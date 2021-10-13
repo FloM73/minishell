@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/25 18:46:13 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 17:44:43 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Add an already existing element at the end of the list
+*/
 
-typedef struct command
+void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
+	t_list	*cur_last;
 
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	if (new)
+	{
+		if (*alst == NULL)
+			*alst = new ;
+		else
+		{
+			cur_last = ft_lstlast(*alst);
+			cur_last->next = new;
+		}
+	}
+}

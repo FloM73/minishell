@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/26 10:02:15 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 17:46:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Delete all the element after the one pointed by **lst
+* Free made in ft_lstdelone
+*/
 
-typedef struct command
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
+	t_list	*mem_next;
 
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	if (!lst || !(*del))
+		return ;
+	mem_next = (*lst)->next;
+	while (*lst)
+	{
+		mem_next = (*lst)->next;
+		ft_lstdelone(*lst, (*del));
+		*lst = mem_next;
+	}
+	*lst = NULL;
+}
