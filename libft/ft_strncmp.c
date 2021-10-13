@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/14 15:53:00 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 19:08:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Compares n bytes of the strings s1 and s2
+* return (s1 - s2) if a difference was found
+* or return 0 if both strings are the same
+*/
 
-typedef struct command
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
+	size_t	i;
 
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	i = 0;
+	while (i < n && (s1[i] != '\0' || s2[i] != '\0'))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

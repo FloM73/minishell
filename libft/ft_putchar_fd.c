@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/21 22:12:30 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 18:35:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Write 1 character on the file descriptor
+*/
 
-typedef struct command
+void	ft_putchar_fd(char c, int fd)
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
-
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	write(fd, &c, 1);
+}

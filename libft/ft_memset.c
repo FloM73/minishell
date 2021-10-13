@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/13 11:49:09 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 18:09:23 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Fills n bytes of the memory pointed by s with the constant byte c
+* return a pointer to the memory area s
+*/
 
-typedef struct command
+void	*ft_memset(void *s, int c, size_t n)
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
+	unsigned char	*output;
+	size_t			i;
 
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	if (!s)
+		return (NULL);
+	output = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		output[i] = (unsigned char) c;
+		i++;
+	}
+	return ((void *)output);
+}

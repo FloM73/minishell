@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 23:00:53 by flormich         ###   ########.fr       */
+/*   Created: 2021/05/25 09:35:14 by flormich          #+#    #+#             */
+/*   Updated: 2021/06/06 17:51:28 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
-# define PATH_MAX 4097
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+/*
+* Create (allocate memory) a new element for the list
+* Can be put at the end with ft_lstaddback after creation
+*/
 
-typedef struct command
+t_list	*ft_lstnew(void *content)
 {
-	int		nb_cmd;
-	char	**env;
-	char	***arr_cmd;
+	t_list	*mylist;
 
-} t_cmd;
-
-// find_cmd.c
-char	***parse_cmd(char *input, t_cmd *cmd);
-
-#endif
+	mylist = (t_list *)malloc(sizeof(t_list));
+	if (mylist)
+	{
+		mylist->content = content;
+		mylist->next = NULL;
+		return (mylist);
+	}
+	return (NULL);
+}
