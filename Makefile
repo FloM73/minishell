@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/13 23:00:39 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/14 22:34:09 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 		$(DIR_LIB)/ft_strmapi.c $(DIR_LIB)/ft_putchar_fd.c $(DIR_LIB)/ft_putstr_fd.c \
 		$(DIR_LIB)/ft_putendl_fd.c $(DIR_LIB)/ft_putnbr_fd.c
 
-SRC = ms_main.c ms_parse_cmd.c
+SRC = ms_main.c ms_parse_cmd.c ms_extract_redirection.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_LIB = $(SRC_LIB:.c=.o)
@@ -41,6 +41,7 @@ all: $(NAME)
 
 $(NAME): $(HEADER) $(OBJ) $(OBJ_LIB)
 	make all -C ./$(DIR_LIB)
+	$(CC) $(CFLAGS) ms_cd.c -o ./sbin/cd
 	$(CC) $(CFLAGS) $(OBJ) $(OBJ_LIB) -o $(NAME) -lreadline
 
 clean:
