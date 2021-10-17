@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/15 00:04:13 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/16 23:50:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	print_cmd(t_cmd *cmd)
 	int	i;
 	int	j;
 
-	printf("Infile:  fd = %3d - name = %s\n", cmd->fd_infile, cmd->name_infile);
-	printf("Outfile: fd = %3d - name = %s\n", cmd->fd_outfile, cmd->name_outfile);
+	printf("Infile:  fd = %3d - name = %s\n", cmd->fd_in, cmd->name_in);
+	printf("Outfile: fd = %3d - name = %s\n", cmd->fd_out, cmd->name_out);
 	i = 0;
 	while (i < cmd->nb_cmd)
 	{
@@ -34,28 +34,29 @@ static void	print_cmd(t_cmd *cmd)
 	}
 }
 
-static void	init_cmd(int argc, char ** argv, char ** envp, t_cmd *cmd)
+// what's the trick to get ride of the -Werror: is not use ??
+static void	init_cmd(int argc, char **argv, char **envp, t_cmd *cmd)
 {
-	// what's the trick to get ride of the -Werror: is not use ??
 	argc = argc;
 	argv = argv;
 	cmd->nb_cmd = 0;
-	cmd->fd_infile = 0;
-	cmd->name_infile = NULL;
-	cmd->fd_outfile = 1;
-	cmd->name_outfile = NULL;
+	cmd->fd_in = 0;
+	cmd->name_in = NULL;
+	cmd->fd_out = 1;
+	cmd->name_out = NULL;
+	cmd->limiter = NULL;
 	cmd->env = envp;
 }
 
-static void	free_memory(t_cmd *cmd)
+void	free_memory(t_cmd *cmd)
 {
 	int	i;
 	int	j;
 
-	if( cmd->name_infile)
-		free(cmd->name_infile);
-	if (cmd->name_outfile)
-		free(cmd->name_outfile);
+	if (cmd->name_in)
+		free(cmd->name_in);
+	if (cmd->name_out)
+		free(cmd->name_out);
 	i = 0;
 	while (i < cmd->nb_cmd)
 	{
@@ -69,6 +70,7 @@ static void	free_memory(t_cmd *cmd)
 		i++;
 	}
 	free(cmd->arr_cmd);
+	free(cmd->limiter);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -83,8 +85,12 @@ int	main(int argc, char **argv, char **envp)
 			return (-1);
 		init_cmd(argc, argv, envp, &cmd);
 		cmd.arr_cmd = parse_cmd(input, &cmd);
-		print_cmd(&cmd);						//just for test
+		if (cmd.arr_cmd)
+			print_cmd(&cmd);
+		free_memory(&cmd);
+		init_cmd(argc, argv, envp, &cmd);
 	}
+	write(1, "end\n", 4);
 	free_memory(&cmd);
 	free(input);
 	return (0);

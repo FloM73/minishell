@@ -6,124 +6,88 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/15 00:16:19 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/17 13:11:04 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell_libs.h"
 
-// TO CHECK=
-// - what are all the space characters ?
-// - shall we test >>> ?
-static int	extract_output(char *str, t_cmd *cmd)
+static int	extract_outfile(char *str, t_cmd *cmd)
 {
-	int		len;
 	int		i;
 	int		j;
 	int		append;
 
-	len = ft_strlen(str);
-	cmd->name_outfile = ft_calloc(len + 1, sizeof(char));
 	i = 0;
-	while (str[i] == '>')
+	while (str[i] == '>' && i < 2)
 		i++;
 	append = i - 1;
-	while (str[i] == ' ')
+	while (ft_isspace(str[i]) == 1)
 		i++;
-	if (str[i] == '\0')
+	if (str[i] == '\0' || str[i] == '\n' || str[i] == '|' || str[i] == '>')
 	{
-		perror(RED"Output file needed\n"D);
+		ms_error_file(str[i]);
 		return (-1);
 	}
+	cmd->name_out = malloc_file_name(&cmd->name_out, str);
+	if (!cmd->name_out)
+		ms_error("Failed to malloc outfile\n", 0, cmd);
 	j = 0;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
-	{
-		cmd->name_outfile[j] = str[i];
-		i++;
-		j++;
-	}
-	if (append == 1)
-		cmd->fd_outfile = open(cmd->name_outfile, O_RDWR | O_CREAT | O_APPEND, 0777);
-	else if (append == 0)
-		cmd->fd_outfile = open(cmd->name_outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	else
-		cmd->fd_outfile = -1;	// >>> or more
-	if (cmd->fd_outfile == -1)
-		perror(RED"Failed to open/create outfile\n"D);
+		cmd->name_out[j++] = str[i++];
+	cmd->fd_out = open_outfile(cmd->name_out, append);
+	if (test_file_descriptor(cmd->fd_out, cmd->name_out) == -1)
+		return (-1);
 	return (i);
 }
 
-static int	extract_input(char *str, t_cmd *cmd)
-{
-	int		len;
-	int		i;
-	int		j;
-
-	len = ft_strlen(str);
-	cmd->name_infile = ft_calloc(len + 1, sizeof(char));
-	i = 0;
-	while (str[i] == '<')
-		i++;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] == '\0')
-	{
-		perror(RED"Input file needed\n"D);
-		return (-1);
-	}
-	j = 0;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
-	{
-		cmd->name_infile[j] = str[i];
-		i++;
-		j++;
-	}
-	cmd->fd_infile = open(cmd->name_infile, O_RDWR, 0777);
-	if (cmd->fd_infile == -1)
-		perror(RED"Failed to open infile\n"D);
-	return (i);
-}
-
-// remove file name from input
-static void	remove_redirection(char *input, int nb, char c)
-{
-	int	len;
-	int	i;
-
-	len = ft_strlen(input);
-	i = 0;
-	while (input[i] != c)
-		i++;
-	if (i + nb == len)
-		input[i] = '\0';
-	else
-	{
-		while (i + nb < len)
-		{
-			input[i] = input[i + nb];
-			i++;
-		}
-		input[i] = '\0';
-	}
-}
-
-char	*extract_redirection(char *input, t_cmd *cmd)
+char	*pilote_extract_outfile(char *input, t_cmd *cmd)
 {
 	int		len;
 	char	*ptr;
 	int		nb_to_remove;
 
 	len = ft_strlen(input);
+	if (len < 1)
+		return (NULL);
 	ptr = ft_strnstr(input, ">", len);
-	if (ptr)
-		nb_to_remove = extract_output(ptr, cmd);
-	if (nb_to_remove > 0)
-		remove_redirection(input, nb_to_remove, '>');
+	while (ptr)
+	{
+		nb_to_remove = extract_outfile(ptr, cmd);
+		if (nb_to_remove > 0)
+			remove_redirection(input, nb_to_remove, '>');
+		else
+			return (NULL);
+		len = ft_strlen(input);
+		if (len < 1)
+			return (NULL);
+		ptr = ft_strnstr(input, ">", len);
+	}
+	return (input);
+}
+
+char	*extract_redirection(char *input, t_cmd *cmd)
+{
+	int		len;
+	char	*ptr;
+
 	len = ft_strlen(input);
+	if (len < 1)
+		return (NULL);
+	ptr = ft_strnstr(input, "<<", len);
+	if (ptr)
+		input = extract_limiter(input, cmd);
+	if (!input)
+		return (NULL);
 	ptr = ft_strnstr(input, "<", len);
 	if (ptr)
-		nb_to_remove = extract_input(ptr, cmd);
-	if (nb_to_remove > 0)
-		remove_redirection(input, nb_to_remove, '<');
+		input = pilote_extract_infile(input, cmd);
+	if (!input)
+		return (NULL);
+	ptr = ft_strnstr(input, ">", len);
+	if (ptr)
+		input = pilote_extract_outfile(input, cmd);
+	if (!input)
+		return (NULL);
 	return (input);
 }
