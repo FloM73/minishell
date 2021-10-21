@@ -6,19 +6,19 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/16 23:43:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/22 01:46:40 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-void	ms_error(char *txt, int	*exit_level, t_cmd *cmd)
+void	ms_error(char *txt, int	*exit_level, t_struct *st)
 {
 	perror(txt);
-	if (cmd->name_in)
-		free(cmd->name_in);
-	if (cmd->name_out)
-		free(cmd->name_out);
+	if (st->name_in)
+		free(st->name_in);
+	if (st->name_out)
+		free(st->name_out);
 	if (exit_level == 0)
 		exit (-1);
 }

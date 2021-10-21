@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/17 13:08:09 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/21 21:11:19 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 		$(DIR_LIB)/ft_strmapi.c $(DIR_LIB)/ft_putchar_fd.c $(DIR_LIB)/ft_putstr_fd.c \
 		$(DIR_LIB)/ft_putendl_fd.c $(DIR_LIB)/ft_putnbr_fd.c $(DIR_LIB)/ft_isspace.c
 
-SRC = ms_main.c ms_parse_cmd.c ms_extract_redirection.c ms_extract_infile_limiter.c \
+SRC = ms_main.c ms_extract_cmd.c ms_parse_input.c \
 		ms_extract_utils.c ms_error.c
 
 OBJ = $(SRC:.c=.o)
