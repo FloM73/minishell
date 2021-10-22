@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/22 01:46:40 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:20:06 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ms_error(char *txt, int	*exit_level, t_struct *st)
 		exit (-1);
 }
 
-void	ms_error_file(char c)
+void	ms_error_synthaxe(char c)
 {
 	if (c == '\0' || c == '\n')
 		printf("-bash: syntax error near unexpected token `newline'\n");

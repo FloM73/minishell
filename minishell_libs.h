@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/21 23:37:11 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/23 00:27:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef struct command
 typedef struct structure
 {
 	int		nb_cmd;
+	int		tr;
+	int		arg;
+	int		digit;
+	int		take_all;
+	char	*input;
+	int		len;
 	int		fd_in;
 	char	*name_in;
 	char	*limiter;
@@ -58,10 +64,10 @@ typedef struct structure
 //void	free_memory t_struct *cmd);
 
 // extract_cmd.c
-int		extract_cmd(char *input, t_struct *st);
+int		extract_cmd(t_struct *st);
 
 // parse_input
-int		parse_input(char *input, t_struct *st);
+int		parse_input(t_struct *st);
 
 // extract_utils.c
 char	*malloc_file_name(char *file, char *str);
@@ -70,6 +76,6 @@ int		open_outfile(char *name, int append);
 
 //error.c
 void	ms_error(char *txt, int	*exit_level, t_struct *st);
-void	ms_error_file(char c);
+void	ms_error_synthaxe(char c);
 
 #endif

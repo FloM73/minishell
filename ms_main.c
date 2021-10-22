@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/22 01:43:52 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/23 00:26:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 // just for test purpose
 static void	print_cmd(t_struct *st)
 {
-	int	i;
-	//int	j;
+	int	tr;
+	int	arg;
 
 	printf("Infile:  fd = %3d - name = %s\n", st->fd_in, st->name_in);
-	printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_out);
-	i = 0;
-	while (i < st->nb_cmd)
+	printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_in);
+	tr = 0;
+	while (tr < st->nb_cmd)
 	{
-	/*	j = 0;
-		while (st->arr[i].cmd[i][j])
+		arg = 0;
+		while (arg <= st->arr[tr].nb_arg)
 		{
-			printf("cmd %d - Arg %d = %d\n", i, j, st->arr[i].cmd[i][j]);
-			j++;
-		}*/
+			printf("st->arr[%d].cmd[%d] = %s\n", tr, arg, st->arr[tr].cmd[arg]);
+			arg++;
+		}
 		printf("\n");
-		i++;
+		tr++;
 	}
 }
 
 // what's the trick to get ride of the -Werror: is not use ??
 static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 {
-	argc = argc;
-	argv = argv;
+	argc = argc + 1;
+	argv[0] = NULL;
 	st->nb_cmd = 0;
 	st->fd_in = 0;
 	st->name_in = NULL;
@@ -46,9 +46,13 @@ static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 	st->name_out = NULL;
 	st->limiter = NULL;
 	st->env = envp;
+	st->arg = 0;
+	st->tr = 0;
+	st->digit = 0;
+	st->take_all = 0;
+	st->len = (int)ft_strlen(st->input);
 }
 
-/*
 void	free_memory(t_struct *st)
 {
 	int	i;
@@ -62,42 +66,43 @@ void	free_memory(t_struct *st)
 	while (i < st->nb_cmd)
 	{
 		j = 0;
-		while (st->arr[i][j])
+		while (j <= st->arr[i].nb_arg)
 		{
-			free(st->arr[i][j]);
+			//printf("FREE st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
+			free(st->arr[i].cmd[j]);
 			j++;
 		}
-		free(st->arr[i]);
+		//printf("FREE st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
+		free(st->arr[i].cmd);
 		i++;
 	}
+	//printf("FREE st->arr = %p\n", st->arr);
 	free(st->arr);
+	//printf("FREE st->limiter = %p\n", st->limiter);
 	free(st->limiter);
 }
-*/
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	char	*temp;
+	char		*input;
+	char		*temp;
 	t_struct	st;
 
 	while (1)
 	{
 		temp = readline("$ ");
-		input = ft_strtrim(temp, " 	");
-		//printf("Input = |%s|\ntemp  = |%s|\n", input, temp);
+		st.input = ft_strtrim(temp, " 	");
+		//printf("Input = |%s|\ntemp    = |%s|\n", input, temp);
 		free(temp);
-		if (input && input[0] != '\0')
+		if (st.input && st.input[0] != '\0')
 		{
 			init_st(argc, argv, envp, &st);
-			if (extract_cmd(input, &st) == 0)
+			if (extract_cmd(&st) == 0)
 				print_cmd(&st);
-			write(1, "1\n", 2);
-			//free_memory(&cmd);
-			write(1, "2\n", 2);
+			free_memory(&st);
 			init_st(argc, argv, envp, &st);
 		}
 	}
-	write(1, "end\n", 4);
 	//free_memory(&st);
 	free(input);
 	return (0);
