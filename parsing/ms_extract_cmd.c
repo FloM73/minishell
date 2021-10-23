@@ -21,7 +21,7 @@ static int	count_pipe(char *input)
 	nb = 1;
 	while (input[i] != '\0')
 	{
-		if (input[i] == '|')
+		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 			nb++;
 		i++;
 	}
@@ -36,7 +36,7 @@ static t_cmd	*create_arr(t_struct *st)
 
 	st->nb_cmd = count_pipe(st->input);
 	arr = malloc(st->nb_cmd * sizeof(t_cmd));
-	//printf("MALLOC st->arr = %p\n", arr);
+	//printf("MALLOC extract_cmd st->arr = %p - nb_cmd = %d\n", arr, st->nb_cmd);
 	if (!arr)
 		ms_error("Fail to malloc arr_st_arg in ***parse_st", 0, st);
 	return (arr);
@@ -45,6 +45,8 @@ static t_cmd	*create_arr(t_struct *st)
 // Parse st option and args in ***arr_st
 int	extract_cmd(t_struct *st)
 {
+	if (!st->input)
+		return (-1);
 	st->arr = create_arr(st);
 	if (parse_input(st) == -1)
 		return (-1);

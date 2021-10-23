@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/23 00:26:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/24 01:16:21 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	print_cmd(t_struct *st)
 	int	arg;
 
 	printf("Infile:  fd = %3d - name = %s\n", st->fd_in, st->name_in);
-	printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_in);
+	printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_out);
 	tr = 0;
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			printf("st->arr[%d].cmd[%d] = %s\n", tr, arg, st->arr[tr].cmd[arg]);
+			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
 		printf("\n");

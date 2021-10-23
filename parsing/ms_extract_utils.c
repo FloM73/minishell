@@ -6,18 +6,15 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:58:31 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/23 21:24:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/24 01:07:32 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell_libs.h"
 
 // Malloc memory for file names
-char	*malloc_file_name(char *file, char *str)
+char	*malloc_file_name(char *file, int len)
 {
-	int	len;
-
-	len = ft_strlen(str);
 	if (file)
 		free(file);
 	return (ft_calloc(len + 1, sizeof(char)));

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/23 21:24:52 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/24 01:29:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	malloc_cmd(t_struct *st)
 		while (j <= st->arr[i].nb_arg)
 		{
 			st->arr[i].cmd[j] = ft_calloc(st->len + 1, sizeof(char));
-			printf("MALLOC st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
+			//printf("MALLOC malloc_cmd st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
 			if (!st->arr[i].cmd[j])
 				return (-1);
 			j++;
@@ -76,6 +76,16 @@ static int	fill_cmd(char *input, t_struct *st)
 			st->arg = 0;
 			st->digit = 0;
 			i++;
+		}
+		if (st->take_all == 0 && (input[i] == '<' || input[i] == '>'))
+		{
+			if (st->arr[st->tr].cmd[0][0] != '\0')
+				st->tr++;
+			st->arg = 0;
+			st->digit = 0;
+			i = extract_redirection(st, i);
+			if (i == -1)
+				return (-1);
 		}
 		if ((st->take_all == 0 && (input[i] == '"' || input[i] == '\''))
 			|| (st->take_all == 1 && input[i] == c))
@@ -125,7 +135,7 @@ static int	count_arg(char *input, t_struct *st)
 		st->arr[tr].nb_arg = 0;
 		while (ft_isspace(input[i]) == 1)
 			i++;
-		while (input[i] != '|' && i <= st->len)
+		while (input[i] != '|' && input[i] != '<' && input[i] != '>' && i <= st->len)
 		{
 			if (input[i] == '"' || input[i] == '\'')
 			{
@@ -164,7 +174,7 @@ int	parse_input(t_struct *st)
 	while (i < st->nb_cmd)
 	{
 		st->arr[i].cmd = malloc((st->arr[i].nb_arg + 1 ) * sizeof(char *));
-		//printf("MALLOC st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
+		//printf("MALLOC parse_input st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
 		if (!st->arr[i].cmd)
 			return (-1);
 		i++;

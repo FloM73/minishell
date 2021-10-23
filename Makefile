@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/23 21:35:04 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/24 01:03:24 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 
 SRC = ms_main.c ms_error.c
 SRC_P = $(DIR_P)/ms_extract_cmd.c $(DIR_P)/ms_parse_input.c \
-	$(DIR_P)/ms_extract_utils.c
+	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_infile_limiter.c \
+	$(DIR_P)/ms_extract_redirection.c $(DIR_P)/ms_extract_outfile.c \
 
 OBJ = $(SRC:.c=.o)
 OBJ_P = $(SRC_P:.c=.o)
@@ -43,15 +44,14 @@ OBJ_LIB = $(SRC_LIB:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(HEADER) $(OBJ) $(OBJ_LIB) $(SRC) $(SRC_P)
+$(NAME): $(HEADER) $(OBJ) $(OBJ_P) $(OBJ_LIB)
 	make all -C ./$(DIR_LIB)
 	$(CC) $(CFLAGS) ms_cd.c -o ./sbin/cd
-	$(CC) $(CFLAGS) $(SRC) $(SRC_P) $(OBJ_LIB) -o $(NAME) -lreadline
-	#$(CC) $(CFLAGS) $(OBJ) $(OBJ_P) $(OBJ_LIB) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(OBJ) $(OBJ_P) $(OBJ_LIB) -o $(NAME) -lreadline
 
 clean:
 	make clean -C ./$(DIR_LIB)
-	rm -f $(OBJ) minishell.o
+	rm -f $(OBJ) $(OBJ_P) minishell.o
 
 fclean:	clean
 	rm -f $(NAME)

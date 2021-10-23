@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/23 00:27:08 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/24 01:09:20 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,30 @@ typedef struct structure
 } t_struct;
 
 // main.c
-//void	free_memory t_struct *cmd);
+void	free_memory(t_struct *cmd);
 
-// extract_cmd.c
+// parsing: extract_cmd.c
 int		extract_cmd(t_struct *st);
 
-// parse_input
+// parsing: extract_redirection
+int		count_lengh_name(t_struct *st, int i);
+int		extract_redirection(t_struct *st, int i);
+
+// parsing: extract_infile_limiter
+int		extract_infile(t_struct *st, int i);
+int		extract_limiter(t_struct *st, int i);
+
+// parsing: extract_infile_limiter
+int		extract_outfile(t_struct *st, int i);
+
+// parsing: parse_input
 int		parse_input(t_struct *st);
 
-// extract_utils.c
-char	*malloc_file_name(char *file, char *str);
+// parsing: extract_utils.c
+char	*malloc_file_name(char *file, int len);
 int		test_file_descriptor(int fd, char *name);
 int		open_outfile(char *name, int append);
+void	remove_redirection(char *input, int nb, char c);
 
 //error.c
 void	ms_error(char *txt, int	*exit_level, t_struct *st);
