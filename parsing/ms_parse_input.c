@@ -6,11 +6,11 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/23 00:34:44 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/23 21:24:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell_libs.h"
+#include"../minishell_libs.h"
 
 static int	skip_till(char *input, int from, char c, int max)
 {

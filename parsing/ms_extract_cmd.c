@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell_libs.h"
+#include"../minishell_libs.h"
 
 static int	count_pipe(char *input)
 {

@@ -6,13 +6,14 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/21 21:11:19 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/23 21:35:04 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ms
 CFLAGS = -Wall -Wextra -Werror
 DIR_LIB = libft
+DIR_P = parsing
 HEADER = $(DIR_LIB)/libft.h minishell_libs.h
 
 SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
@@ -32,18 +33,21 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 		$(DIR_LIB)/ft_strmapi.c $(DIR_LIB)/ft_putchar_fd.c $(DIR_LIB)/ft_putstr_fd.c \
 		$(DIR_LIB)/ft_putendl_fd.c $(DIR_LIB)/ft_putnbr_fd.c $(DIR_LIB)/ft_isspace.c
 
-SRC = ms_main.c ms_extract_cmd.c ms_parse_input.c \
-		ms_extract_utils.c ms_error.c
+SRC = ms_main.c ms_error.c
+SRC_P = $(DIR_P)/ms_extract_cmd.c $(DIR_P)/ms_parse_input.c \
+	$(DIR_P)/ms_extract_utils.c
 
 OBJ = $(SRC:.c=.o)
+OBJ_P = $(SRC_P:.c=.o)
 OBJ_LIB = $(SRC_LIB:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(HEADER) $(OBJ) $(OBJ_LIB)
+$(NAME): $(HEADER) $(OBJ) $(OBJ_LIB) $(SRC) $(SRC_P)
 	make all -C ./$(DIR_LIB)
 	$(CC) $(CFLAGS) ms_cd.c -o ./sbin/cd
-	$(CC) $(CFLAGS) $(OBJ) $(OBJ_LIB) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(SRC) $(SRC_P) $(OBJ_LIB) -o $(NAME) -lreadline
+	#$(CC) $(CFLAGS) $(OBJ) $(OBJ_P) $(OBJ_LIB) -o $(NAME) -lreadline
 
 clean:
 	make clean -C ./$(DIR_LIB)

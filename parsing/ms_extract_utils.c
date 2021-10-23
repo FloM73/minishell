@@ -6,11 +6,11 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:58:31 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/21 19:10:14 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/23 21:24:48 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell_libs.h"
+#include"../minishell_libs.h"
 
 // Malloc memory for file names
 char	*malloc_file_name(char *file, char *str)
