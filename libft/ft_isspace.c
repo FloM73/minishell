@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 10:23:01 by pnuti            ###   ########.fr       */
+/*   Created: 2021/05/13 14:51:06 by flormich          #+#    #+#             */
+/*   Updated: 2021/10/17 13:09:58 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_libs.h"
+#include "libft.h"
 
-void	cd(char *path)
+int	ft_isspace(int c)
 {
-	int	err;
-
-	err = chdir(path);
-	if (err)
-		printf("%s\n", strerror(err));
+	if ((c == 32 || (c >= 9 && c <= 13)))
+		return (1);
+	else
+		return (0);
 }

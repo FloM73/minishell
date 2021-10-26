@@ -6,13 +6,14 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/13 23:00:39 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/25 22:05:33 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = ms
 CFLAGS = -Wall -Wextra -Werror
 DIR_LIB = libft
+DIR_P = parsing
 HEADER = $(DIR_LIB)/libft.h minishell_libs.h
 
 SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
@@ -30,22 +31,28 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 		$(DIR_LIB)/ft_itohex.c \
 		$(DIR_LIB)/ft_itoa_with_sign.c $(DIR_LIB)/ft_itoa_without_sign.c \
 		$(DIR_LIB)/ft_strmapi.c $(DIR_LIB)/ft_putchar_fd.c $(DIR_LIB)/ft_putstr_fd.c \
-		$(DIR_LIB)/ft_putendl_fd.c $(DIR_LIB)/ft_putnbr_fd.c
+		$(DIR_LIB)/ft_putendl_fd.c $(DIR_LIB)/ft_putnbr_fd.c $(DIR_LIB)/ft_isspace.c
 
-SRC = ms_main.c ms_parse_cmd.c
+SRC = ms_main.c ms_error.c ms_launch_cmd.c
+SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
+	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_infile_limiter.c \
+	$(DIR_P)/ms_3_extract_redirection.c $(DIR_P)/ms_extract_outfile.c \
+	$(DIR_P)/ms_add_path.c
 
 OBJ = $(SRC:.c=.o)
+OBJ_P = $(SRC_P:.c=.o)
 OBJ_LIB = $(SRC_LIB:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(HEADER) $(OBJ) $(OBJ_LIB)
+$(NAME): $(HEADER) $(OBJ) $(OBJ_P) $(OBJ_LIB)
 	make all -C ./$(DIR_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(OBJ_LIB) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) ms_cd.c -o ./sbin/cd
+	$(CC) $(CFLAGS) $(OBJ) $(OBJ_P) $(OBJ_LIB) -o $(NAME) -lreadline
 
 clean:
 	make clean -C ./$(DIR_LIB)
-	rm -f $(OBJ) minishell.o
+	rm -f $(OBJ) $(OBJ_P) minishell.o
 
 fclean:	clean
 	rm -f $(NAME)
