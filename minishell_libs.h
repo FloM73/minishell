@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/25 22:10:35 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/26 17:07:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct command
 {
 	char	**cmd;
 	int		nb_arg;
+	int		cmd_type;	//our (cd, export, echo ) / shell
 } t_cmd;
 
 typedef struct structure
