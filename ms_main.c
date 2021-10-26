@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/24 01:16:21 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/25 22:34:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			init_st(argc, argv, envp, &st);
 			if (extract_cmd(&st) == 0)
+			{
 				print_cmd(&st);
+				launch_cmd(&st);
+			}
 			free_memory(&st);
 			init_st(argc, argv, envp, &st);
 		}
