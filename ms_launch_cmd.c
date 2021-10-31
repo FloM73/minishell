@@ -6,24 +6,14 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/25 23:36:43 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/31 21:36:11 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-static void	exec_child(char **cmd)
-{
-	write(1, "exec\n", 5);
-	if (execve(cmd[0], cmd, NULL) == -1)
-	{
-		write(1, "error exec\n", 11);
-		perror("Child: execve failed");
-	}
-}
-
 // STDIN = 0, STDOUT = 1, STDERR = 2
-static void	set_redirection(t_struct *st, int which_cmd, int *fd)
+static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
 {
 	if (st->nb_cmd == 1)
 	{
@@ -33,50 +23,56 @@ static void	set_redirection(t_struct *st, int which_cmd, int *fd)
 	else if (which_cmd == 0)
 	{
 		dup2(st->fd_in, STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
+		dup2(next_fd[WRITE], STDOUT_FILENO);
 	}
 	else if (which_cmd == st->nb_cmd - 1)
 	{
-		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[READ], STDIN_FILENO);
 		dup2(st->fd_out, STDOUT_FILENO);
+		printf("st->fd_out = %d\n", st->fd_out);
 	}
 	else
 	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
+		dup2(fd[READ], STDIN_FILENO);
+		dup2(next_fd[WRITE], STDOUT_FILENO);
 	}
-	close(fd[0]);
-	close(fd[1]);
+	close(fd[READ]);
+}
+
+static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
+{
+	set_redirection(st, tr, fd, next_fd);
+	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, st->env) == -1)
+		perror("Child: execve failed");
 }
 
 int	launch_cmd(t_struct *st)
 {
 	pid_t	pid;
 	int		fd[2];
+	int		next_fd[2];
 	int		i;
 
+	if (pipe(fd) == -1)
+		return (-1);
+	close(fd[WRITE]);
 	i = 0;
 	while (i < st->nb_cmd)
 	{
-		write(1, "1\n", 2);
-		if (pipe(fd) == -1)
+		if (pipe(next_fd) == -1)
 			return (-1);
-		write(1, "2\n", 2);
-		set_redirection(st, i, fd);
-		write(1, "3\n", 2);
 		pid = fork();
 		if (pid < 0)
 			perror ("Failed to create Child");
 		if (pid == 0)
-		{
-			st->arr[i].cmd[1] = NULL;
-			//printf("cmd[0] = %s - cmd[1] = %s\n", st->arr[i].cmd[0], st->arr[i].cmd[1]);
-			exec_child(st->arr[i].cmd);
-		}
-		close(fd[0]);
-		close(fd[1]);
+			exec_child(st, i, fd, next_fd);
+		if (i < st->nb_cmd)
+			dup2(next_fd[READ], fd[READ]);
+		//else
+		//	close(fd[READ]);
+		close(next_fd[READ]);
+		close(next_fd[WRITE]);
 		waitpid(pid, NULL, 0);
-		write(1, "4\n", 2);
 		i++;
 	}
 	return (0);

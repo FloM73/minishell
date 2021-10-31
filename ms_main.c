@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/25 22:34:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/29 22:21:32 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ static void	print_cmd(t_struct *st)
 	int	tr;
 	int	arg;
 
-	printf("Infile:  fd = %3d - name = %s\n", st->fd_in, st->name_in);
-	printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_out);
+	//printf("Infile:  fd = %3d - name = %s\n", st->fd_in, st->name_in);
+	//printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_out);
 	tr = 0;
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
+			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
-		printf("\n");
+		//printf("\n");
 		tr++;
 	}
 }
@@ -55,26 +55,26 @@ static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 
 void	free_memory(t_struct *st)
 {
-	int	i;
-	int	j;
+	int	tr;
+	int	arg;
 
 	if (st->name_in)
 		free(st->name_in);
 	if (st->name_out)
 		free(st->name_out);
-	i = 0;
-	while (i < st->nb_cmd)
+	tr = 0;
+	while (tr < st->nb_cmd)
 	{
-		j = 0;
-		while (j <= st->arr[i].nb_arg)
+		arg = 0;
+		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
-			free(st->arr[i].cmd[j]);
-			j++;
+			free(st->arr[tr].cmd[arg]);
+			arg++;
 		}
 		//printf("FREE st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
-		free(st->arr[i].cmd);
-		i++;
+		free(st->arr[tr].cmd);
+		tr++;
 	}
 	//printf("FREE st->arr = %p\n", st->arr);
 	free(st->arr);

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/26 17:07:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/31 13:11:02 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include "libft/libft.h"
 # include <unistd.h>
 
+# define READ 0
+# define WRITE 1
 # define RED "\033[0;31m"
 # define GR "\033[0;32m"
 # define YE "\033[0;33m"
@@ -41,7 +43,7 @@ typedef struct command
 {
 	char	**cmd;
 	int		nb_arg;
-	int		cmd_type;	//our (cd, export, echo ) / shell
+	int		cmd_type;
 } t_cmd;
 
 typedef struct structure
@@ -60,6 +62,8 @@ typedef struct structure
 	char	*name_out;
 	char	**env;
 	t_cmd	*arr;
+	int		pid;
+	int		ppid;
 } t_struct;
 
 // main.c
@@ -84,6 +88,8 @@ char	*malloc_file_name(char *file, int len);
 int		test_file_descriptor(int fd, char *name);
 int		open_outfile(char *name, int append);
 void	remove_redirection(char *input, int nb, char c);
+// parsing: clean_arr
+void clean_arr(t_struct *st);
 
 //error.c
 void	ms_error(char *txt, int	*exit_level, t_struct *st);

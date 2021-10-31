@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/22 17:20:06 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/29 15:24:35 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ms_error(char *txt, int	*exit_level, t_struct *st)
 	if (st->name_out)
 		free(st->name_out);
 	if (exit_level == 0)
-		exit (-1);
+		exit(-1);
 }
 
 void	ms_error_synthaxe(char c)

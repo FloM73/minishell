@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/10/25 22:05:33 by flormich         ###   ########.fr        #
+#    Updated: 2021/10/29 09:57:33 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC = ms_main.c ms_error.c ms_launch_cmd.c
 SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
 	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_infile_limiter.c \
 	$(DIR_P)/ms_3_extract_redirection.c $(DIR_P)/ms_extract_outfile.c \
-	$(DIR_P)/ms_add_path.c
+	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_P = $(SRC_P:.c=.o)

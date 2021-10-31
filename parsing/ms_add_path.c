@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/25 21:36:42 by flormich         ###   ########.fr       */
+/*   Updated: 2021/10/29 15:21:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static void	free_arr(char **arr)
 {
-	int	i;
+	int	tr;
 
-	i = 0;
-	while (*(arr + i) != 0)
+	tr = 0;
+	while (*(arr + tr) != 0)
 	{
-		free(arr[i]);
-		i++;
+		free(arr[tr]);
+		tr++;
 	}
-	free(arr[i]);
+	free(arr[tr]);
 	free(arr);
 }
 
@@ -69,7 +69,7 @@ static char	*join_path(char const *s1, char const *s2)
 	return (conc);
 }
 
-static char *test_path(char **arr_path, char *cmd)
+static char	*test_path(char **arr_path, char *cmd)
 {
 	int		j;
 	char	*str_cmd;
@@ -91,24 +91,24 @@ static char *test_path(char **arr_path, char *cmd)
 int	add_path(t_struct *st)
 {
 	char	**arr_path;
-	int		i;
+	int		tr;
 	int		where_is_path;
 
 	where_is_path = find_path(st);
 	if (where_is_path == -1)
 		return (-1);
 	arr_path = ft_split(st->env[where_is_path], ':');
-	i = 0;
-	while (i <= st->tr)
+	tr = 0;
+	while (tr <= st->tr)
 	{
-		st->arr[i].cmd[0] = test_path(arr_path, st->arr[i].cmd[0]);
-		if (!st->arr[i].cmd[0])
+		st->arr[tr].cmd[0] = test_path(arr_path, st->arr[tr].cmd[0]);
+		if (!st->arr[tr].cmd[0])
 		{
 			free_arr(arr_path);
 			perror("Command-not-found\n");
 			return (-1);
 		}
-		i++;
+		tr++;
 	}
 	free_arr(arr_path);
 	return (0);
