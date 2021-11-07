@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/29 15:23:04 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/07 10:11:24 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	skip_till(char *input, int from, char c, int max)
 	while (input[from] != c && from <= max)
 	{
 		if (from == max || input[from] == '\0')
-			return (-1);
+			return (from);
 		from++;
 	}
 	return (from);
@@ -37,7 +37,7 @@ static int	malloc_cmd(t_struct *st)
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			st->arr[tr].cmd[arg] = ft_calloc(st->len + 1, sizeof(char));
-			//printf("MALLOC malloc_cmd st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
+			//printf("MALLOC malloc_cmd  st->arr[%d].cmd[%d] = %p - size = %ld\n", tr, arg, st->arr[tr].cmd[arg], (st->len + 1) * sizeof(char));
 			if (!st->arr[tr].cmd[arg])
 				return (-1);
 			//printf("cmd = |%s|\n", st->arr[tr].cmd[j]);
@@ -60,7 +60,7 @@ static int	fill_cmd(char *input, t_struct *st)
 		return (-1);
 	while (i < st->len)
 	{
-		while (ft_isspace(input[i]) == 1 && st->take_all == 0)
+		while (ft_isspace(input[i]) == 1 && st->all == 0)
 		{
 			i++;
 			if (st->digit != 0)
@@ -69,7 +69,7 @@ static int	fill_cmd(char *input, t_struct *st)
 				st->digit = 0;
 			}
 		}
-		if (input[i] == '|' && st->take_all == 0)
+		if (input[i] == '|' && st->all == 0)
 		{
 			if (st->digit == 0 && st->arg == 0)
 			{
@@ -81,7 +81,7 @@ static int	fill_cmd(char *input, t_struct *st)
 			st->digit = 0;
 			i++;
 		}
-		if (st->take_all == 0 && (input[i] == '<' || input[i] == '>'))
+		if (st->all == 0 && (input[i] == '<' || input[i] == '>'))
 		{
 			if (st->arr[st->tr].cmd[0][0] != '\0' && st->tr < st->nb_cmd - 1)
 			{
@@ -93,18 +93,19 @@ static int	fill_cmd(char *input, t_struct *st)
 			if (i == -1)
 				return (-1);
 		}
-		if ((st->take_all == 0 && (input[i] == '"' || input[i] == '\''))
-			|| (st->take_all == 1 && input[i] == c))
+		if ((st->all == 0 && (input[i] == '"' || input[i] == '\''))
+			|| (st->all == 1 && input[i] == c))
+			//|| (st->all == 1 && input[i - 1] != '\\' && input[i] == c))
 		{
-			if (st->take_all == 0)
+			if (st->all == 0)
 			{
 				c = input[i];
-				st->take_all = 1;
-				if (st->digit != 0)
+				st->all = 1;
+				/*if (st->digit != 0)
 				{
 					st->arg++;
 					st->digit = 0;
-				}
+				}*/
 				st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 				st->digit++;
 				i++;
@@ -112,14 +113,14 @@ static int	fill_cmd(char *input, t_struct *st)
 			else
 			{
 				st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
-				st->take_all = 0;
-				st->arg++;
-				st->digit = 0;
+				st->all = 0;
+				//st->arg++;
+				st->digit++;
 				c = '\0';
 				i++;
 			}
 		}
-		else if (i < st->len && (ft_isspace(input[i]) == 0 || st->take_all == 1))
+		else if (i < st->len && (ft_isspace(input[i]) == 0 || st->all == 1))
 		{
 			st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 			st->digit++;
@@ -143,13 +144,12 @@ static int	count_arg(char *input, t_struct *st)
 		st->arr[tr].nb_arg = 0;
 		while (ft_isspace(input[i]) == 1)
 			i++;
-		while (input[i] != '|' && i <= st->len)
+		while (input[i] != '|' && i <= st->len && input[i] != '\0')
 		{
 			if (input[i] == '"' || input[i] == '\'')
 			{
 				i = skip_till(input, i + 1, input[i], st->len);
-				if (i == -1)
-					return (-1);
+				//st->arr[tr].nb_arg++;
 			}
 			if (input[i] == '<' || input[i] == '>')
 			{
@@ -189,7 +189,7 @@ int	parse_input(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		st->arr[tr].cmd = malloc((st->arr[tr].nb_arg + 1 ) * sizeof(char *));
-		//printf("MALLOC parse_input st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
+		//printf("MALLOC parse_input st->arr[%d].cmd    = %p - size = %ld\n", tr, st->arr[tr].cmd, (st->arr[tr].nb_arg + 1 ) * sizeof(char *));
 		if (!st->arr[tr].cmd)
 			return (-1);
 		tr++;

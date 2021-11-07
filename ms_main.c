@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/29 22:21:32 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/07 21:37:20 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	print_cmd(t_struct *st)
 // what's the trick to get ride of the -Werror: is not use ??
 static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 {
-	argc = argc + 1;
+	st->argc = argc;
 	argv[0] = NULL;
 	st->nb_cmd = 0;
 	st->fd_in = 0;
@@ -49,7 +49,8 @@ static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 	st->arg = 0;
 	st->tr = 0;
 	st->digit = 0;
-	st->take_all = 0;
+	st->all = 0;
+	st->expand = 0;
 	st->len = (int)ft_strlen(st->input);
 }
 
@@ -68,11 +69,11 @@ void	free_memory(t_struct *st)
 		arg = 0;
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			//printf("FREE st->arr[%d].cmd[%d] = %p\n", i, j, st->arr[i].cmd[j]);
+			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
 			free(st->arr[tr].cmd[arg]);
 			arg++;
 		}
-		//printf("FREE st->arr[%d].cmd = %p\n", i, st->arr[i].cmd);
+		//printf("FREE st->arr[%d].cmd = %p\n", tr, st->arr[tr].cmd);
 		free(st->arr[tr].cmd);
 		tr++;
 	}
@@ -84,16 +85,16 @@ void	free_memory(t_struct *st)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*input;
-	char		*temp;
+	//char		*temp;
 	t_struct	st;
 
 	while (1)
 	{
-		temp = readline("$ ");
-		st.input = ft_strtrim(temp, " 	");
-		//printf("Input = |%s|\ntemp    = |%s|\n", input, temp);
-		free(temp);
+		//temp = readline("SHELL $ ");
+		//st.input = ft_strtrim(temp, " 	");
+		st.input = readline("SHELL $ ");
+		//printf("Input   = |%s|\ntemp    = |%s|\n", st.input, temp);
+		//free(temp);
 		if (st.input && st.input[0] != '\0')
 		{
 			init_st(argc, argv, envp, &st);
@@ -106,7 +107,5 @@ int	main(int argc, char **argv, char **envp)
 			init_st(argc, argv, envp, &st);
 		}
 	}
-	//free_memory(&st);
-	free(input);
 	return (0);
 }

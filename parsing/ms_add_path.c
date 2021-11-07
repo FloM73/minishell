@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/29 15:21:56 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:13:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ static void	free_arr(char **arr)
 	tr = 0;
 	while (*(arr + tr) != 0)
 	{
+		//printf("FREE_arr arr[%d] %p\n", tr, arr[tr]);
 		free(arr[tr]);
 		tr++;
 	}
+	//printf("FREE_arr arr[%d] %p\n", tr, arr[tr]);
 	free(arr[tr]);
+	//printf("FREE_arr arr %p\n", arr);
 	free(arr);
 }
 
@@ -33,7 +36,7 @@ static int	find_path(t_struct *st)
 	i = 0;
 	while (st->env[i])
 	{
-		if (!ft_strnstr(st->env[i], "PATH", ft_strlen(st->env[i])))
+		if (ft_strncmp(st->env[i], "PATH=", 5) != 0)
 			i++;
 		else
 			return (i);
