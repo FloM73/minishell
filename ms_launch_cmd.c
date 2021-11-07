@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/10/31 21:36:11 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/07 21:41:41 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
 	{
 		dup2(fd[READ], STDIN_FILENO);
 		dup2(st->fd_out, STDOUT_FILENO);
-		printf("st->fd_out = %d\n", st->fd_out);
 	}
 	else
 	{
@@ -39,9 +38,8 @@ static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
 	close(fd[READ]);
 }
 
-static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
+static void	exec_child(t_struct *st, int tr)
 {
-	set_redirection(st, tr, fd, next_fd);
 	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, st->env) == -1)
 		perror("Child: execve failed");
 }
@@ -59,20 +57,28 @@ int	launch_cmd(t_struct *st)
 	i = 0;
 	while (i < st->nb_cmd)
 	{
-		if (pipe(next_fd) == -1)
-			return (-1);
-		pid = fork();
-		if (pid < 0)
-			perror ("Failed to create Child");
-		if (pid == 0)
-			exec_child(st, i, fd, next_fd);
-		if (i < st->nb_cmd)
-			dup2(next_fd[READ], fd[READ]);
-		//else
-		//	close(fd[READ]);
-		close(next_fd[READ]);
-		close(next_fd[WRITE]);
-		waitpid(pid, NULL, 0);
+		if (st->arr[i].cmd_type == 1)
+			st->arr[i].f_ptr(st, &(st->arr[i]));
+		else
+		{
+			if (pipe(next_fd) == -1)
+				return (-1);
+			pid = fork();
+			if (pid < 0)
+				perror ("Failed to create Child");
+			if (pid == 0)
+			{
+				set_redirection(st, i, fd, next_fd);
+				exec_child(st, i);
+			}
+			if (i < st->nb_cmd)
+				dup2(next_fd[READ], fd[READ]);
+			//else
+			//	close(fd[READ]);
+			close(next_fd[READ]);
+			close(next_fd[WRITE]);
+			waitpid(pid, NULL, 0);
+		}
 		i++;
 	}
 	return (0);

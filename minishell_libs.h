@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/31 13:11:02 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/07 23:21:31 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,20 @@ typedef struct command
 	char	**cmd;
 	int		nb_arg;
 	int		cmd_type;
+	int		(*f_ptr)(void *st, void *arr);
+	//int		skip_space;
 } t_cmd;
 
 typedef struct structure
 {
+	char	*input;
+	char	*buf;
 	int		nb_cmd;
 	int		tr;
 	int		arg;
 	int		digit;
-	int		take_all;
-	char	*input;
+	int		all;
+	int		expand;
 	int		len;
 	int		fd_in;
 	char	*name_in;
@@ -62,8 +66,9 @@ typedef struct structure
 	char	*name_out;
 	char	**env;
 	t_cmd	*arr;
-	int		pid;
-	int		ppid;
+	int		skip_space;
+	int		argc;
+	int		cancel;
 } t_struct;
 
 // main.c
@@ -97,5 +102,13 @@ void	ms_error_synthaxe(char c);
 
 // ms_launch_cmd.c
 int		launch_cmd(t_struct *st);
+
+// echo: ms_echo.c
+int		run_echo(void *st, void *cmd);
+// echo: ms_buffer.c
+char	*add_char_to_buf(t_struct *st, char c);
+char	*add_number_to_buf(t_struct *st, int nb);
+// echo: ms_find_variable.c
+int		launch_write_variable(t_struct *st, t_cmd *cmd, int pos, int i);
 
 #endif
