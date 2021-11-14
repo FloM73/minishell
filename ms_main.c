@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 21:37:20 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/14 12:30:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ static void	print_cmd(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
+		printf("Infile: fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
+		printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
+			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
-		//printf("\n");
+		printf("\n");
 		tr++;
 	}
 }
@@ -40,11 +42,11 @@ static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 	st->argc = argc;
 	argv[0] = NULL;
 	st->nb_cmd = 0;
-	st->fd_in = 0;
+/*	st->fd_in = 0;
 	st->name_in = NULL;
 	st->fd_out = 1;
 	st->name_out = NULL;
-	st->limiter = NULL;
+	st->limiter = NULL;*/
 	st->env = envp;
 	st->arg = 0;
 	st->tr = 0;
@@ -59,14 +61,20 @@ void	free_memory(t_struct *st)
 	int	tr;
 	int	arg;
 
-	if (st->name_in)
+	/*if (st->name_in)
 		free(st->name_in);
 	if (st->name_out)
-		free(st->name_out);
+		free(st->name_out);*/
 	tr = 0;
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
+		//if (st->arr[tr].name_out)
+			free(st->arr[tr].name_out);
+		//if (st->arr[tr].name_in)
+			free(st->arr[tr].name_in);
+		//if (st->arr[tr].limiter)
+			free(st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
@@ -75,12 +83,18 @@ void	free_memory(t_struct *st)
 		}
 		//printf("FREE st->arr[%d].cmd = %p\n", tr, st->arr[tr].cmd);
 		free(st->arr[tr].cmd);
+//		close(st->arr[tr].fd_in);  BUG DOESN'T RETURN TO $
+//		close(st->arr[tr].fd_out);
+		free(st->arr[tr].name_in);
+		free(st->arr[tr].name_out);
+		free(st->arr[tr].limiter);
 		tr++;
 	}
 	//printf("FREE st->arr = %p\n", st->arr);
 	free(st->arr);
+	free(st->input);
 	//printf("FREE st->limiter = %p\n", st->limiter);
-	free(st->limiter);
+	//free(st->limiter);
 }
 
 int	main(int argc, char **argv, char **envp)

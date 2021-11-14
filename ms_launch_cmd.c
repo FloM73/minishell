@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 21:41:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/14 11:09:17 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
 {
 	if (st->nb_cmd == 1)
 	{
-		dup2(st->fd_in, STDIN_FILENO);
-		dup2(st->fd_out, STDOUT_FILENO);
+		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
+		dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
 	}
 	else if (which_cmd == 0)
 	{
-		dup2(st->fd_in, STDIN_FILENO);
+		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
 		dup2(next_fd[WRITE], STDOUT_FILENO);
 	}
 	else if (which_cmd == st->nb_cmd - 1)
 	{
 		dup2(fd[READ], STDIN_FILENO);
-		dup2(st->fd_out, STDOUT_FILENO);
+		dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
 	}
 	else
 	{
@@ -57,7 +57,7 @@ int	launch_cmd(t_struct *st)
 	i = 0;
 	while (i < st->nb_cmd)
 	{
-		if (st->arr[i].cmd_type == 1)
+		if (st->arr[i].cmd_type == BUILDIN)
 			st->arr[i].f_ptr(st, &(st->arr[i]));
 		else
 		{
