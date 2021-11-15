@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 23:24:05 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/09 19:51:46 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ char	*add_number_to_buf(t_struct *st, int nb)
 		new_buf[i + j] = str[j];
 		j++;
 	}
+	free(str);
 	return (new_buf);
 }

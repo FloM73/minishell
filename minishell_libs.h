@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/07 23:21:31 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:19:45 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,25 @@
 # define D "\033[0m"
 //# define PATH = "~/minishell/sbin/"
 
+typedef enum command_typ
+{
+	SHELL,
+	BUILDIN,
+	IGNORE
+} e_cmd;
+
 typedef struct command
 {
 	char	**cmd;
 	int		nb_arg;
-	int		cmd_type;
+	e_cmd	cmd_type;
 	int		(*f_ptr)(void *st, void *arr);
-	//int		skip_space;
+	int		fd_in;
+	char	*name_in;
+	char	*limiter;
+	int		fd_out;
+	char	*name_out;
+
 } t_cmd;
 
 typedef struct structure
@@ -59,11 +71,11 @@ typedef struct structure
 	int		all;
 	int		expand;
 	int		len;
-	int		fd_in;
+	/*int		fd_in;
 	char	*name_in;
 	char	*limiter;
 	int		fd_out;
-	char	*name_out;
+	char	*name_out;*/
 	char	**env;
 	t_cmd	*arr;
 	int		skip_space;
@@ -82,14 +94,14 @@ int		extract_redirection(t_struct *st, int i);
 // parsing: extract_infile_limiter.c
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
-// parsing: extract_infile_limiter.c
+// parsing: extract_outfile.c
 int		extract_outfile(t_struct *st, int i);
 // parsing: parse_input.c
 int		parse_input(t_struct *st);
 //parsing: add_path.c
 int		add_path(t_struct *st);
 // parsing: extract_utils.c
-char	*malloc_file_name(char *file, int len);
+char	*malloc_file_name(char **file, int len);
 int		test_file_descriptor(int fd, char *name);
 int		open_outfile(char *name, int append);
 void	remove_redirection(char *input, int nb, char c);

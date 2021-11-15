@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/07 23:23:19 by flormich         ###   ########.fr        #
+#    Updated: 2021/11/09 22:32:56 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC_LIB = $(DIR_LIB)/ft_memset.c $(DIR_LIB)/ft_bzero.c $(DIR_LIB)/ft_memcpy.c \
 SRC = ms_main.c ms_error.c ms_launch_cmd.c
 SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
 	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_infile_limiter.c \
-	$(DIR_P)/ms_3_extract_redirection.c $(DIR_P)/ms_extract_outfile.c \
+	$(DIR_P)/ms_3_extract_redirection.c $(DIR_P)/ms_extract_outfile.c\
 	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c
 SRC_E = $(DIR_E)/ms_echo.c $(DIR_E)/ms_find_variable.c $(DIR_E)/ms_buffer.c
 

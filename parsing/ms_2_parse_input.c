@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 10:11:24 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/14 11:20:48 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int	fill_cmd(char *input, t_struct *st)
 		}
 		if (input[i] == '|' && st->all == 0)
 		{
-			if (st->digit == 0 && st->arg == 0)
+			/*if (st->digit == 0 && st->arg == 0 && st->tr == 0)
 			{
 				ms_error_synthaxe(input[i]);
 				return (-1);
-			}
+			}*/
 			st->tr++;
 			st->arg = 0;
 			st->digit = 0;
@@ -83,10 +83,10 @@ static int	fill_cmd(char *input, t_struct *st)
 		}
 		if (st->all == 0 && (input[i] == '<' || input[i] == '>'))
 		{
-			if (st->arr[st->tr].cmd[0][0] != '\0' && st->tr < st->nb_cmd - 1)
+			/*if (st->arr[st->tr].cmd[0][0] != '\0' && st->tr < st->nb_cmd - 1)
 			{
 				st->tr++;
-			}
+			}*/
 			st->arg = 0;
 			st->digit = 0;
 			i = extract_redirection(st, i);
@@ -192,6 +192,10 @@ int	parse_input(t_struct *st)
 		//printf("MALLOC parse_input st->arr[%d].cmd    = %p - size = %ld\n", tr, st->arr[tr].cmd, (st->arr[tr].nb_arg + 1 ) * sizeof(char *));
 		if (!st->arr[tr].cmd)
 			return (-1);
+		st->arr[tr].fd_in = 0;
+		st->arr[tr].fd_out = 1;
+		st->arr[tr].name_in = NULL;
+		st->arr[tr].name_out = NULL;
 		tr++;
 	}
 	if (fill_cmd(st->input, st) == -1)
