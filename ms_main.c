@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/14 12:30:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/15 12:26:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	free_memory(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
-		//if (st->arr[tr].name_out)
+		if (st->arr[tr].name_out)
 			free(st->arr[tr].name_out);
-		//if (st->arr[tr].name_in)
+		if (st->arr[tr].name_in)
 			free(st->arr[tr].name_in);
-		//if (st->arr[tr].limiter)
+		if (st->arr[tr].limiter)
 			free(st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
@@ -83,11 +83,6 @@ void	free_memory(t_struct *st)
 		}
 		//printf("FREE st->arr[%d].cmd = %p\n", tr, st->arr[tr].cmd);
 		free(st->arr[tr].cmd);
-//		close(st->arr[tr].fd_in);  BUG DOESN'T RETURN TO $
-//		close(st->arr[tr].fd_out);
-		free(st->arr[tr].name_in);
-		free(st->arr[tr].name_out);
-		free(st->arr[tr].limiter);
 		tr++;
 	}
 	//printf("FREE st->arr = %p\n", st->arr);
