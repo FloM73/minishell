@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/11 19:19:45 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/16 11:48:21 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 typedef enum command_typ
 {
 	SHELL,
-	BUILDIN,
+	BUILTIN,
 	IGNORE
 } e_cmd;
 

@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/09 22:32:56 by flormich         ###   ########.fr        #
+#    Updated: 2021/11/16 11:05:28 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ all: $(NAME)
 
 $(NAME): $(HEADER) $(OBJ) $(OBJ_P) $(OBJ_E) $(OBJ_LIB)
 	make all -C ./$(DIR_LIB)
-	$(CC) $(CFLAGS) ms_cd.c -o ./sbin/cd
 	$(CC) $(CFLAGS) $(OBJ) $(OBJ_P) $(OBJ_E) $(OBJ_LIB) -o $(NAME) -lreadline
 
 clean:

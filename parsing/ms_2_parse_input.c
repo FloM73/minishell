@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/14 11:20:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/16 11:43:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int	parse_input(t_struct *st)
 		st->arr[tr].fd_out = 1;
 		st->arr[tr].name_in = NULL;
 		st->arr[tr].name_out = NULL;
+		st->arr[tr].limiter = NULL;
 		tr++;
 	}
 	if (fill_cmd(st->input, st) == -1)

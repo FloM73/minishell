@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/09 19:27:31 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/16 11:48:41 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	implement_cmd_typ(t_cmd *arr)
 		trim_quote(arr, arr->cmd[0][0]);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 	{
-		arr->cmd_type = BUILDIN;
+		arr->cmd_type = BUILTIN;
 		arr->f_ptr = &run_echo;
 	}
 	else
