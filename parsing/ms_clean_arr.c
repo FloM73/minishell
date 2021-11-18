@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/16 11:48:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:46:27 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,38 @@ static void	implement_cmd_typ(t_cmd *arr)
 {
 	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
 		trim_quote(arr, arr->cmd[0][0]);
+	printf("-%s-\n", arr->cmd[0]);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 	{
 		arr->cmd_type = BUILTIN;
 		arr->f_ptr = &run_echo;
+	}
+	else if (ft_strncmp(arr->cmd[0], "env", ft_strlen(arr->cmd[0])) == 0)
+	{
+		arr->cmd_type = BUILTIN;
+		arr->f_ptr = &ms_run_env;
+	}
+	else if (ft_strncmp(arr->cmd[0], "export", ft_strlen(arr->cmd[0])) == 0)
+	{
+		printf("check\n");
+		arr->cmd_type = BUILTIN;
+		arr->f_ptr = &ms_run_export;
+		printf("%d\n", arr->cmd_type);
+	}
+	else if (ft_strncmp(arr->cmd[0], "unset", ft_strlen(arr->cmd[0])) == 0)
+	{
+		arr->cmd_type = BUILTIN;
+		arr->f_ptr = &ms_run_unset;
+	}
+	else if (ft_strncmp(arr->cmd[0], "pwd", ft_strlen(arr->cmd[0])) == 0)
+	{
+		arr->cmd_type = BUILTIN;
+		arr->f_ptr = &pwd;
+	}
+	else if (ft_strncmp(arr->cmd[0], "cd", ft_strlen(arr->cmd[0])) == 0)
+	{
+		arr->cmd_type = BUILTIN;
+		arr->f_ptr = &cd;
 	}
 	else
 		arr->cmd_type = SHELL;

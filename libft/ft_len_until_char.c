@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_len_until_char.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/13 10:24:11 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/13 10:55:40 by pnuti            ###   ########.fr       */
+/*   Created: 2021/11/17 15:26:56 by pnuti             #+#    #+#             */
+/*   Updated: 2021/11/17 15:31:57 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_libs.h"
-
-void	pwd(void)
+int	ft_len_until_char(char *s, char c)
 {
-	char	buf[PATH_MAX];
+	int	i;
 
-	getcwd(buf, PATH_MAX);
-	printf("%s\n", buf);
+	i = 0;
+	while (s[i] != c && s[i])
+		i++;
+	if (s[i] == c)
+		return (i);
+	else
+		return (0);
 }

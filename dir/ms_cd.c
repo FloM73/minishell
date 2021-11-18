@@ -3,28 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/14 18:28:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:48:36 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_libs.h"
+#include "../minishell_libs.h"
 
-void	cd(char *path)
+int	cd(void *stt, void *cmd)
 {
-	int	err;
+	t_cmd		*arr;
+	t_struct	*st;
 
-	err = chdir(path);
-	if (err)
-		printf("%s\n", strerror(err));
-}
-
-int	main(int argc, char ** argv)
-{
-	if (argc <= 1)
-		return (-1);
-	cd(argv[1]);
-	return (0);
+	arr = (t_cmd *)cmd;
+	st = (t_struct *)stt;
+	st->arr->cmd[2] = NULL;
+	return (chdir(arr->cmd[1]));
 }

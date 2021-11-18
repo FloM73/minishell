@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_env.c                                       :+:      :+:    :+:   */
+/*   ms_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/20 17:38:59 by pnuti             #+#    #+#             */
-/*   Updated: 2021/10/21 15:37:30 by pnuti            ###   ########.fr       */
+/*   Created: 2021/10/20 18:01:33 by pnuti             #+#    #+#             */
+/*   Updated: 2021/11/18 07:58:15 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_libs.h"
+#include "../minishell_libs.h"
 
-int	manage_env(char *name, int func(char ***, char *, int *))
+void	ms_env(void)
 {
-	static int	n_env;
-	static char	**env;
+	int	i;
 
-	if (!env)
+	i = 0;
+	while (__environ[i])
 	{
-		env = (char **)malloc(1);
-		env[0] = NULL;
+		printf("%s\n", __environ[i]);
+		i++;
 	}
-	return (func(&env, name, &n_env));
 }

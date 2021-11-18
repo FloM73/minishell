@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/16 10:55:09 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:26:55 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	print_cmd(t_struct *st)
 static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 {
 	st->argc = argc;
-	argv[0] = NULL;
+	st->argv = argv;
 	st->nb_cmd = 0;
 /*	st->fd_in = 0;
 	st->name_in = NULL;
@@ -97,6 +97,7 @@ int	main(int argc, char **argv, char **envp)
 	//char		*temp;
 	t_struct	st;
 
+	ms_sig_hook();
 	while (1)
 	{
 		//temp = readline("SHELL $ ");
@@ -106,6 +107,7 @@ int	main(int argc, char **argv, char **envp)
 		//free(temp);
 		if (st.input && st.input[0] != '\0')
 		{
+			add_history(st.input);
 			init_st(argc, argv, envp, &st);
 			if (extract_cmd(&st) == 0)
 			{
@@ -115,6 +117,8 @@ int	main(int argc, char **argv, char **envp)
 			free_memory(&st);
 			init_st(argc, argv, envp, &st);
 		}
+		else
+			return (0);
 	}
 	return (0);
 }

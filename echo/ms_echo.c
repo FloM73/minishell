@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 23:24:16 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/17 09:56:06 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	bufferize_text(t_struct *st, t_cmd *arr, int arg)
 }
 
 // if pos_arg > 1: there is a valid -n flag
-int	run_echo(void	*stt, void *cmd)
+int	run_echo(void *stt, void *cmd)
 {
 	t_cmd		*arr;
 	t_struct	*st;

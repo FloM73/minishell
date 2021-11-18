@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/16 11:48:21 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:43:56 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_LIBS_H
 # define PATH_MAX 4097
 
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -80,6 +81,7 @@ typedef struct structure
 	t_cmd	*arr;
 	int		skip_space;
 	int		argc;
+	char	**argv;
 	int		cancel;
 } t_struct;
 
@@ -122,5 +124,16 @@ char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 // echo: ms_find_variable.c
 int		launch_write_variable(t_struct *st, t_cmd *cmd, int pos, int i);
+
+int		ms_run_env(void *stt, void *cmd);
+int		ms_run_export(void *stt, void *cmd);
+int		ms_run_unset(void *stt, void *cmd);
+void	ms_env(void);
+int		ms_export(char *new_var, t_struct *st, int done);
+int		ms_unset(char *var_name, t_struct *st, int done);
+int		cd(void *stt, void *cmd);
+int		pwd(void *stt, void *cmd);
+int		ms_sig_hook(void);
+
 
 #endif
