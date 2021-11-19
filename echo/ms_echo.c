@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/17 09:56:06 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 18:44:49 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
+
+static int	initialise_buf(t_struct *st)
+{
+	if (st->tr < st->nb_cmd - 1 && st->arr[st->tr].fd_out == 1)
+		return (-1);
+	st->all = 0;
+	st->expand = 1;
+	st->skip_space = 0;
+	st->cancel = 0;
+	st->buf = ft_calloc(1, sizeof(char *));
+	return(0);
+}
 
 static int	test_flag_n(t_cmd *arr)
 {
@@ -62,11 +74,6 @@ static void	bufferize_text(t_struct *st, t_cmd *arr, int arg)
 {
 	int		i;
 
-	st->all = 0;
-	st->expand = 1;
-	st->skip_space = 0;
-	st->cancel = 0;
-	st->buf = ft_calloc(1, sizeof(char *));
 	while (arr->cmd[arg] && st->cancel == 0)
 	{
 		i = 0;
@@ -106,15 +113,17 @@ int	run_echo(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
-	pos_arg = test_flag_n(arr);
-	bufferize_text(st, arr, pos_arg);
-	if (st->cancel == 0)
+	if (initialise_buf(st) == 0)
 	{
-		if (pos_arg == 1)
-			printf("%s\n", st->buf);
-		else
-			printf("%s", st->buf);
+		pos_arg = test_flag_n(arr);
+		bufferize_text(st, arr, pos_arg);
+		if (st->cancel == 0)
+		{
+			ft_putstr_fd(st->buf, arr->fd_out);
+			if (pos_arg == 1)
+				write(arr->fd_out, "\n", 1);
+		}
+		free(st->buf);
 	}
-	free(st->buf);
 	return (0);
 }

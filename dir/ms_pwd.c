@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 10:24:11 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 09:48:43 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 21:03:02 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	pwd(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
-	arr->cmd[1] = NULL;
-	st->arr[0].cmd[1] = NULL;
+	arr->cmd[1] = arr->cmd[1];
+	st->arr[0].cmd[1] = st->arr[0].cmd[1];
 	if (!getcwd(buf, PATH_MAX))
 	{
-		perror("Something went wrong");
+		perror("Current directory unknown");
 		return (-1);
 	}
 	printf("%s\n", buf);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 08:25:05 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 18:36:23 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,18 @@ int	launch_cmd(t_struct *st)
 	pid_t	pid;
 	int		fd[2];
 	int		next_fd[2];
-	int		i;
 
 	if (pipe(fd) == -1)
 		return (-1);
 	close(fd[WRITE]);
-	i = 0;
-	printf("%d\n", st->nb_cmd);
-	while (i < st->nb_cmd)
+	st->tr = 0;
+	//printf("%d\n", st->nb_cmd);
+	while (st->tr < st->nb_cmd)
 	{
-		printf("%d\n", st->arr[i].cmd_type);
-		if (st->arr[i].cmd_type == BUILTIN)
+		//printf("%d\n", st->arr[i].cmd_type);
+		if (st->arr[st->tr].cmd_type == BUILTIN)
 		{
-			printf("check2\n");
-			st->arr[i].f_ptr(st, &(st->arr[i]));
+			st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 		}
 		else
 		{
@@ -73,10 +71,10 @@ int	launch_cmd(t_struct *st)
 				perror ("Failed to create Child");
 			if (pid == 0)
 			{
-				set_redirection(st, i, fd, next_fd);
-				exec_child(st, i);
+				set_redirection(st, st->tr, fd, next_fd);
+				exec_child(st, st->tr);
 			}
-			if (i < st->nb_cmd)
+			if (st->tr < st->nb_cmd)
 				dup2(next_fd[READ], fd[READ]);
 			//else
 			//	close(fd[READ]);
@@ -84,7 +82,7 @@ int	launch_cmd(t_struct *st)
 			close(next_fd[WRITE]);
 			waitpid(pid, NULL, 0);
 		}
-		i++;
+		st->tr++;
 	}
 	return (0);
 }

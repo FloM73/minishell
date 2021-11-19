@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 09:26:55 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 21:40:43 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	print_cmd(t_struct *st)
 		arg = 0;
 		//printf("Infile: fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
 		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
+		//printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
@@ -102,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		//temp = readline("SHELL $ ");
 		//st.input = ft_strtrim(temp, " 	");
-		st.input = readline("SHELL $ ");
+		st.input = readline(BL "~/MAXIPAIN $ " D);
 		//printf("Input   = |%s|\ntemp    = |%s|\n", st.input, temp);
 		//free(temp);
 		if (st.input && st.input[0] != '\0')

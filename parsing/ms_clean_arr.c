@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 09:46:27 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 11:33:53 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	implement_cmd_typ(t_cmd *arr)
 {
 	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
 		trim_quote(arr, arr->cmd[0][0]);
-	printf("-%s-\n", arr->cmd[0]);
+	//printf("-%s-\n", arr->cmd[0]);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 	{
 		arr->cmd_type = BUILTIN;
@@ -44,10 +44,9 @@ static void	implement_cmd_typ(t_cmd *arr)
 	}
 	else if (ft_strncmp(arr->cmd[0], "export", ft_strlen(arr->cmd[0])) == 0)
 	{
-		printf("check\n");
 		arr->cmd_type = BUILTIN;
 		arr->f_ptr = &ms_run_export;
-		printf("%d\n", arr->cmd_type);
+		//printf("%d\n", arr->cmd_type);
 	}
 	else if (ft_strncmp(arr->cmd[0], "unset", ft_strlen(arr->cmd[0])) == 0)
 	{

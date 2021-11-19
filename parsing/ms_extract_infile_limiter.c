@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 18:28:43 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/11 19:42:52 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/18 17:53:41 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,28 @@
 
 int	extract_limiter(t_struct *st, int i)
 {
-	st->arr[st->tr].limiter = "a faire";
-	i = i * 1;
+	int	len;
+	int	j;
+
+	if (st->input[i] == '>')
+	{
+		ms_error_synthaxe(st->input[i]);
+		return (-1);
+	}
+	while (ft_isspace(st->input[i]) == 1)
+		i++;
+	if (st->input[i] == '|' || st->input[i] == '>')
+	{
+		ms_error_synthaxe(st->input[i]);
+		return (-1);
+	}
+	len = count_lengh_name(st, i);
+	st->arr[st->tr].limiter = malloc_file_name(&(st->arr[st->tr].limiter), len);
+	if (!st->arr[st->tr].limiter)
+		ms_error("Failed to malloc limiter\n", 0, st);
+	j = 0;
+	while (j < len)
+		st->arr[st->tr].limiter[j++] = st->input[i++];
 	return (i);
 }
 
