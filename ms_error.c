@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/14 11:08:23 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:52:12 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ms_error_synthaxe(char c)
 		printf("-bash: syntax error near unexpected token `<'\n");
 	else if (c == '}')
 		printf("-bash: ${}: bad substitution\n");
+	else if (c == 't')
+		printf("-bash: cd: too many arguments\n");
 	else
 		printf("-bash: syntax error near unexpected token '%c'\n", c);
 }
