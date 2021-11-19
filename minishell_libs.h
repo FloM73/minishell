@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
 /*   Updated: 2021/11/19 08:30:59 by pnuti            ###   ########.fr       */
@@ -13,6 +13,18 @@
 #ifndef MINISHELL_LIBS_H
 # define MINISHELL_LIBS_H
 # define PATH_MAX 4097
+
+// flo= LIMITER text save
+// flo= many echo pipe
+// Pietro= finish unset
+// Pietro= exit
+// both= basically more test (for example: signal)
+// both= test the pipes
+// leak test
+// $?
+// LIMITER: make the code to handel the LIMITER
+// we skip = VAR=x
+// pipe : only for the shell function - not for our BUILTIN?
 
 # include <signal.h>
 # include <stdio.h>
@@ -58,7 +70,6 @@ typedef struct command
 	char	*limiter;
 	int		fd_out;
 	char	*name_out;
-
 } t_cmd;
 
 typedef struct structure
