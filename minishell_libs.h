@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 21:01:38 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/19 08:30:59 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int		ms_unset(char *var_name, t_struct *st, int done);
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
 int		ms_sig_hook(void);
+int		run_exit(void *stt, void *cmd);
 
 
 #endif
