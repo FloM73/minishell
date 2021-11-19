@@ -6,12 +6,12 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 10:57:27 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 07:58:48 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/19 07:58:16 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
-
+/*
 static int	same_varname(char *to_del, char *env_var)
 {
 	char	*varname1;
@@ -27,7 +27,7 @@ static int	same_varname(char *to_del, char *env_var)
 		i = 0;
 	free(varname1);
 	return (i);
-}
+}*/
 
 int	ms_unset(char *var_name, t_struct *st, int done)
 {
@@ -49,9 +49,9 @@ int	ms_unset(char *var_name, t_struct *st, int done)
 		return (1);
 	i = 0;
 	check = 0;
-	while (tmp[i])
+	while (tmp[i + check])
 	{
-		if (!same_varname(var_name, tmp[i]))
+		if (ft_strncmp(var_name, tmp[i + check], ft_len_until_char(tmp[i + check], '=')))
 		{
 			env[i] = tmp[i + check];
 			i++;
@@ -63,6 +63,6 @@ int	ms_unset(char *var_name, t_struct *st, int done)
 	if (n[1] > 1)
 		free(tmp);
 	if (done)
-		return (execve("./minishell", st->argv, env));
+		return (execve("./ms", st->argv, env));
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/18 09:48:22 by pnuti            ###   ########.fr        #
+#    Updated: 2021/11/19 08:30:34 by pnuti            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ DIR_ENV = env
 DIR_D = dir
 HEADER = $(DIR_LIB)/libft.h minishell_libs.h
 
-SRC = ms_main.c ms_error.c ms_launch_cmd.c ms_sig_hook.c
+SRC = ms_main.c ms_error.c ms_launch_cmd.c ms_sig_hook.c ms_run_exit.c
 SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
 	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_infile_limiter.c \
 	$(DIR_P)/ms_3_extract_redirection.c $(DIR_P)/ms_extract_outfile.c\

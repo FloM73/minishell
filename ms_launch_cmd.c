@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 08:25:05 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/18 11:02:52 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,10 @@ int	launch_cmd(t_struct *st)
 		return (-1);
 	close(fd[WRITE]);
 	i = 0;
-	printf("%d\n", st->nb_cmd);
 	while (i < st->nb_cmd)
 	{
-		printf("%d\n", st->arr[i].cmd_type);
 		if (st->arr[i].cmd_type == BUILTIN)
-		{
-			printf("check2\n");
 			st->arr[i].f_ptr(st, &(st->arr[i]));
-		}
 		else
 		{
 			if (pipe(next_fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 10:14:36 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 07:59:19 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/19 07:59:11 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ms_run_export(void *stt, void *cmd)
 	while (arr->cmd[n])
 	{
 		if (ft_strrchr(arr->cmd[n], '='))
-			ms_export(arr->cmd[n], st, n == arr->nb_arg);
+			ms_export(arr->cmd[n], st, n == arr->nb_arg - 1);
 		else
 		{
 			i = 0;
@@ -67,7 +67,7 @@ int	ms_run_export(void *stt, void *cmd)
 				if (!ft_strncmp(arr->cmd[n], st->argv[i], 
 					ft_len_until_char(st->argv[i], '=')))
 				{
-					if (sort_and_exp(st, i, n == arr->nb_arg) != 0)
+					if (sort_and_exp(st, i, n == arr->nb_arg - 1) != 0)
 						return (-1);
 				}
 				i++;
@@ -90,8 +90,9 @@ int	ms_run_unset(void *stt, void *cmd)
 	n = 1;
 	while (arr->cmd[n])
 	{
-		if (ms_unset(arr->cmd[n], st, n == arr->nb_arg) != 0)
+		if (ms_unset(arr->cmd[n], st, n == arr->nb_arg - 1) != 0)
 			return (-1);
+		n++;
 	}
 	return (0);
 }
