@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/22 17:58:10 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/22 22:43:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		extract_cmd(t_struct *st);
 // parsing: extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
-int		test_synthaxe(t_struct *st, int i, int redirection_typ);
+int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
 // parsing: extract_file.c
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
