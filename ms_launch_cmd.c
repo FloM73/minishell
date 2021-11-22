@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 11:02:52 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/22 17:17:03 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	launch_cmd(t_struct *st)
 		{
 			if (pipe(next_fd) == -1)
 				return (-1);
+			if (pid!= 0 && st->arr[st->tr].limiter != NULL)
+				read_till_limiter(st, st->tr);
 			pid = fork();
 			if (pid < 0)
 				perror ("Failed to create Child");
@@ -76,8 +78,6 @@ int	launch_cmd(t_struct *st)
 			}
 			if (st->tr < st->nb_cmd)
 				dup2(next_fd[READ], fd[READ]);
-			//else
-			//	close(fd[READ]);
 			close(next_fd[READ]);
 			close(next_fd[WRITE]);
 			waitpid(pid, NULL, 0);

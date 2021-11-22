@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/09 22:33:49 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/22 17:56:11 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,31 @@ int	count_lengh_name(t_struct *st, int i)
 		len++;
 	}
 	return (len);
+}
+
+int	test_synthaxe(t_struct *st, int i, int redirection_typ)
+{
+	if (st->input[i] == '>')
+	{
+		if (redirection_typ == LIMITER)
+		{
+			ms_error_synthaxe(st->input[i]);
+			return (-1);
+		}
+		i++;
+	}
+	while (ft_isspace(st->input[i]) == 1)
+		i++;
+	if (st->input[i] == '|' || st->input[i] == '>')
+	{
+		ms_error_synthaxe(st->input[i]);
+		return (-1);
+	}
+	if (st->input[i] == '$')
+	{
+
+	}
+	return (i);
 }
 
 int	extract_redirection(t_struct *st, int i)

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 10:41:32 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/22 17:17:49 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_cmd(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
-		//printf("Infile: fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
+		//printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
 		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
 		//printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
@@ -75,7 +75,10 @@ void	free_memory(t_struct *st)
 		if (st->arr[tr].name_in)
 			free(st->arr[tr].name_in);
 		if (st->arr[tr].limiter)
+		{
+			unlink("tmp_limite");
 			free(st->arr[tr].limiter);
+		}
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
