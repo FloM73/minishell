@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/19 08:30:59 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 09:57:41 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int		ms_run_unset(void *stt, void *cmd);
 void	ms_env(void);
 int		ms_export(char *new_var, t_struct *st, int done);
 int		ms_unset(char *var_name, t_struct *st, int done);
+char	*ms_get_env(char ***env, char *varname);
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
 int		ms_sig_hook(void);

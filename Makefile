@@ -6,7 +6,7 @@
 #    By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/19 08:30:34 by pnuti            ###   ########.fr        #
+#    Updated: 2021/11/23 13:49:42 by pnuti            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
 	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c
 SRC_E = $(DIR_E)/ms_echo.c $(DIR_E)/ms_find_variable.c $(DIR_E)/ms_buffer.c
 SRC_ENV =	$(DIR_ENV)/ms_env.c $(DIR_ENV)/ms_export.c $(DIR_ENV)/ms_unset.c \
-			$(DIR_ENV)/ms_manage_env.c
+			$(DIR_ENV)/ms_manage_env.c $(DIR_ENV)/ms_get_env.c
 SRC_D = $(DIR_D)/ms_cd.c $(DIR_D)/ms_pwd.c
 
 OBJ = $(SRC:.c=.o)
