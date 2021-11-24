@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_sig_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:48:42 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 09:29:18 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/23 19:30:30 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	sigquit_handle(int signum)
 
 int	ms_sig_hook(void)
 {
-	struct sigaction sa1;
-	struct sigaction sa2;
+	struct sigaction	sa1;
+	struct sigaction	sa2;
 
 	sa1.sa_handler = &sigint_handle;
 	sa2.sa_handler = &sigquit_handle;

@@ -6,35 +6,13 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 10:57:27 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/23 14:16:41 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 15:01:16 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-static int	del_and_sort(char *varname, char **env)
-{
-	int	i;
-	int	check;
-
-	i = 0;
-	check = 0;
-	while (env[i] && !check)
-	{
-		if (!ft_strncmp(varname, env[i], ft_len_until_char(env[i], '=')))
-			check += 1;
-		else
-			i++;
-	}
-	while (env[i])
-	{
-		env[i] = env[i + 1];
-		i++;
-	}
-	return (check);
-}
-
-static void	copy_and_del(char *varname, char **old_env, char **new_env)
+static void	find_and_del(char *varname, char **old_env, char **new_env)
 {
 	int	i;
 	int	check;
@@ -43,31 +21,36 @@ static void	copy_and_del(char *varname, char **old_env, char **new_env)
 	check = 0;
 	while (old_env[i + check])
 	{
-		if (!ft_strncmp(varname, old_env[i], ft_len_until_char(old_env[i], '=')))
+		if (!ft_strncmp(varname, old_env[i], ft_len_until_char(old_env[i], '=')) &&
+			!ft_strncmp(varname, old_env[i], ft_strlen(varname)) && !check)
 		{
 			free(old_env[i]);
-			check += 1;
+			old_env[i] = NULL;
+			if (old_env[i + 1] != NULL)
+				check += 1;
 		}
-		else
+		if (old_env[i + check])
+		{
 			new_env[i] = old_env[i + check];
-		i++;
+			i++;
+		}
 	}
 	new_env[i] = NULL;
 }
 
-int	ms_unset(char *var_name, t_struct *st, int done)
+int	ms_unset(char *var_name, t_struct *st)
 {
 	char	**env;
 	int		n;
 
-	if (!ms_get_env(st->env, var_name) || !del_and_sort(var_name, st->env[0]))
+	if (!ms_get_env(st->env, var_name))
 		return (0);
-	n = ft_2darr_len(st->env[1]);
+	n = ft_2darr_len(st->env);
 	env = (char **)malloc(sizeof(char *) * n);
 	if (!env)
 		return (1);
-	copy_and_del(var_name, st->env[1], env);
-	free(st->env[1]);
-	st->env[1] = env;
+	find_and_del(var_name, st->env, env);
+	free(st->env);
+	st->env = env;
 	return (0);
 }

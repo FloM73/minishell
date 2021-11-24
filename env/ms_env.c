@@ -6,20 +6,20 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:01:33 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 07:58:15 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 14:10:29 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-void	ms_env(void)
+void	ms_env(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (__environ[i])
+	while (env[i])
 	{
-		printf("%s\n", __environ[i]);
+		printf("%s\n", env[i]);
 		i++;
 	}
 }

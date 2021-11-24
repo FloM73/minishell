@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 11:18:35 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 18:55:55 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static char	*test_path(char **arr_path, char *cmd)
 	int		j;
 	char	*str_cmd;
 
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	j = 1;
 	while (arr_path[j] != NULL)
 	{

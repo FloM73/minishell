@@ -6,13 +6,13 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 19:49:07 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/07 23:24:21 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 18:30:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-static void	write_variable(t_struct *st, int e, int j)
+void	write_variable(t_struct *st, int e, int j)
 {
 	while (st->env[e][j + 2] != '\0')
 	{
@@ -22,7 +22,7 @@ static void	write_variable(t_struct *st, int e, int j)
 }
 
 // How to put § : error: multi-character character constant [-Werror=multichar]
-static int	is_variable_end(t_struct *st, unsigned char c)
+int	is_variable_end(t_struct *st, unsigned char c)
 {
 	if (c == ' ' || c == '"' || c == '\'' || c == '*' || c == '#'
 		|| c == '%' || c == '\\' || c == '$' || c == '}' || c == '\0')
@@ -38,7 +38,7 @@ static int	is_variable_end(t_struct *st, unsigned char c)
 	return (0);
 }
 
-static int	find_match(t_struct *st, int e, char *var, int pos)
+int	find_match(t_struct *st, int e, char *var, int pos)
 {
 	int	j;
 
@@ -56,12 +56,12 @@ static int	find_match(t_struct *st, int e, char *var, int pos)
 	return (0);
 }
 
-int	launch_write_variable(t_struct *st, t_cmd *arr, int arg, int pos_s)
+int	launch_bufferize_variable(t_struct *st, t_cmd *arr, int arg, int pos_s)
 {
 	int		e;
 	int		new_pos;
 
-	if (is_variable_end(st, arr->cmd[arg][pos_s + 1]) == 1)
+	if (is_variable_end(st, arr->cmd[arg][pos_s + 1]) == 1 && arr->cmd[arg][pos_s] != '~')
 	{
 		if (arr->cmd[arg][pos_s] == '$' && (arr->cmd[arg][pos_s + 1] == ' ' || arr->cmd[arg][pos_s + 1] == '\0'
 			|| (arr->cmd[arg][pos_s + 1] == '"' && st->all == 1)))
@@ -96,33 +96,37 @@ int	launch_write_variable(t_struct *st, t_cmd *arr, int arg, int pos_s)
 		}
 		pos_s ++;
 	}
-	e = 0;
-	new_pos = pos_s + 1;
-	while (st->env[e])
+	if (arr->cmd[arg][pos_s] == '~')
 	{
-		new_pos = find_match(st, e, arr->cmd[arg], pos_s + 1);
-		if (new_pos != 0)
+		e = 0;
+		new_pos = 0;
+		while (st->env[e])
 		{
-			if (arr->cmd[arg][new_pos + 1] == '}')
-				new_pos += 2;
-			return (new_pos);
+			find_match(st, e, "HOME", 0);
+			if (new_pos != 0)
+				return (pos_s + 1);
+			e++;
 		}
-		e++;
+	}
+	else
+	{
+		e = 0;
+		new_pos = pos_s + 1;
+		while (st->env[e])
+		{
+			new_pos = find_match(st, e, arr->cmd[arg], pos_s + 1);
+			if (new_pos != 0)
+			{
+				if (arr->cmd[arg][new_pos + 1] == '}')
+					new_pos += 2;
+				return (new_pos);
+			}
+			e++;
+		}
 	}
 	while(is_variable_end(st, arr->cmd[arg][pos_s + 1]) == 0)
 		pos_s++;
 	st->skip_space = 1;
 	return(pos_s);
 }
-/*
-	while(arr->cmd[arg][pos_s + 1] != ' ' && arr->cmd[arg][pos_s + 1] != '"'
-		&& arr->cmd[arg][pos_s + 1] != '\0' && is_variable_end(arr->cmd[arg][pos_s + 1]) == 1)
-	//while(is_variable_end(arr->cmd[arg][pos_$ + 1]) == 0 && arr->cmd[arg][pos_$ + 1] != '\0')
-		pos_s++;
-	if (arr->cmd[arg][pos_s] == '$')
-		pos_s = pos_s - 2;
-	else if (is_variable_end(arr->cmd[arg][pos_s]) == 1 && arr->cmd[arg][pos_s] != ' '
-		&& arr->cmd[arg][pos_s] != '"' && arr->cmd[arg][pos_s] != '\0')
-		pos_s = pos_s - 1;
-	st->skip_space = 1;
-	return(pos_s + 1);*/
+
