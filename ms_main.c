@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 19:36:53 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/24 09:38:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,7 @@ int	main(int argc, char **argv, char **envp)
 			free_memory(&st);
 			init_st(argc, argv, envp, &st);
 		}
-		// ELSE must NOT be here - otherwise program exit if no comand
-		// wenn commentiert => ctrl D doesn't run
-		else
+		else if (!st.input)
 			return (0);
 	}
 	return (0);
