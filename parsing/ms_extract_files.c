@@ -6,13 +6,13 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 18:28:43 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/22 22:52:05 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 18:36:35 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-static char	*expand_name(char **name)
+char	*expand_name(char **name)
 {
 	char	*tmp;
 	char	*new_name;
@@ -39,8 +39,8 @@ static char	*expand_name(char **name)
 
 int	extract_limiter(t_struct *st, int i)
 {
-	int	len;
-	int	j;
+	int		len;
+	int		j;
 
 	i = test_synthaxe(st, i, LIMITER);
 	if (i == -1)

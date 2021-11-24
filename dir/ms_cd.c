@@ -6,12 +6,13 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/19 14:23:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 18:26:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
+/*
 static void	add_home_directory(t_struct *st, t_cmd *arr)
 {
 	char	*tmp;
@@ -22,11 +23,13 @@ static void	add_home_directory(t_struct *st, t_cmd *arr)
 	free(tmp);
 	free(st->buf);
 }
-
+*/
 int	cd(void *stt, void *cmd)
 {
 	t_cmd		*arr;
 	t_struct	*st;
+	int			i;
+	int			len;
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
@@ -36,7 +39,21 @@ int	cd(void *stt, void *cmd)
 		st->nb_cmd = 0;
 		return (-1);
 	}
-	if (ft_strncmp(arr->cmd[1], "~", 1) == 0)
-		add_home_directory(st, arr);
+	if (initialise_buf(st) == 0)
+	{
+		bufferize_cmd(st, arr, 1);
+		//chdir(st->buf);
+		free(arr->cmd[1]);
+		i = 0;
+		len = ft_strlen(st->buf);
+		arr->cmd[1] = ft_calloc(len + 1, sizeof(char));
+		while (st->buf[i] != '\0')
+		{
+			arr->cmd[1][i] = st->buf[i];
+			i++;
+		}
+	}
+	printf("st->buf = %s - arr->cmd[0] = %s - arr->cmd[1] = %s - arr->cmd[2] = %s\n", st->buf, arr->cmd[0], arr->cmd[1], arr->cmd[2]);
+	free(st->buf);
 	return (chdir(arr->cmd[1]));
 }

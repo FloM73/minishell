@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/19 12:52:12 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 19:29:20 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 void	ms_error(char *txt, int	*exit_level, t_struct *st)
 {
 	perror(txt);
-/*	if (st->name_in)
-		free(st->name_in);
-	if (st->name_out)
-		free(st->name_out);*/
 		st = st;
 	if (exit_level == 0)
 		exit(-1);

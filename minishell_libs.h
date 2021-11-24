@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/22 22:43:00 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/23 19:31:35 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ typedef struct structure
 	int		all;
 	int		expand;
 	int		len;
-	/*int		fd_in;
-	char	*name_in;
-	char	*limiter;
-	int		fd_out;
-	char	*name_out;*/
 	char	**env;
 	t_cmd	*arr;
 	int		skip_space;
@@ -118,6 +113,7 @@ int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
 int		extract_outfile(t_struct *st, int i);
+char	*expand_name(char **name);
 // parsing: parse_input.c
 int		parse_input(t_struct *st);
 //parsing: add_path.c
@@ -139,11 +135,21 @@ int		launch_cmd(t_struct *st);
 
 // echo: ms_echo.c
 int		run_echo(void *st, void *cmd);
+int		initialise_buf(t_struct *st);
+void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg);
+int		is_writable(t_struct *st, char c, int all);
 // echo: ms_buffer.c
 char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 // echo: ms_find_variable.c
-int		launch_write_variable(t_struct *st, t_cmd *cmd, int pos, int i);
+int		launch_bufferize_variable(t_struct *st, t_cmd *cmd, int pos, int i);
+int		find_match(t_struct *st, int e, char *var, int pos);
+int		is_variable_end(t_struct *st, unsigned char c);
+void	write_variable(t_struct *st, int e, int j);
+
+// echo: ms_expand_variable_str
+int		launch_bufferize_variable_str(t_struct *st, char *str, int pos_s);
+void	bufferize_str(t_struct *st, char *str);
 
 // env
 int		ms_run_env(void *stt, void *cmd);

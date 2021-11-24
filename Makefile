@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/22 17:59:13 by flormich         ###   ########.fr        #
+#    Updated: 2021/11/23 18:28:25 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,13 @@ SRC_P = $(DIR_P)/ms_1_extract_cmd.c $(DIR_P)/ms_2_parse_input.c \
 	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_files.c \
 	$(DIR_P)/ms_3_extract_redirection.c \
 	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c
-SRC_E = $(DIR_E)/ms_echo.c $(DIR_E)/ms_find_variable.c $(DIR_E)/ms_buffer.c
+SRC_E = $(DIR_E)/ms_echo.c $(DIR_E)/ms_find_variable.c $(DIR_E)/ms_buffer.c \
+	$(DIR_E)/ms_expand_variable_str.c
 SRC_ENV = $(DIR_ENV)/ms_env.c $(DIR_ENV)/ms_export.c $(DIR_ENV)/ms_unset.c \
-			$(DIR_ENV)/ms_manage_env.c
+	$(DIR_ENV)/ms_manage_env.c
 SRC_D = $(DIR_D)/ms_cd.c $(DIR_D)/ms_pwd.c
-SRC_G = $(DIR_G)/ms_gnl.c $(DIR_G)/ms_gnl_utils.c $(DIR_G)/ms_read_till_limiter.c
+SRC_G = $(DIR_G)/ms_gnl.c $(DIR_G)/ms_gnl_utils.c \
+	$(DIR_G)/ms_read_till_limiter.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_P = $(SRC_P:.c=.o)
