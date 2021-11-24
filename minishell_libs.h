@@ -6,13 +6,14 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/19 08:30:59 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/23 19:31:35 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_LIBS_H
 # define MINISHELL_LIBS_H
 # define PATH_MAX 4097
+# define BUFFER_SIZE 100
 
 // flo= LIMITER text save
 // flo= many echo pipe
@@ -38,7 +39,6 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
-# include <unistd.h>
 
 # define READ 0
 # define WRITE 1
@@ -58,6 +58,13 @@ typedef enum command_typ
 	BUILTIN,
 	IGNORE
 } e_cmd;
+
+typedef enum redirection_typ
+{
+	INFILE,
+	OUTFILE,
+	LIMITER
+} e_red;
 
 typedef struct command
 {
@@ -83,11 +90,6 @@ typedef struct structure
 	int		all;
 	int		expand;
 	int		len;
-	/*int		fd_in;
-	char	*name_in;
-	char	*limiter;
-	int		fd_out;
-	char	*name_out;*/
 	char	**env;
 	t_cmd	*arr;
 	int		skip_space;
@@ -98,17 +100,20 @@ typedef struct structure
 
 // main.c
 void	free_memory(t_struct *cmd);
+int		ms_sig_hook(void);
+int		run_exit(void *stt, void *cmd);
 
 // parsing: extract_cmd.c
 int		extract_cmd(t_struct *st);
 // parsing: extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
-// parsing: extract_infile_limiter.c
+int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
+// parsing: extract_file.c
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
-// parsing: extract_outfile.c
 int		extract_outfile(t_struct *st, int i);
+char	*expand_name(char **name);
 // parsing: parse_input.c
 int		parse_input(t_struct *st);
 //parsing: add_path.c
@@ -130,22 +135,45 @@ int		launch_cmd(t_struct *st);
 
 // echo: ms_echo.c
 int		run_echo(void *st, void *cmd);
+int		initialise_buf(t_struct *st);
+void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg);
+int		is_writable(t_struct *st, char c, int all);
 // echo: ms_buffer.c
 char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 // echo: ms_find_variable.c
-int		launch_write_variable(t_struct *st, t_cmd *cmd, int pos, int i);
+int		launch_bufferize_variable(t_struct *st, t_cmd *cmd, int pos, int i);
+int		find_match(t_struct *st, int e, char *var, int pos);
+int		is_variable_end(t_struct *st, unsigned char c);
+void	write_variable(t_struct *st, int e, int j);
 
+// echo: ms_expand_variable_str
+int		launch_bufferize_variable_str(t_struct *st, char *str, int pos_s);
+void	bufferize_str(t_struct *st, char *str);
+
+// env
 int		ms_run_env(void *stt, void *cmd);
 int		ms_run_export(void *stt, void *cmd);
 int		ms_run_unset(void *stt, void *cmd);
 void	ms_env(void);
 int		ms_export(char *new_var, t_struct *st, int done);
 int		ms_unset(char *var_name, t_struct *st, int done);
+
+// dir
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
-int		ms_sig_hook(void);
-int		run_exit(void *stt, void *cmd);
 
+// gnl
+int		read_till_limiter(t_struct *st, int tr);
+char	*get_strjoin(char *s1, char *s2);
+int		get_extract_line(char **line, char *str, int stat_read);
+int		get_next_line(int fd, char **line, char *limiter);
+char	*gnl_strchr(const char *s, int c);
+void	*gnl_memmove(void *dest, const void *src, size_t n);
+size_t	get_lglen(const char *s);
+char	*gnl_substr(char const *s, size_t len);
+size_t	gnl_strlen(const char *s);
+void	gnl_bzero(void *s, size_t n);
+void	*gnl_calloc(size_t nmemb, size_t n);
 
 #endif

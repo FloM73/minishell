@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 10:41:32 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 09:38:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_cmd(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
-		//printf("Infile: fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
+		//printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
 		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
 		//printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
@@ -37,17 +37,11 @@ static void	print_cmd(t_struct *st)
 	}
 }
 
-// what's the trick to get ride of the -Werror: is not use ??
 static void	init_st(int argc, char **argv, char **envp, t_struct *st)
 {
 	st->argc = argc;
 	st->argv = argv;
 	st->nb_cmd = 0;
-/*	st->fd_in = 0;
-	st->name_in = NULL;
-	st->fd_out = 1;
-	st->name_out = NULL;
-	st->limiter = NULL;*/
 	st->env = envp;
 	st->arg = 0;
 	st->tr = 0;
@@ -62,10 +56,6 @@ void	free_memory(t_struct *st)
 	int	tr;
 	int	arg;
 
-	/*if (st->name_in)
-		free(st->name_in);
-	if (st->name_out)
-		free(st->name_out);*/
 	tr = 0;
 	while (tr < st->nb_cmd)
 	{
@@ -75,7 +65,10 @@ void	free_memory(t_struct *st)
 		if (st->arr[tr].name_in)
 			free(st->arr[tr].name_in);
 		if (st->arr[tr].limiter)
+		{
+			unlink("tmp_limite");
 			free(st->arr[tr].limiter);
+		}
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
@@ -89,23 +82,16 @@ void	free_memory(t_struct *st)
 	//printf("FREE st->arr = %p\n", st->arr);
 	free(st->arr);
 	free(st->input);
-	//printf("FREE st->limiter = %p\n", st->limiter);
-	//free(st->limiter);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	//char		*temp;
 	t_struct	st;
 
 	ms_sig_hook();
 	while (1)
 	{
-		//temp = readline("SHELL $ ");
-		//st.input = ft_strtrim(temp, " 	");
 		st.input = readline(BL "~/MAXIPAIN $ " D);
-		//printf("Input   = |%s|\ntemp    = |%s|\n", st.input, temp);
-		//free(temp);
 		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);
@@ -113,12 +99,13 @@ int	main(int argc, char **argv, char **envp)
 			if (extract_cmd(&st) == 0)
 			{
 				print_cmd(&st);
+				st.tr = 0;
 				launch_cmd(&st);
 			}
 			free_memory(&st);
 			init_st(argc, argv, envp, &st);
 		}
-		else
+		else if (!st.input)
 			return (0);
 	}
 	return (0);

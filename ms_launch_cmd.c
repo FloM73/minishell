@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/18 11:02:52 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/23 19:26:44 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,24 @@ static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
 		dup2(next_fd[WRITE], STDOUT_FILENO);
 	}
 	close(fd[READ]);
+	close(fd[WRITE]);
 }
 
-static void	exec_child(t_struct *st, int tr)
+static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
 {
+	if (st->arr[tr].limiter != NULL)
+		read_till_limiter(st, tr);
+	set_redirection(st, st->tr, fd, next_fd);
 	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, st->env) == -1)
 		perror("Child: execve failed");
+}
+
+static void	manage_fd(t_struct *st, int *fd, int *next_fd)
+{
+	if (st->tr < st->nb_cmd)
+		dup2(next_fd[READ], fd[READ]);
+	close(next_fd[READ]);
+	close(next_fd[WRITE]);
 }
 
 int	launch_cmd(t_struct *st)
@@ -52,16 +64,10 @@ int	launch_cmd(t_struct *st)
 
 	if (pipe(fd) == -1)
 		return (-1);
-	close(fd[WRITE]);
-	st->tr = 0;
-	//printf("%d\n", st->nb_cmd);
 	while (st->tr < st->nb_cmd)
 	{
-		//printf("%d\n", st->arr[i].cmd_type);
 		if (st->arr[st->tr].cmd_type == BUILTIN)
-		{
 			st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
-		}
 		else
 		{
 			if (pipe(next_fd) == -1)
@@ -70,16 +76,8 @@ int	launch_cmd(t_struct *st)
 			if (pid < 0)
 				perror ("Failed to create Child");
 			if (pid == 0)
-			{
-				set_redirection(st, st->tr, fd, next_fd);
-				exec_child(st, st->tr);
-			}
-			if (st->tr < st->nb_cmd)
-				dup2(next_fd[READ], fd[READ]);
-			//else
-			//	close(fd[READ]);
-			close(next_fd[READ]);
-			close(next_fd[WRITE]);
+				exec_child(st, st->tr, fd, next_fd);
+			manage_fd(st, fd, next_fd);
 			waitpid(pid, NULL, 0);
 		}
 		st->tr++;
