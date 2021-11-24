@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/24 13:55:40 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 21:58:10 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ void	free_memory(t_struct *st)
 
 static int	init_env(char **old_env, t_struct *st)
 {
-	int	i;
-	int	n;
+	int		i;
+	int		n;
+	char	path[PATH_MAX];
+	char	*shell;
 
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
@@ -99,6 +101,9 @@ static int	init_env(char **old_env, t_struct *st)
 		i++;
 	}
 	st->env[i] = NULL;
+	shell = ft_strjoin("SHELL=", getcwd(path, PATH_MAX));
+	ms_export(ft_strjoin(shell, ms_get_env(st->env, "_") + 1), st);
+	free(shell);
 	return (0);
 }
 
@@ -108,6 +113,7 @@ int	main(int argc, char **argv, char **envp)
 
 	ms_sig_hook();
 	init_env(envp, &st);
+	st.res = 0;
 	while (1)
 	{
 		st.input = readline(BL "~/MAXIPAIN $ " D);
@@ -119,13 +125,19 @@ int	main(int argc, char **argv, char **envp)
 			{
 				print_cmd(&st);
 				st.tr = 0;
-				launch_cmd(&st);
+				if (launch_cmd(&st) != 0)
+					st.res = 1;
 			}
+			else
+				st.res = 127;
 			free_memory(&st);
 			init_st(argc, argv, &st);
 		}
 		else if (!st.input)
+		{
+			free_env(&st);
 			return (0);
+		}
 	}
 	return (0);
 }

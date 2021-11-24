@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable_str.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 18:22:53 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:35:37 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	launch_bufferize_variable_str(t_struct *st, char *str, int pos_s)
 		else if (str[pos_s + 1] == '?')
 		{
 			// last return code
-			st->buf = add_number_to_buf(st, 999);
+			st->buf = add_number_to_buf(st, st->res);
 			pos_s ++;
 		}
 		else if (str[pos_s + 1] == '@' || str[pos_s + 1] == '*')

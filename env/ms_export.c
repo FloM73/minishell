@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 17:23:00 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/24 15:08:24 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 21:13:16 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ms_export(char *new_var, t_struct *st)
 		n++;
 	env = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!env)
-		return (-1);
+		return (1);
 	sub_or_append(new_var, st, env);
 	free(st->env);
 	st->env = env;

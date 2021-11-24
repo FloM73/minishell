@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_find_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 19:49:07 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 18:30:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:55:35 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	launch_bufferize_variable(t_struct *st, t_cmd *arr, int arg, int pos_s)
 		else if (arr->cmd[arg][pos_s + 1] == '?')
 		{
 			// last return code
-			st->buf = add_number_to_buf(st, 999);
+			st->buf = add_number_to_buf(st, st->res);
 			pos_s ++;
 		}
 		else if (arr->cmd[arg][pos_s + 1] == '@' || arr->cmd[arg][pos_s + 1] == '*')

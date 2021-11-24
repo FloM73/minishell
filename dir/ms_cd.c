@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/23 18:26:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/24 21:12:17 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	cd(void *stt, void *cmd)
 	{
 		ms_error_synthaxe('t');
 		st->nb_cmd = 0;
-		return (-1);
+		return (1);
 	}
 	if (initialise_buf(st) == 0)
 	{

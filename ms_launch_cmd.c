@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 19:26:44 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/24 19:01:16 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ int	launch_cmd(t_struct *st)
 	pid_t	pid;
 	int		fd[2];
 	int		next_fd[2];
+	int		status;
 
 	if (pipe(fd) == -1)
 		return (-1);
 	while (st->tr < st->nb_cmd)
 	{
 		if (st->arr[st->tr].cmd_type == BUILTIN)
-			st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
+			st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 		else
 		{
 			if (pipe(next_fd) == -1)
@@ -78,7 +79,9 @@ int	launch_cmd(t_struct *st)
 			if (pid == 0)
 				exec_child(st, st->tr, fd, next_fd);
 			manage_fd(st, fd, next_fd);
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				st->res = WEXITSTATUS(status);
 		}
 		st->tr++;
 	}

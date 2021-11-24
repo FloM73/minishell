@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/24 14:10:01 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:47:27 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct structure
 	int		argc;
 	char	**argv;
 	int		cancel;
+	int		res;
 } t_struct;
 
 // main.c
@@ -161,6 +162,7 @@ int		ms_unset(char *var_name, t_struct *st);
 char	*ms_get_env(char **env, char *varname);
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
+void	free_env(t_struct *st);
 
 // gnl
 int		read_till_limiter(t_struct *st, int tr);
