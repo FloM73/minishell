@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_find_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 19:49:07 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/24 16:55:35 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/25 19:21:09 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	write_variable(t_struct *st, int e, int j)
 int	is_variable_end(t_struct *st, unsigned char c)
 {
 	if (c == ' ' || c == '"' || c == '\'' || c == '*' || c == '#'
-		|| c == '%' || c == '\\' || c == '$' || c == '}' || c == '\0')
+		|| c == '%' || c == '\\' || c == '$' || c == '}' || c == '\0' || c == '\n')
 		return (1);
 	else if (c == '!' || c == '&' || c == '/' || c == '='
 		|| c == '?' || c == '-' || c == '@' )

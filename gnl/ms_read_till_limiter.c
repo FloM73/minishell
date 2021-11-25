@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 11:48:35 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/22 17:14:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/25 19:22:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	read_till_limiter(t_struct *st, int tr)
 	int		i;
 
 	i = 1;
-	st->buf = (char *)gnl_calloc(1, 1);
+	st->buf_tmp = (char *)gnl_calloc(1, 1);
 	while (i > 0)
 	{
-		i = get_next_line(0, &st->buf, st->arr[tr].limiter);
+		i = get_next_line(0, &st->buf_tmp, st->arr[tr].limiter);
 	}
+	initialise_buf(st);
+	bufferize_input(st, st->buf_tmp);
 	i = 0;
 	while (st->buf[i] !='\0')
 	{
@@ -31,5 +33,6 @@ int	read_till_limiter(t_struct *st, int tr)
 	close(st->arr[tr].fd_in);
 	st->arr[tr].fd_in = open(st->arr[st->tr].name_in, O_RDWR, 0777);
 	free(st->buf);
+	free(st->buf_tmp);
 	return (0);
 }

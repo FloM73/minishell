@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/24 21:58:10 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/25 18:13:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,31 @@ static int	init_env(char **old_env, t_struct *st)
 	return (0);
 }
 
+static int transfert_buf_input(t_struct *st)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	printf("input  = %s\n", st->input);
+	printf("buffer = %s\n", st->buf);
+	tmp = st->input;
+	len = ft_strlen(st->buf);
+	st->input = (char *)malloc((len + 1) * sizeof(char));
+	if (!st->input)
+		return (-1);
+	i = 0;
+	while (i < len)
+	{
+		st->input[i] = st->buf[i];
+		i++;
+	}
+	st->input[i] = '\0';
+	free(tmp);
+	free(st->buf);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	st;
@@ -117,6 +142,12 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		st.input = readline(BL "~/MAXIPAIN $ " D);
+		if (st.input && st.input[0] != '\0')
+			add_history(st.input);
+		if (initialise_buf(&st) == -1)
+			return (-1);
+		bufferize_input(&st, st.input);
+		transfert_buf_input(&st);
 		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);

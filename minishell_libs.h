@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/24 16:47:27 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/25 18:40:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct structure
 {
 	char	*input;
 	char	*buf;
+	char	*buf_tmp;
 	int		nb_cmd;
 	int		tr;
 	int		arg;
@@ -104,6 +105,10 @@ void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
 
+// parsing: expand_input
+void	bufferize_input(t_struct *st, char *str);
+int		launch_expand_variable_input(t_struct *st, char *str, int pos_s);
+
 // parsing: extract_cmd.c
 int		extract_cmd(t_struct *st);
 // parsing: extract_redirection.c
@@ -114,7 +119,7 @@ int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
 int		extract_outfile(t_struct *st, int i);
-char	*expand_name(char **name);
+char	*expand_name(char **env, char **name);
 // parsing: parse_input.c
 int		parse_input(t_struct *st);
 //parsing: add_path.c
