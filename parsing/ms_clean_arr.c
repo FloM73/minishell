@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/22 10:48:49 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:12:24 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	implement_cmd_typ(t_cmd *arr)
 {
 	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
 		trim_quote(arr, arr->cmd[0][0]);
-	//printf("-%s-\n", arr->cmd[0]);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 	{
 		arr->cmd_type = BUILTIN;
@@ -46,7 +45,6 @@ static void	implement_cmd_typ(t_cmd *arr)
 	{
 		arr->cmd_type = BUILTIN;
 		arr->f_ptr = &ms_run_export;
-		//printf("%d\n", arr->cmd_type);
 	}
 	else if (ft_strncmp(arr->cmd[0], "unset", ft_strlen(arr->cmd[0])) == 0)
 	{

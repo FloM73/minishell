@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 12:44:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:14:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	print_cmd(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
-		printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
-		printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
-		printf("Limiter: %s\n", st->arr[tr].limiter);
+		//printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
+		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
+		//printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
+			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
-		printf("\n");
+		//printf("\n");
 		tr++;
 	}
 }
@@ -91,7 +91,6 @@ static int	init_env(char **old_env, t_struct *st)
 	char	*shell;
 	char	*shell2;
 
-	write(1,"init_env1\n", 10);
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!st->env)
@@ -108,7 +107,6 @@ static int	init_env(char **old_env, t_struct *st)
 	ms_export(shell2, st);
 	free(shell2);
 	free(shell);
-	write(1,"init_env2\n", 10);
 	return (0);
 }
 
@@ -132,11 +130,8 @@ static int transfert_buf_input(t_struct *st)
 		i++;
 	}
 	st->input[i] = '\0';
-	write(1,"2\n", 2);
 	free(tmp);
-	write(1,"3\n", 2);
 	free(st->buf);
-	write(1,"4\n", 2);
 	return (0);
 }
 

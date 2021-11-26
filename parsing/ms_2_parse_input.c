@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 12:42:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:10:42 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ static int	malloc_cmd(t_struct *st)
 	int	arg;
 
 	tr = 0;
-	write(1,"Malloc_cmd_1\n", 13);
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			st->arr[tr].cmd[arg] = ft_calloc(st->len + 1, sizeof(char));
-			printf("MALLOC malloc_cmd  st->arr[%d].cmd[%d] = %p - size = %ld\n", tr, arg, st->arr[tr].cmd[arg], (st->len + 1) * sizeof(char));
+			//printf("MALLOC malloc_cmd  st->arr[%d].cmd[%d] = %p - size = %ld\n", tr, arg, st->arr[tr].cmd[arg], (st->len + 1) * sizeof(char));
 			if (!st->arr[tr].cmd[arg])
 				return (-1);
 			//printf("cmd = |%s|\n", st->arr[tr].cmd[j]);
@@ -46,7 +45,6 @@ static int	malloc_cmd(t_struct *st)
 		}
 		tr++;
 	}
-	write(1,"Malloc_cmd_2\n", 13);
 	return (tr);
 }
 
@@ -56,12 +54,10 @@ static int	fill_cmd(char *input, t_struct *st)
 	int		i;
 	char	c;
 
-	write(1,"Fill_cmd_1\n",11);
 	c = '\0';
 	i = 0;
 	if (malloc_cmd(st) == -1)
 		return (-1);
-	write(1,"Fill_cmd_2\n",11);
 	while (i < st->len)
 	{
 		while (ft_isspace(input[i]) == 1 && st->all == 0)
@@ -75,11 +71,6 @@ static int	fill_cmd(char *input, t_struct *st)
 		}
 		if (input[i] == '|' && st->all == 0)
 		{
-			/*if (st->digit == 0 && st->arg == 0 && st->tr == 0)
-			{
-				ms_error_synthaxe(input[i]);
-				return (-1);
-			}*/
 			st->tr++;
 			st->arg = 0;
 			st->digit = 0;
@@ -87,31 +78,19 @@ static int	fill_cmd(char *input, t_struct *st)
 		}
 		if (st->all == 0 && (input[i] == '<' || input[i] == '>'))
 		{
-			/*if (st->arr[st->tr].cmd[0][0] != '\0' && st->tr < st->nb_cmd - 1)
-			{
-				st->tr++;
-			}*/
 			st->arg = 0;
 			st->digit = 0;
-			write(1,"Fill_cmd_3\n",11);
 			i = extract_redirection(st, i);
-			write(1,"Fill_cmd_4\n",11);
 			if (i == -1)
 				return (-1);
 		}
 		if ((st->all == 0 && (input[i] == '"' || input[i] == '\''))
 			|| (st->all == 1 && input[i] == c))
-			//|| (st->all == 1 && input[i - 1] != '\\' && input[i] == c))
 		{
 			if (st->all == 0)
 			{
 				c = input[i];
 				st->all = 1;
-				/*if (st->digit != 0)
-				{
-					st->arg++;
-					st->digit = 0;
-				}*/
 				st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 				st->digit++;
 				i++;
@@ -120,7 +99,6 @@ static int	fill_cmd(char *input, t_struct *st)
 			{
 				st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 				st->all = 0;
-				//st->arg++;
 				st->digit++;
 				c = '\0';
 				i++;
@@ -133,8 +111,6 @@ static int	fill_cmd(char *input, t_struct *st)
 			i++;
 		}
 	}
-	write(1,"Fill_cmd_5\n",11);
-	write(1,"Fill_cmd_6\n",11);
 	return (0);
 }
 

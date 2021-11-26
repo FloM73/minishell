@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 18:19:52 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 13:55:34 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	bufferize_input(t_struct *st, char *str)
 		else if (str[i] == '$' && str[i + 1] == '$')
 		{
 			st->buf = add_number_to_buf(st, getpid());
+			i++;
+		}
+		else if (str[i] == '$' && str[i + 1] == '?')
+		{
+			st->buf = add_number_to_buf(st, st->res);
 			i++;
 		}
 		else if (str[i] == '\'')
