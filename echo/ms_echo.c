@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 19:14:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 12:15:05 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 int	initialise_buf(t_struct *st)
 {
+	char	*tmp;
+
+	write(1,"0\n", 2);
+	tmp = st->buf;
 	if (st->tr < st->nb_cmd - 1 && st->arr[st->tr].fd_out == 1)
 		return (-1);
 	st->all = 0;
 	st->expand = 1;
 	st->skip_space = 0;
 	st->cancel = 0;
-	if (st->buf == NULL)
-		st->buf = ft_calloc(1, sizeof(char *));
+	st->buf = ft_calloc(1, sizeof(char *));
+	if (tmp)
+		free(tmp);
+	write(1,"1\n", 2);
 	return(0);
 }
 

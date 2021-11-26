@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 10:46:03 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 12:22:09 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	launch_cmd(t_struct *st)
 	int		next_fd[2];
 	int		status;
 
+	write(1,"launch_cmd1\n", 12);
 	if (pipe(fd) == -1)
 		return (-1);
 	while (st->tr < st->nb_cmd)
@@ -87,5 +88,6 @@ int	launch_cmd(t_struct *st)
 		}
 		st->tr++;
 	}
+	write(1,"launch_cmd2\n", 12);
 	return (0);
 }
