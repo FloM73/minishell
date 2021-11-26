@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/24 19:01:16 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/25 10:46:03 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
 	if (st->arr[tr].limiter != NULL)
 		read_till_limiter(st, tr);
 	set_redirection(st, st->tr, fd, next_fd);
+	if (st->arr[tr].fd_out != 1)
+		dup2(st->arr[tr].fd_out, STDOUT_FILENO);
 	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, st->env) == -1)
 		perror("Child: execve failed");
 }
