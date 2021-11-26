@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 18:13:08 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 11:02:14 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int	init_env(char **old_env, t_struct *st)
 	int		n;
 	char	path[PATH_MAX];
 	char	*shell;
+	char	*shell2;
 
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
@@ -102,7 +103,9 @@ static int	init_env(char **old_env, t_struct *st)
 	}
 	st->env[i] = NULL;
 	shell = ft_strjoin("SHELL=", getcwd(path, PATH_MAX));
-	ms_export(ft_strjoin(shell, ms_get_env(st->env, "_") + 1), st);
+	shell2 = ft_strjoin(shell, ms_get_env(st->env, "_") + 1);
+	ms_export(shell2, st);
+	free(shell2);
 	free(shell);
 	return (0);
 }
