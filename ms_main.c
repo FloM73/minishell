@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 17:14:00 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 21:39:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,26 +146,28 @@ int	main(int argc, char **argv, char **envp)
 	{
 		st.input = readline(BL "~/MAXIPAIN $ " D);
 		if (st.input && st.input[0] != '\0')
-			add_history(st.input);
-		if (initialise_buf(&st) == -1)
-			return (-1);
-		bufferize_input(&st, st.input);
-		transfert_buf_input(&st);
-		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);
-			init_st(argc, argv, &st);
-			if (extract_cmd(&st) == 0)
+			if (initialise_buf(&st) == -1)
+				return (-1);
+			bufferize_input(&st, st.input);
+			transfert_buf_input(&st);
+			if (st.input && st.input[0] != '\0')
 			{
-				print_cmd(&st);
-				st.tr = 0;
-				if (launch_cmd(&st) != 0)
-					st.res = 1;
+				add_history(st.input);
+				init_st(argc, argv, &st);
+				if (extract_cmd(&st) == 0)
+				{
+					print_cmd(&st);
+					st.tr = 0;
+					if (launch_cmd(&st) != 0)
+						st.res = 1;
+				}
+				else
+					st.res = 127;
+				free_memory(&st);
+				init_st(argc, argv, &st);
 			}
-			else
-				st.res = 127;
-			free_memory(&st);
-			init_st(argc, argv, &st);
 		}
 		else if (!st.input)
 		{
