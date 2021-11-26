@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 18:28:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/25 19:14:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	initialise_buf(t_struct *st)
 	st->expand = 1;
 	st->skip_space = 0;
 	st->cancel = 0;
-	st->buf = ft_calloc(1, sizeof(char *));
+	if (st->buf == NULL)
+		st->buf = ft_calloc(1, sizeof(char *));
 	return(0);
 }
 
@@ -95,6 +96,8 @@ void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg)
 			}
 			else if (st->expand == 1 && (arr->cmd[arg][i] == '$' || arr->cmd[arg][i] == '~') && arr->cmd[arg][i + 1] != '%')
 				i = launch_bufferize_variable(st, arr, arg, i);
+			else if (st->all == 0 && arr->cmd[arg][i] == '#')
+				st->cancel = 1;
 			else if (is_writable(st, arr->cmd[arg][i], st->all) == 1)
 				st->buf = add_char_to_buf(st, arr->cmd[arg][i]);
 			i++;
