@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 18:28:43 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 11:12:12 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/27 19:45:40 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	extract_limiter(t_struct *st, int i)
 	j = 0;
 	while (j < len)
 		st->arr[st->tr].limiter[j++] = st->input[i++];
-	if (st->expand == 1)
+	if (st->exp == 1)
 		st->arr[st->tr].limiter = expand_name(st->env, &(st->arr[st->tr].limiter));
 	st->arr[st->tr].name_in = ft_strdup("tmp_limite");
 	st->arr[st->tr].fd_in = open(st->arr[st->tr].name_in, O_CREAT | O_RDWR, 0777);
@@ -77,7 +77,7 @@ int	extract_infile(t_struct *st, int i)
 	j = 0;
 	while (j < len)
 		st->arr[st->tr].name_in[j++] = st->input[i++];
-	if (st->expand == 1)
+	if (st->exp == 1)
 		st->arr[st->tr].name_in = expand_name(st->env, &(st->arr[st->tr].name_in));
 	st->arr[st->tr].fd_in = open(st->arr[st->tr].name_in, O_RDWR, 0777);
 	if (test_file_descriptor(st->arr[st->tr].fd_in, st->arr[st->tr].name_in) == -1)
@@ -105,7 +105,7 @@ int	extract_outfile(t_struct *st, int i)
 	j = 0;
 	while (j < len)
 		st->arr[st->tr].name_out[j++] = st->input[i++];
-	if (st->expand == 1)
+	if (st->exp == 1)
 		st->arr[st->tr].name_out = expand_name(st->env, &(st->arr[st->tr].name_out));
 	st->arr[st->tr].fd_out = open_outfile(st->arr[st->tr].name_out, append);
 	if (test_file_descriptor(st->arr[st->tr].fd_out, st->arr[st->tr].name_out) == -1)

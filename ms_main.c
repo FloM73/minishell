@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 21:39:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/27 19:44:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static void	init_st(int argc, char **argv, t_struct *st)
 	st->tr = 0;
 	st->digit = 0;
 	st->all = 0;
-	st->expand = 0;
+	st->exp = 1;
+	st->force_expand = -1;
 	st->len = (int)ft_strlen(st->input);
 }
 
@@ -91,6 +92,8 @@ static int	init_env(char **old_env, t_struct *st)
 	char	*shell;
 	char	*shell2;
 
+	ms_sig_hook();
+	st->res = 0;
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!st->env)
@@ -110,51 +113,19 @@ static int	init_env(char **old_env, t_struct *st)
 	return (0);
 }
 
-static int transfert_buf_input(t_struct *st)
-{
-	char	*tmp;
-	int		len;
-	int		i;
-
-	printf("input  = %s\n", st->input);
-	printf("buffer = %s\n", st->buf);
-	tmp = st->input;
-	len = ft_strlen(st->buf);
-	st->input = (char *)malloc((len + 1) * sizeof(char));
-	if (!st->input)
-		return (-1);
-	i = 0;
-	while (i < len)
-	{
-		st->input[i] = st->buf[i];
-		i++;
-	}
-	st->input[i] = '\0';
-	free(tmp);
-	free(st->buf);
-	return (0);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	st;
 
-	ms_sig_hook();
 	init_env(envp, &st);
-	st.res = 0;
 	while (1)
 	{
 		st.input = readline(BL "~/MAXIPAIN $ " D);
 		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);
-			if (initialise_buf(&st) == -1)
-				return (-1);
-			bufferize_input(&st, st.input);
-			transfert_buf_input(&st);
-			if (st.input && st.input[0] != '\0')
+			if (manage_expand_variable(&st) == 0)
 			{
-				add_history(st.input);
 				init_st(argc, argv, &st);
 				if (extract_cmd(&st) == 0)
 				{
@@ -170,6 +141,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		else if (!st.input)
+		//isn't there a way to put this in the ms_sig_hook ?
 		{
 			free_env(&st);
 			return (0);

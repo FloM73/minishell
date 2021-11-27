@@ -6,18 +6,19 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/23 19:29:20 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/26 22:05:11 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-void	ms_error(char *txt, int	*exit_level, t_struct *st)
+int	ms_error(char *txt, int	exit_level, t_struct *st)
 {
 	perror(txt);
-		st = st;
+	st = st;
 	if (exit_level == 0)
-		exit(-1);
+		return (-1);
+	return(0);
 }
 
 void	ms_error_synthaxe(char c)

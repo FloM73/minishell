@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/09 19:51:46 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/27 19:12:05 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,29 @@ char	*add_number_to_buf(t_struct *st, int nb)
 	}
 	free(str);
 	return (new_buf);
+}
+
+int	transfert_buf_input(t_struct *st)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	printf("input  = %s\n", st->input);
+	printf("buffer = %s\n", st->buf);
+	tmp = st->input;
+	len = ft_strlen(st->buf);
+	st->input = (char *)malloc((len + 1) * sizeof(char));
+	if (!st->input)
+		return (-1);
+	i = 0;
+	while (i < len)
+	{
+		st->input[i] = st->buf[i];
+		i++;
+	}
+	st->input[i] = '\0';
+	free(tmp);
+	free(st->buf);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/25 18:40:56 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/27 19:44:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ typedef struct structure
 	int		arg;
 	int		digit;
 	int		all;
-	int		expand;
+	int		exp;
+	int		force_expand;
 	int		len;
 	char	**env;
 	t_cmd	*arr;
@@ -105,13 +106,23 @@ void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
 
-// parsing: expand_input
-void	bufferize_input(t_struct *st, char *str);
-int		launch_expand_variable_input(t_struct *st, char *str, int pos_s);
-
-// parsing: extract_cmd.c
+// parsing: 0_expand_input
+void	bufferize_input(t_struct *st, char *str, int i);
+int		manage_simple_quote(t_struct *st, char *str, int i);
+int		launch_expand_variable(t_struct *st, char *str, int i);
+int		expand_variable(t_struct *st, char *str, int i);
+int		expand_special_variable(t_struct *st, char *str, int i);
+// parsing : expand_variable
+int		manage_expand_variable(t_struct *st);
+int		find_match(t_struct *st, int e, char *var, int pos);
+int		is_variable_end(t_struct *st, unsigned char c);
+int		is_special_variable(unsigned char c);
+void	write_variable(t_struct *st, int e, int j);
+// parsing: 1_extract_cmd.c
 int		extract_cmd(t_struct *st);
-// parsing: extract_redirection.c
+// parsing: 2_parse_input.c
+int		parse_input(t_struct *st);
+// parsing: 3_extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
 int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
@@ -120,20 +131,25 @@ int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
 int		extract_outfile(t_struct *st, int i);
 char	*expand_name(char **env, char **name);
-// parsing: parse_input.c
-int		parse_input(t_struct *st);
 //parsing: add_path.c
 int		add_path(t_struct *st);
+//parsing: ms_buffer.c
+char	*add_char_to_buf(t_struct *st, char c);
+char	*add_number_to_buf(t_struct *st, int nb);
+int		transfert_buf_input(t_struct *st);
+
+// parsing: clean_arr
+void clean_arr(t_struct *st);
+
 // parsing: extract_utils.c
 char	*malloc_file_name(char **file, int len);
 int		test_file_descriptor(int fd, char *name);
 int		open_outfile(char *name, int append);
 void	remove_redirection(char *input, int nb, char c);
-// parsing: clean_arr
-void clean_arr(t_struct *st);
+
 
 //error.c
-void	ms_error(char *txt, int	*exit_level, t_struct *st);
+int		ms_error(char *txt, int	exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);
 
 // ms_launch_cmd.c
@@ -144,14 +160,6 @@ int		run_echo(void *st, void *cmd);
 int		initialise_buf(t_struct *st);
 void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg);
 int		is_writable(t_struct *st, char c, int all);
-// echo: ms_buffer.c
-char	*add_char_to_buf(t_struct *st, char c);
-char	*add_number_to_buf(t_struct *st, int nb);
-// echo: ms_find_variable.c
-int		launch_bufferize_variable(t_struct *st, t_cmd *cmd, int pos, int i);
-int		find_match(t_struct *st, int e, char *var, int pos);
-int		is_variable_end(t_struct *st, unsigned char c);
-void	write_variable(t_struct *st, int e, int j);
 
 // echo: ms_expand_variable_str
 int		launch_bufferize_variable_str(t_struct *st, char *str, int pos_s);

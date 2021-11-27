@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/11/25 11:28:03 by flormich         ###   ########.fr        #
+#    Updated: 2021/11/27 19:20:54 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ SRC = ms_main.c ms_error.c ms_launch_cmd.c ms_sig_hook.c ms_run_exit.c
 SRC_P = $(DIR_P)/ms_0_expand_input.c $(DIR_P)/ms_1_extract_cmd.c \
 	$(DIR_P)/ms_2_parse_input.c $(DIR_P)/ms_extract_utils.c \
 	$(DIR_P)/ms_extract_files.c $(DIR_P)/ms_3_extract_redirection.c \
-	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c
-SRC_E = $(DIR_E)/ms_echo.c $(DIR_E)/ms_find_variable.c $(DIR_E)/ms_buffer.c
+	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c $(DIR_P)/ms_expand_variable.c \
+	$(DIR_P)/ms_buffer.c
+SRC_E = $(DIR_E)/ms_echo.c
 SRC_ENV =	$(DIR_ENV)/ms_env.c $(DIR_ENV)/ms_export.c $(DIR_ENV)/ms_unset.c \
 			$(DIR_ENV)/ms_manage_env.c $(DIR_ENV)/ms_get_env.c \
 			$(DIR_ENV)/ms_free_env.c

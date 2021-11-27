@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/25 10:44:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/27 19:46:06 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	test_synthaxe(t_struct *st, int i, e_red red_type)
 		return (-1);
 	}
 	if (st->input[i] == '$')
-		st->expand = 1;
+		st->exp = 1;
 	else
-		st->expand = 0;
-	return (i + st->expand);
+		st->exp = 0;
+	return (i + st->exp);
 }
 
 int	extract_redirection(t_struct *st, int i)
