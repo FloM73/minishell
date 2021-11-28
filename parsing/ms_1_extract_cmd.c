@@ -47,12 +47,23 @@ static t_cmd	*create_arr(t_struct *st)
 // Pilote the parsing of the input string
 int	extract_cmd(t_struct *st)
 {
+	int	sucess;
+
 	if (!st->input)
+		sucess = -1;
+	else
+	{
+		st->arr = create_arr(st);
+		if (parse_input(st) == -1)
+			sucess = -1;
+		else if (add_path(st) == -1)
+			sucess = -1;
+	}
+	st->tr = 0;
+	if (sucess == -1)
+	{
+		st->res = 127;
 		return (-1);
-	st->arr = create_arr(st);
-	if (parse_input(st) == -1)
-		return (-1);
-	if (add_path(st) == -1)
-		return (-1);
+	}
 	return (0);
 }
