@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/27 19:44:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/28 11:46:09 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
-
+/*
 // just for test purpose
 static void	print_cmd(t_struct *st)
 {
@@ -36,7 +36,7 @@ static void	print_cmd(t_struct *st)
 		tr++;
 	}
 }
-
+*/
 static void	init_st(int argc, char **argv, t_struct *st)
 {
 	st->argc = argc;
@@ -129,7 +129,6 @@ int	main(int argc, char **argv, char **envp)
 				init_st(argc, argv, &st);
 				if (extract_cmd(&st) == 0)
 				{
-					print_cmd(&st);
 					st.tr = 0;
 					if (launch_cmd(&st) != 0)
 						st.res = 1;
@@ -141,11 +140,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		else if (!st.input)
-		//isn't there a way to put this in the ms_sig_hook ?
-		{
 			free_env(&st);
-			return (0);
-		}
 	}
 	return (0);
 }
