@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/27 19:44:08 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:35:33 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,15 @@ void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
 
-// parsing: 0_expand_input
+// parsing: 0_expand_input.c
 void	bufferize_input(t_struct *st, char *str, int i);
 int		manage_simple_quote(t_struct *st, char *str, int i);
+int		manage_doppel_quote(t_struct *st, char *str, int i);
 int		launch_expand_variable(t_struct *st, char *str, int i);
+//parsing: expand_variable.c
 int		expand_variable(t_struct *st, char *str, int i);
 int		expand_special_variable(t_struct *st, char *str, int i);
-// parsing : expand_variable
+// parsing : expand_variable_utils.c
 int		manage_expand_variable(t_struct *st);
 int		find_match(t_struct *st, int e, char *var, int pos);
 int		is_variable_end(t_struct *st, unsigned char c);
@@ -158,8 +160,8 @@ int		launch_cmd(t_struct *st);
 // echo: ms_echo.c
 int		run_echo(void *st, void *cmd);
 int		initialise_buf(t_struct *st);
-void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg);
-int		is_writable(t_struct *st, char c, int all);
+void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i);
+int		is_writable(t_struct *st, char c, char c_next);
 
 // echo: ms_expand_variable_str
 int		launch_bufferize_variable_str(t_struct *st, char *str, int pos_s);

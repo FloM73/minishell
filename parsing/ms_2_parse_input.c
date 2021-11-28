@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/27 16:54:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/28 12:48:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,7 @@ static int	count_arg(char *input, t_struct *st)
 		while (input[i] != '|' && i <= st->len && input[i] != '\0')
 		{
 			if (input[i] == '"' || input[i] == '\'')
-			{
 				i = skip_till(input, i + 1, input[i], st->len);
-				//st->arr[tr].nb_arg++;
-			}
 			if (input[i] == '<' || input[i] == '>')
 			{
 				if (input[i + 1] == '<' || input[i + 1] == '>')
