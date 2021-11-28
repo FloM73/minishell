@@ -6,72 +6,70 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/27 19:37:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:23:49 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-int	manage_expand_variable(t_struct *st)
+static int	go_to_variable_end(t_struct *st, char *str, int i)
 {
-	st->force_expand = -1;
-	if (initialise_buf(st) == -1)
-		return (-1);
-	bufferize_input(st, st->input, 0);
-	transfert_buf_input(st);
-	if (st->input && st->input[0] != '\0')
-		return (0);
-	return (-1);
+	while (is_variable_end(st, str[i]) == 0)
+		i++;
+	while (str[i] == '#')
+		st->buf = add_char_to_buf(st, str[i++]);
+	return (i);
 }
 
-// How to put § : error: multi-character character constant [-Werror=multichar]
-int	is_variable_end(t_struct *st, unsigned char c)
+int	expand_variable(t_struct *st, char *str, int i)
 {
-	if (c == ' ' || c == '"' || c == '\'' || c == '*' || c == '#'
-		|| c == '%' || c == '\\' || c == '$' || c == '{' || c == '}'
-		|| c == '\0' || c == '\n')
-		return (1);
-	else if (c == '!' || c == '&' || c == '/' || c == '='
-		|| c == '?' || c == '-' || c == '@' )
-		return (1);
-	else if (c == '>' || c == '<' )
+	int		e;
+	int		new_pos;
+
+	if (str[i] == '~')
 	{
-		st->cancel = 1;
-		perror("-bash: syntax error near unexpected token 'newline'\n");
+		st->buf_tmp = st->buf;
+		st->buf = ft_strjoin(st->buf, ms_get_env(st->env, "HOME"));
+		free(st->buf_tmp);
+		return (i);
 	}
-	return (0);
-}
-
-int	is_special_variable(unsigned char c)
-{
-	if (c == '$' || c == '?' || c == '@' || c == '*' || c == '{' )
-		return (1);
-	return (0);
-}
-
-int	find_match(t_struct *st, int e, char *var, int pos)
-{
-	int	j;
-
-	j = 0;
-	while (st->env[e][j] == var[pos] && is_variable_end(st, var[pos] == 0))
+	else
 	{
-		if (st->env[e][j + 1] == '=' && is_variable_end(st, var[pos + 1]) == 1)
+		e = 0;
+		while (st->env[e])
 		{
-			write_variable(st, e, j);
-			return (pos);
+			new_pos = find_match(st, e, str, i + 1);
+			if (new_pos != 0)
+				return (new_pos);
+			e++;
 		}
-		pos++;
-		j++;
+		i++;
+		i = go_to_variable_end(st, str, i);
 	}
-	return (0);
+	return (i - 1);
 }
 
-void	write_variable(t_struct *st, int e, int j)
+//@ && * make nothing
+int	expand_special_variable(t_struct *st, char *str, int i)
 {
-	while (st->env[e][j + 2] != '\0')
+	if (str[i + 1] == '$')
+		st->buf = add_number_to_buf(st, getpid());
+	else if (str[i + 1] == '?')
+		st->buf = add_number_to_buf(st, st->res);
+	else if (str[i + 1] == '"')
 	{
-		st->buf = add_char_to_buf(st, st->env[e][j + 2]);
-		j++;
+		st->buf = add_char_to_buf(st, '$');
+		return (i);
 	}
+	else if (str[i + 1] == '{')
+	{
+		if (str[i + 2] == '}')
+		{
+			st->cancel = 1;
+			ms_error_synthaxe('}');
+			return (-2);
+		}
+		i = expand_variable(st, str, i + 1);
+	}
+	return (i + 1);
 }
