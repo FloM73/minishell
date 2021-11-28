@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 17:23:00 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/25 17:36:00 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/28 12:21:53 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static int	env_exists(char *new_var, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(new_var, env[i], ft_len_until_char(new_var, '=')) &&
-			!ft_strncmp(new_var, env[i], ft_len_until_char(env[i], '=')))
+		if (!ft_strncmp(new_var, env[i], ft_len_until_char(new_var, '='))
+			&& !ft_strncmp(new_var, env[i], ft_len_until_char(env[i], '=')))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-static void	sub_or_append(char *new_var, t_struct *st, char **new_env)
+static void	sub_or_append(char *newvar, t_struct *st, char **new_env)
 {
 	int	i;
 	int	check;
@@ -36,11 +36,11 @@ static void	sub_or_append(char *new_var, t_struct *st, char **new_env)
 	check = 0;
 	while (st->env[i])
 	{
-		if (!ft_strncmp(new_var, st->env[i], ft_len_until_char(st->env[i], '=')) &&
-			!ft_strncmp(new_var, st->env[i], ft_len_until_char(new_var, '=')))
+		if (!ft_strncmp(newvar, st->env[i], ft_len_until_char(st->env[i], '='))
+			&& !ft_strncmp(newvar, st->env[i], ft_len_until_char(newvar, '=')))
 		{
 			free(st->env[i]);
-			new_env[i] = ft_strdup(new_var);
+			new_env[i] = ft_strdup(newvar);
 			check += 1;
 		}
 		else
@@ -49,7 +49,7 @@ static void	sub_or_append(char *new_var, t_struct *st, char **new_env)
 	}
 	if (!check)
 	{
-		new_env[i] = ft_strdup(new_var);
+		new_env[i] = ft_strdup(newvar);
 		i++;
 	}
 	new_env[i] = NULL;
@@ -59,6 +59,7 @@ int	ms_export(char *new_var, t_struct *st)
 {
 	char	**env;
 	int		n;
+
 	n = ft_2darr_len(st->env);
 	if (!env_exists(new_var, st->env))
 		n++;

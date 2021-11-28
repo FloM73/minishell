@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 10:57:27 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/24 15:01:16 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/28 12:23:36 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	find_and_del(char *varname, char **old_env, char **new_env)
 	check = 0;
 	while (old_env[i + check])
 	{
-		if (!ft_strncmp(varname, old_env[i], ft_len_until_char(old_env[i], '=')) &&
-			!ft_strncmp(varname, old_env[i], ft_strlen(varname)) && !check)
+		if (!ft_strncmp(varname, old_env[i], ft_len_until_char(old_env[i], '='))
+			&& !ft_strncmp(varname, old_env[i], ft_strlen(varname)) && !check)
 		{
 			free(old_env[i]);
 			old_env[i] = NULL;
