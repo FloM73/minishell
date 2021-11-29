@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/28 16:35:33 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:23:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct command
 
 typedef struct structure
 {
+	char	*prompt;
 	char	*input;
 	char	*buf;
 	char	*buf_tmp;
