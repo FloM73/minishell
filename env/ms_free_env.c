@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_free_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 16:45:21 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/28 11:40:14 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/11/29 09:27:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ void	free_env(t_struct *st)
 		i++;
 	}
 	free(st->env);
+	free(st->prompt);
 	exit(0);
 }

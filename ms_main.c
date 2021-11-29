@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/28 15:47:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:57:26 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static int	init_env(char **old_env, t_struct *st)
 	char	*shell2;
 
 	ms_sig_hook();
+	st->prompt = ft_strdup("~/MAXIPAIN $ ");
 	st->res = 0;
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
@@ -120,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 	init_env(envp, &st);
 	while (1)
 	{
-		st.input = readline(BL "~/MAXIPAIN $ " D);
+		st.input = readline(st.prompt);
 		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);

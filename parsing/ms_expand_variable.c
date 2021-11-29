@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/28 16:23:49 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 10:35:24 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	expand_variable(t_struct *st, char *str, int i)
 {
 	int		e;
 	int		new_pos;
+	char	*tmp_ptr;
 
 	if (str[i] == '~')
 	{
-		st->buf_tmp = st->buf;
+		tmp_ptr = st->buf;
 		st->buf = ft_strjoin(st->buf, ms_get_env(st->env, "HOME"));
-		free(st->buf_tmp);
+		free(tmp_ptr);
 		return (i);
 	}
 	else
