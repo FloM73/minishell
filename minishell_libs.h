@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/29 22:44:59 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 23:00:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	free_env(t_struct *st);
 int		read_till_limiter(t_struct *st, int tr);
 char	*get_strjoin(char *s1, char *s2);
 int		get_extract_line(char **line, char *str, int stat_read);
-int		get_next_line(int fd, char **line, char *limiter);
+int		get_next_line(int fd, char **line, char *limiter, int stat_read);
 char	*gnl_strchr(const char *s, int c);
 void	*gnl_memmove(void *dest, const void *src, size_t n);
 size_t	get_lglen(const char *s);
