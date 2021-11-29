@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand_variable.c                               :+:      :+:    :+:   */
+/*   ms_expand_variable_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/28 14:49:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 12:14:34 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int	manage_expand_variable(t_struct *st)
 {
+	int	i;
+
+	i = 0;
 	st->force_expand = -1;
+	st->nb_cmd = 1;
 	if (initialise_buf(st) == -1)
 		return (-1);
-	bufferize_input(st, st->input, 0);
+	while (ft_isspace(st->input[i]) == 1)
+		i++;
+	bufferize_input(st, st->input, i);
 	transfert_buf_input(st);
 	if (st->input && st->input[0] != '\0')
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 21:04:40 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/21 12:41:07 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 22:44:09 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_strjoin(char *s1, char *s2)
 		i++;
 	}
 	j = 0;
-	//while (s2[j] != '\0' && s2[j] != '\n')
 	while (s2[j] != '\0')
 	{
 		conc[i + j] = s2[j];
@@ -74,11 +73,10 @@ int	get_extract_line(char **line, char *str, int stat_read)
 }
 
 // Manage the read till the next '\n' and return the line to the main
-int	get_next_line(int fd, char **line, char *limiter)
+int	get_next_line(int fd, char **line, char *limiter, int stat_read)
 {
 	static char	buffer[BUFFER_SIZE] = {0};
 	int			full_line;
-	int			stat_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 	{
@@ -86,7 +84,6 @@ int	get_next_line(int fd, char **line, char *limiter)
 		return (-1);
 	}
 	full_line = 0;
-	stat_read = 0;
 	while (full_line == 0)
 	{
 		if (buffer[0] == '\0')
@@ -96,7 +93,8 @@ int	get_next_line(int fd, char **line, char *limiter)
 			stat_read = read(fd, buffer, BUFFER_SIZE);
 			if (stat_read == 0)
 				return (0);
-			if (get_lglen(buffer) - 1 == ft_strlen(limiter) && ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
+			if (get_lglen(buffer) - 1 == ft_strlen(limiter)
+				&& ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
 				return (-1);
 		}
 		full_line = get_extract_line(line, buffer, stat_read);

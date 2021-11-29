@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 17:12:24 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 13:15:17 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,12 @@ void	clean_arr(t_struct *st)
 			arg++;
 		free(st->arr[tr].cmd[arg]);
 		st->arr[tr].cmd[arg] = (char *)0;
-		//st->arr[tr].skip_space = 0;
 		arg++;
 		offset = 0;
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE_clean_arr st->arr[%d].cmd[%d] %p\n", tr, arg, st->arr[tr].cmd[arg]);
 			free(st->arr[tr].cmd[arg]);
-			//st->arr[tr].cmd[arg] = 0;
 			offset++;
 			arg++;
 		}

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 09:57:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 22:47:18 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	print_cmd(t_struct *st)
 	while (tr < st->nb_cmd)
 	{
 		arg = 0;
-		//printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
-		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
-		//printf("Limiter: %s\n", st->arr[tr].limiter);
+		printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
+		printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
+		printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
+			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
-		//printf("\n");
+		printf("\n");
 		tr++;
 	}
 }
@@ -41,7 +41,6 @@ static void	init_st(int argc, char **argv, t_struct *st)
 {
 	st->argc = argc;
 	st->argv = argv;
-	st->nb_cmd = 0;
 	st->arg = 0;
 	st->tr = 0;
 	st->digit = 0;
@@ -130,7 +129,6 @@ int	main(int argc, char **argv, char **envp)
 				init_st(argc, argv, &st);
 				if (extract_cmd(&st) == 0)
 				{
-					print_cmd(&st);				//norme OK without this line
 					if (launch_cmd(&st) != 0)
 						st.res = 1;
 				}
