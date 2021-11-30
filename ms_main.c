@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 09:57:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:50:13 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,9 @@ int	main(int argc, char **argv, char **envp)
 		if (st.input && st.input[0] != '\0')
 		{
 			add_history(st.input);
+			init_st(argc, argv, &st);
 			if (manage_expand_variable(&st) == 0)
 			{
-				init_st(argc, argv, &st);
 				if (extract_cmd(&st) == 0)
 				{
 					print_cmd(&st);				//norme OK without this line
