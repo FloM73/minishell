@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 21:55:32 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 22:35:48 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ int	add_path(t_struct *st)
 	tr = 0;
 	while (tr <= st->tr)
 	{
-			if (st->arr[tr].cmd_type != BUILTIN)
+		if (st->arr[tr].cmd_type != BUILTIN)
+		{
+			st->arr[tr].cmd[0] = test_path(arr_path, st->arr[tr].cmd[0]);
+			if (!st->arr[tr].cmd[0])
 			{
-				st->arr[tr].cmd[0] = test_path(arr_path, st->arr[tr].cmd[0]);
-				if (!st->arr[tr].cmd[0])
-				{
-					free_arr(arr_path);
-					perror("Command-not-found\n");
-					return (-1);
-				}
+				free_arr(arr_path);
+				perror("Command-not-found\n");
+				return (-1);
 			}
+		}
 		tr++;
 	}
 	free_arr(arr_path);

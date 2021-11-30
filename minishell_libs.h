@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/29 09:23:25 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 23:00:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct structure
 	int		len;
 	char	**env;
 	t_cmd	*arr;
-	int		skip_space;
 	int		argc;
 	char	**argv;
 	int		cancel;
@@ -113,6 +112,7 @@ int		manage_simple_quote(t_struct *st, char *str, int i);
 int		manage_doppel_quote(t_struct *st, char *str, int i);
 int		launch_expand_variable(t_struct *st, char *str, int i);
 //parsing: expand_variable.c
+int		count_pipe_skip_space(t_struct *st, char *str, int i);
 int		expand_variable(t_struct *st, char *str, int i);
 int		expand_special_variable(t_struct *st, char *str, int i);
 // parsing : expand_variable_utils.c
@@ -125,6 +125,12 @@ void	write_variable(t_struct *st, int e, int j);
 int		extract_cmd(t_struct *st);
 // parsing: 2_parse_input.c
 int		parse_input(t_struct *st);
+// // parsing: 2_parse_input_utils.c
+int		parse_space(t_struct *st, int i);
+int		parse_pipe(t_struct *st, int i);
+int		parse_redirection(t_struct *st, int i);
+int		parse_quote(t_struct *st, char *input, int i, int begin);
+int		parse_char(t_struct *st, int i, char c);
 // parsing: 3_extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
@@ -145,11 +151,11 @@ int		transfert_buf_input(t_struct *st);
 void clean_arr(t_struct *st);
 
 // parsing: extract_utils.c
-char	*malloc_file_name(char **file, int len);
-int		test_file_descriptor(int fd, char *name);
+char	*malloc_f_name(char **file, int len);
+int		test_fd(int fd, char *name);
 int		open_outfile(char *name, int append);
 void	remove_redirection(char *input, int nb, char c);
-
+int		skip_till(char *input, int from, char c, int max);
 
 //error.c
 int		ms_error(char *txt, int	exit_level, t_struct *st);
@@ -184,7 +190,7 @@ void	free_env(t_struct *st);
 int		read_till_limiter(t_struct *st, int tr);
 char	*get_strjoin(char *s1, char *s2);
 int		get_extract_line(char **line, char *str, int stat_read);
-int		get_next_line(int fd, char **line, char *limiter);
+int		get_next_line(int fd, char **line, char *limiter, int stat_read);
 char	*gnl_strchr(const char *s, int c);
 void	*gnl_memmove(void *dest, const void *src, size_t n);
 size_t	get_lglen(const char *s);

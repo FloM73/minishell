@@ -14,10 +14,16 @@
 
 int	manage_expand_variable(t_struct *st)
 {
+	int	i;
+
+	i = 0;
 	st->force_expand = -1;
+	st->nb_cmd = 1;
 	if (initialise_buf(st) == -1)
 		return (-1);
-	bufferize_input(st, st->input, 0);
+	while (ft_isspace(st->input[i]) == 1)
+		i++;
+	bufferize_input(st, st->input, i);
 	transfert_buf_input(st);
 	if (st->input && st->input[0] != '\0')
 		return (0);

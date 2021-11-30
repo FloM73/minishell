@@ -18,7 +18,6 @@ int	initialise_buf(t_struct *st)
 		return (-1);
 	st->all = 0;
 	st->exp = 1;
-	st->skip_space = 0;
 	st->cancel = 0;
 	st->buf = ft_calloc(1, sizeof(char *));
 	return (0);

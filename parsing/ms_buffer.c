@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/27 19:12:05 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 15:18:39 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,7 @@ char	*add_char_to_buf(t_struct *st, char c)
 {
 	int		j;
 	char	*new_buf;
-	int		len;
 
-	if (st->skip_space == 1 && c == ' ')
-	{
-		len = ft_strlen(st->buf);
-		if (st->buf[len - 1] == ' ' || len == 0)
-		{
-			st->skip_space = 0;
-			return (st->buf);
-		}
-	}
 	new_buf = calloc_buf(st->buf, 2);
 	if (!new_buf)
 		return (NULL);

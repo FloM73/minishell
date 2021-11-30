@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/28 16:03:42 by flormich         ###   ########.fr       */
+/*   Updated: 2021/11/29 11:38:45 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ void	bufferize_input(t_struct *st, char *str, int i)
 		else
 		{
 			st->buf = add_char_to_buf(st, str[i]);
-			while (ft_isspace(str[i]) == 1 && str[i + 1] != '\0'
-				&& ft_isspace(str[i + 1]) == 1)
-				i++;
+			i = count_pipe_skip_space(st, str, i);
 		}
 		i++;
 	}
