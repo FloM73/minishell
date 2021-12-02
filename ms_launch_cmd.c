@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/26 17:13:16 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/01 09:06:33 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,29 @@ static void	manage_fd(t_struct *st, int *fd, int *next_fd)
 	close(next_fd[WRITE]);
 }
 
-int	launch_cmd(t_struct *st)
+static int	launch_pipe(t_struct*st, int *fd)
 {
 	pid_t	pid;
-	int		fd[2];
-	int		next_fd[2];
 	int		status;
+	int		next_fd[2];
+
+	if (pipe(next_fd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid < 0)
+		perror ("Failed to create Child");
+	if (pid == 0)
+		exec_child(st, st->tr, fd, next_fd);
+	manage_fd(st, fd, next_fd);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		st->res = WEXITSTATUS(status);
+	return (0);
+}
+
+int	launch_cmd(t_struct *st)
+{
+	int		fd[2];
 
 	if (pipe(fd) == -1)
 		return (-1);
@@ -73,17 +90,8 @@ int	launch_cmd(t_struct *st)
 			st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 		else
 		{
-			if (pipe(next_fd) == -1)
+			if (launch_pipe(st, fd) == -1)
 				return (-1);
-			pid = fork();
-			if (pid < 0)
-				perror ("Failed to create Child");
-			if (pid == 0)
-				exec_child(st, st->tr, fd, next_fd);
-			manage_fd(st, fd, next_fd);
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				st->res = WEXITSTATUS(status);
 		}
 		st->tr++;
 	}
