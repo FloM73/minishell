@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/01 09:21:07 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:07:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_lengh_name(t_struct *st, int i)
 	return (len);
 }
 
-int	test_synthaxe(t_struct *st, int i, e_red red_type)
+int	test_synthaxe(t_struct *st, int i, t_red red_type)
 {
 	if (st->input[i] == '>')
 	{

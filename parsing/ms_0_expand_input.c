@@ -6,26 +6,26 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 09:33:00 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:38:31 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-int	bufferize_input(t_struct *st, char *str, int i)
+int	bufferize_input(t_struct *st, char *str, int i, int test_quote)
 {
 	while (str[i] != '\0' && i != -1)
 	{
-		if (str[i] == '\\' && (str[i + 1] == '$' || str[i] == '~'))
-			st->buf = add_char_to_buf(st, str[i++]);
+		if (str[i] == '\\' && (str[i + 1] == '$' || str[i + 1] == '~'))
+			i = do_not_expand_variable(st, str, i);
 		else if ((str[i] == '$' && is_variable_end(st, str[i + 1]) == 0)
 			|| (str[i] == '~' && is_variable_end(st, str[i + 1]) == 1)
 			|| (str[i] == '$' && is_special_variable(str[i + 1]) == 1))
 			i = launch_expand_variable(st, str, i);
 		else if (str[i] == '\'')
-			i = manage_simple_quote(st, str, i);
+			i = manage_simple_quote(st, str, i, test_quote);
 		else if (str[i] == '"')
-			i = manage_doppel_quote(st, str, i);
+			i = manage_doppel_quote(st, str, i, test_quote);
 		else
 		{
 			st->buf = add_char_to_buf(st, str[i]);
@@ -39,7 +39,7 @@ int	bufferize_input(t_struct *st, char *str, int i)
 	return (0);
 }
 
-int	manage_doppel_quote(t_struct *st, char *str, int i)
+int	manage_doppel_quote(t_struct *st, char *str, int i, int test_quote)
 {
 	st->buf = add_char_to_buf(st, str[i++]);
 	while (str[i] != '"' && str[i] != '\0')
@@ -55,23 +55,26 @@ int	manage_doppel_quote(t_struct *st, char *str, int i)
 			st->buf = add_char_to_buf(st, str[i++]);
 		}
 	}
-	if (str[i] == '"')
+	if (str[i] == '"' || test_quote == 0)
 	{
-		st->buf = add_char_to_buf(st, '"');
+		if (str[i] == '"')
+			st->buf = add_char_to_buf(st, '"');
 		return (i);
 	}
 	ms_error_synthaxe('"');
 	return (-2);
 }
 
-int	manage_simple_quote(t_struct *st, char *str, int i)
+int	manage_simple_quote(t_struct *st, char *str, int i, int test_quote)
 {
 	st->buf = add_char_to_buf(st, str[i++]);
-	while (str[i] != '\'' && str[i] != '\0')
+	while ((str[i] != '\'' && str[i] != '\0')
+		|| (str[i] == ' ' && test_quote == 0))
 		st->buf = add_char_to_buf(st, str[i++]);
-	if (str[i] == '\'')
+	if (str[i] == '\'' || test_quote == 0)
 	{
-		st->buf = add_char_to_buf(st, '\'');
+		if (str[i] == '\'')
+			st->buf = add_char_to_buf(st, '\'');
 		return (i);
 	}
 	ms_error_synthaxe('\'');

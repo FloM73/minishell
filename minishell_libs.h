@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/02 09:45:08 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:07:36 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,20 @@ typedef enum command_typ
 	SHELL,
 	BUILTIN,
 	IGNORE
-}	e_cmd;
+}	t_cmdt;
 
 typedef enum redirection_typ
 {
 	INFILE,
 	OUTFILE,
 	LIMITER
-}	e_red;
+}	t_red;
 
 typedef struct command
 {
 	char	**cmd;
 	int		nb_arg;
-	e_cmd	cmd_type;
+	t_cmdt	cmd_type;
 	int		(*f_ptr)(void *st, void *arr);
 	int		fd_in;
 	char	*name_in;
@@ -99,6 +99,7 @@ typedef struct structure
 	char	**argv;
 	int		cancel;
 	int		res;
+	int		res_dash;
 }	t_struct;
 
 // main.c
@@ -106,9 +107,9 @@ void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
 // parsing: 0_expand_input.c
-int		bufferize_input(t_struct *st, char *str, int i);
-int		manage_simple_quote(t_struct *st, char *str, int i);
-int		manage_doppel_quote(t_struct *st, char *str, int i);
+int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
+int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
+int		manage_doppel_quote(t_struct *st, char *str, int i, int test_quote);
 int		launch_expand_variable(t_struct *st, char *str, int i);
 //parsing: expand_variable.c
 int		count_pipe_skip_space(t_struct *st, char *str, int i);
@@ -120,6 +121,8 @@ int		find_match(t_struct *st, int e, char *var, int pos);
 int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
 void	write_variable(t_struct *st, int e, int j);
+// parsing : expand_variable_utils.c
+int		do_not_expand_variable(t_struct *st, char *str, int i);
 // parsing: 1_extract_cmd.c
 int		extract_cmd(t_struct *st);
 // parsing: 2_parse_input.c
@@ -136,7 +139,7 @@ int		parse_double_quote(t_struct *st, char *input, int i);
 // parsing: 3_extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
-int		test_synthaxe(t_struct *st, int i, e_red redirection_typ);
+int		test_synthaxe(t_struct *st, int i, t_red redirection_typ);
 // parsing: extract_file.c
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
