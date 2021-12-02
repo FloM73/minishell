@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 09:06:57 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:55:34 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ int	manage_expand_variable(t_struct *st)
 	while (ft_isspace(st->input[i]) == 1)
 		i++;
 	if (bufferize_input(st, st->input, i) == -1)
+	{
+		free(st->buf);
+		free(st->input);
 		return (-1);
+	}
 	transfert_buf_input(st);
 	if (st->input && st->input[0] != '\0')
 		return (0);
