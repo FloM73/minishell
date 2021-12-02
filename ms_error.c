@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 22:46:23 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:10:11 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ms_error(char *txt, int exit_level, t_struct *st)
 {
 	perror(txt);
-	st = st;
+	st->tr = st->tr;
 	if (exit_level == 0)
 		return (-1);
 	return (0);
@@ -35,6 +35,8 @@ void	ms_error_synthaxe(char c)
 		printf("-bash: ${}: bad substitution\n");
 	else if (c == 't')
 		printf("-bash: cd: too many arguments\n");
+	else if (c == '"' || c == '\'')
+		printf("-bash: unclosed quote\n");
 	else
 		printf("-bash: syntax error near unexpected token '%c'\n", c);
 }

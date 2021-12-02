@@ -6,13 +6,12 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 22:26:20 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/01 09:21:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell_libs.h"
 
-// only allow alphanumeric => to implement
 int	count_lengh_name(t_struct *st, int i)
 {
 	int	len;

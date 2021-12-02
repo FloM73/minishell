@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:58:31 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 22:35:09 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:34:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,25 @@ int	open_outfile(char *name, int append)
 
 // Skipp the portion in-between "" or ''
 // (used by count_arg)
-int	skip_till(char *input, int from, char c, int max)
+int	skip_double_quote(char *input, int i, int max)
 {
-	while (input[from] != c && from <= max)
+	while (i <= max
+		&& (input[i] != '"' || (input[i] == '"' && input[i - 1] == '\\')))
 	{
-		if (from == max || input[from] == '\0')
-			return (from);
-		from++;
+		if (i == max || input[i] == '\0')
+			return (i);
+		i++;
 	}
-	return (from);
+	return (i + 1);
+}
+
+int	skip_simple_quote(char *input, int i, int max)
+{
+	while (i <= max && input[i] != '\'')
+	{
+		if (i == max || input[i] == '\0')
+			return (i);
+		i++;
+	}
+	return (i + 1);
 }

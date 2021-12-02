@@ -18,7 +18,6 @@ static t_cmd	*create_arr(t_struct *st)
 	t_cmd	*arr;
 
 	arr = malloc(st->nb_cmd * sizeof(t_cmd));
-	//printf("MALLOC extract_cmd st->arr = %p - nb_cmd = %d\n", arr, st->nb_cmd);
 	if (!arr)
 		ms_error("Fail to malloc arr_st_arg in ***parse_st", 0, st);
 	return (arr);
@@ -29,6 +28,7 @@ int	extract_cmd(t_struct *st)
 {
 	int	sucess;
 
+	sucess = 0;
 	if (!st->input)
 		sucess = -1;
 	else
