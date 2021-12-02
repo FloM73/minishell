@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/29 21:54:00 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/02 16:37:43 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ static int	update_vars(t_struct *st)
 	return (0);
 }
 
+static int	dash_syntax(t_struct *st, t_cmd *arr)
+{
+	char		*old_tmp;
+
+	old_tmp = ms_get_env(st->env, "OLDPWD");
+	if (!old_tmp)
+	{
+		write(2, "minishell: cd: OLDPWD not set\n", 31);
+		return (1);
+	}
+	free(arr->cmd[1]);
+	arr->cmd[1] = ft_strdup(old_tmp);
+	return (0);
+}
+
 int	cd(void *stt, void *cmd)
 {
 	t_cmd		*arr;
@@ -46,6 +61,11 @@ int	cd(void *stt, void *cmd)
 	{
 		st->nb_cmd = 0;
 		return (1);
+	}
+	if (arr->cmd[1][0] == '-' && ft_strlen(arr->cmd[1]) == 1)
+	{
+		if (dash_syntax(st, arr))
+			return (1);
 	}
 	if (chdir(arr->cmd[1]) < 0)
 	{

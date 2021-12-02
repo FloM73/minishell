@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
 /*   Updated: 2021/12/02 23:04:16 by flormich         ###   ########.fr       */
