@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 11:43:31 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:16:54 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	expand_special_variable(t_struct *st, char *str, int i)
 		st->buf = add_number_to_buf(st, getpid());
 	else if (str[i + 1] == '?')
 		st->buf = add_number_to_buf(st, st->res);
+	else if (str[i + 1] == '#')
+		st->buf = add_number_to_buf(st, st->res_dash);
 	else if (str[i + 1] == '"')
 	{
 		st->buf = add_char_to_buf(st, '$');

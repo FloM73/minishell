@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 09:55:34 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:17:11 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	manage_expand_variable(t_struct *st)
 		return (-1);
 	while (ft_isspace(st->input[i]) == 1)
 		i++;
-	if (bufferize_input(st, st->input, i) == -1)
+	if (bufferize_input(st, st->input, i, 1) == -1)
 	{
 		free(st->buf);
 		free(st->input);
@@ -56,7 +56,8 @@ int	is_variable_end(t_struct *st, unsigned char c)
 
 int	is_special_variable(unsigned char c)
 {
-	if (c == '$' || c == '?' || c == '@' || c == '*' || c == '{' || c == '"')
+	if (c == '$' || c == '?' || c == '@' || c == '*' || c == '{'
+		|| c == '"' || c == '#')
 		return (1);
 	return (0);
 }

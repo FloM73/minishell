@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 23:01:21 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:07:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	init_st(int argc, char **argv, t_struct *st)
 	st->exp = 1;
 	st->force_expand = -1;
 	st->len = (int)ft_strlen(st->input);
+	st->res_dash = argc - 1;
 }
 
 void	free_memory(t_struct *st)
