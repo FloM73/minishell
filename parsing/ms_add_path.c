@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 22:35:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/01 09:19:18 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@ static void	free_arr(char **arr)
 	tr = 0;
 	while (*(arr + tr) != 0)
 	{
-		//printf("FREE_arr arr[%d] %p\n", tr, arr[tr]);
 		free(arr[tr]);
 		tr++;
 	}
-	//printf("FREE_arr arr[%d] %p\n", tr, arr[tr]);
 	free(arr[tr]);
-	//printf("FREE_arr arr %p\n", arr);
 	free(arr);
 }
 
@@ -90,6 +87,7 @@ static char	*test_path(char **arr_path, char *cmd)
 		}
 		free(str_cmd);
 	}
+	free(cmd);
 	return (NULL);
 }
 

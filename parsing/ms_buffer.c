@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 15:18:39 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/01 12:56:40 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	transfert_buf_input(t_struct *st)
 		i++;
 	}
 	st->input[i] = '\0';
+	st->len = i;
 	free(tmp);
 	free(st->buf);
 	return (0);

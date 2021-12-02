@@ -6,13 +6,13 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 11:38:45 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:33:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-void	bufferize_input(t_struct *st, char *str, int i)
+int	bufferize_input(t_struct *st, char *str, int i)
 {
 	while (str[i] != '\0' && i != -1)
 	{
@@ -33,7 +33,10 @@ void	bufferize_input(t_struct *st, char *str, int i)
 		}
 		i++;
 	}
+	if (i == -1)
+		return (-1);
 	st->buf = add_char_to_buf(st, '\0');
+	return (0);
 }
 
 int	manage_doppel_quote(t_struct *st, char *str, int i)
@@ -52,8 +55,13 @@ int	manage_doppel_quote(t_struct *st, char *str, int i)
 			st->buf = add_char_to_buf(st, str[i++]);
 		}
 	}
-	st->buf = add_char_to_buf(st, '"');
-	return (i);
+	if (str[i] == '"')
+	{
+		st->buf = add_char_to_buf(st, '"');
+		return (i);
+	}
+	ms_error_synthaxe('"');
+	return (-2);
 }
 
 int	manage_simple_quote(t_struct *st, char *str, int i)
@@ -61,8 +69,13 @@ int	manage_simple_quote(t_struct *st, char *str, int i)
 	st->buf = add_char_to_buf(st, str[i++]);
 	while (str[i] != '\'' && str[i] != '\0')
 		st->buf = add_char_to_buf(st, str[i++]);
-	st->buf = add_char_to_buf(st, '\'');
-	return (i);
+	if (str[i] == '\'')
+	{
+		st->buf = add_char_to_buf(st, '\'');
+		return (i);
+	}
+	ms_error_synthaxe('\'');
+	return (-2);
 }
 
 int	launch_expand_variable(t_struct *st, char *str, int i)

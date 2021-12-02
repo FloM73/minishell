@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/29 23:00:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:45:08 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ typedef enum command_typ
 	SHELL,
 	BUILTIN,
 	IGNORE
-} e_cmd;
+}	e_cmd;
 
 typedef enum redirection_typ
 {
 	INFILE,
 	OUTFILE,
 	LIMITER
-} e_red;
+}	e_red;
 
 typedef struct command
 {
@@ -77,7 +77,7 @@ typedef struct command
 	char	*limiter;
 	int		fd_out;
 	char	*name_out;
-} t_cmd;
+}	t_cmd;
 
 typedef struct structure
 {
@@ -99,15 +99,14 @@ typedef struct structure
 	char	**argv;
 	int		cancel;
 	int		res;
-} t_struct;
+}	t_struct;
 
 // main.c
 void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
-
 // parsing: 0_expand_input.c
-void	bufferize_input(t_struct *st, char *str, int i);
+int		bufferize_input(t_struct *st, char *str, int i);
 int		manage_simple_quote(t_struct *st, char *str, int i);
 int		manage_doppel_quote(t_struct *st, char *str, int i);
 int		launch_expand_variable(t_struct *st, char *str, int i);
@@ -125,12 +124,15 @@ void	write_variable(t_struct *st, int e, int j);
 int		extract_cmd(t_struct *st);
 // parsing: 2_parse_input.c
 int		parse_input(t_struct *st);
-// // parsing: 2_parse_input_utils.c
+// parsing: 2_parse_input_utils.c
 int		parse_space(t_struct *st, int i);
 int		parse_pipe(t_struct *st, int i);
 int		parse_redirection(t_struct *st, int i);
-int		parse_quote(t_struct *st, char *input, int i, int begin);
 int		parse_char(t_struct *st, int i, char c);
+// parsing: 2_parse_input_utils_2.c
+int		parse_quote(t_struct *st, char *input, int i);
+int		parse_simple_quote(t_struct *st, char *input, int i);
+int		parse_double_quote(t_struct *st, char *input, int i);
 // parsing: 3_extract_redirection.c
 int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
@@ -146,34 +148,28 @@ int		add_path(t_struct *st);
 char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 int		transfert_buf_input(t_struct *st);
-
 // parsing: clean_arr
-void clean_arr(t_struct *st);
+void	clean_arr(t_struct *st);
 
 // parsing: extract_utils.c
 char	*malloc_f_name(char **file, int len);
 int		test_fd(int fd, char *name);
 int		open_outfile(char *name, int append);
-void	remove_redirection(char *input, int nb, char c);
-int		skip_till(char *input, int from, char c, int max);
-
+int		skip_double_quote(char *input, int i, int max);
+int		skip_simple_quote(char *input, int i, int max);
 //error.c
-int		ms_error(char *txt, int	exit_level, t_struct *st);
+int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);
-
 // ms_launch_cmd.c
 int		launch_cmd(t_struct *st);
-
 // echo: ms_echo.c
 int		run_echo(void *st, void *cmd);
 int		initialise_buf(t_struct *st);
 void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i);
 int		is_writable(t_struct *st, char c, char c_next);
-
-// echo: ms_expand_variable_str
-int		launch_bufferize_variable_str(t_struct *st, char *str, int pos_s);
-void	bufferize_str(t_struct *st, char *str);
-
+// echo: ms_echo_utils.c
+int		echo_double_quote(t_struct *st, t_cmd *arr, int arg, int i);
+int		echo_simple_quote(t_struct *st, t_cmd *arr, int arg, int i);
 // env
 int		ms_run_env(void *stt, void *cmd);
 int		ms_run_export(void *stt, void *cmd);
@@ -185,7 +181,6 @@ char	*ms_get_env(char **env, char *varname);
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
 void	free_env(t_struct *st);
-
 // gnl
 int		read_till_limiter(t_struct *st, int tr);
 char	*get_strjoin(char *s1, char *s2);

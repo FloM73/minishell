@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 21:50:38 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/02 09:31:29 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	initialise_buf(t_struct *st)
 {
 	if (st->tr < st->nb_cmd - 1 && st->arr[st->tr].fd_out == 1)
 		return (-1);
-	st->all = 0;
-	st->exp = 1;
 	st->cancel = 0;
 	st->buf = ft_calloc(1, sizeof(char *));
 	return (0);
@@ -72,21 +70,9 @@ void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i)
 	while (arr->cmd[arg][i] != '\0' && st->cancel == 0)
 	{
 		if (arr->cmd[arg][i] == '"')
-		{
-			i++;
-			while (arr->cmd[arg][i] != '"' && arr->cmd[arg][i] != '\0')
-			{
-				if (arr->cmd[arg][i] == '\\' && arr->cmd[arg][i + 1] == '"')
-					i++;
-				st->buf = add_char_to_buf(st, arr->cmd[arg][i++]);
-			}
-		}
+			i = echo_double_quote(st, arr, arg, i + 1);
 		else if (st->all == 0 && st->exp == 1 && arr->cmd[arg][i] == '\'')
-		{
-			i++;
-			while (arr->cmd[arg][i] != '\'' && arr->cmd[arg][i] != '\0')
-				st->buf = add_char_to_buf(st, arr->cmd[arg][i++]);
-		}
+			i = echo_simple_quote(st, arr, arg, i + 1);
 		else if (is_writable(st, arr->cmd[arg][i], arr->cmd[arg][i + 1]) == 1)
 			st->buf = add_char_to_buf(st, arr->cmd[arg][i]);
 		i++;
