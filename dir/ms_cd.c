@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/29 21:54:00 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/01 11:23:15 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ int	cd(void *stt, void *cmd)
 	{
 		st->nb_cmd = 0;
 		return (1);
+	}
+	if (arr->cmd[1][0] == '-' && ft_strlen(arr->cmd[1]) == 1)
+	{
+		free(arr->cmd[1]);
+		arr->cmd[1] = ft_strdup(ms_get_env(st->env, "OLDPWD"));
 	}
 	if (chdir(arr->cmd[1]) < 0)
 	{
