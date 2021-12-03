@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/02 23:07:36 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:19:55 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct structure
 void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
+void	set_red_shell(t_struct *st, int which_cmd, int *fd, int *next_fd);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
@@ -118,8 +119,6 @@ int		expand_special_variable(t_struct *st, char *str, int i);
 // parsing : expand_variable_utils.c
 int		manage_expand_variable(t_struct *st);
 int		find_match(t_struct *st, int e, char *var, int pos);
-int		is_variable_end(t_struct *st, unsigned char c);
-int		is_special_variable(unsigned char c);
 void	write_variable(t_struct *st, int e, int j);
 // parsing : expand_variable_utils.c
 int		do_not_expand_variable(t_struct *st, char *str, int i);
@@ -153,13 +152,15 @@ char	*add_number_to_buf(t_struct *st, int nb);
 int		transfert_buf_input(t_struct *st);
 // parsing: clean_arr
 void	clean_arr(t_struct *st);
-
 // parsing: extract_utils.c
 char	*malloc_f_name(char **file, int len);
 int		test_fd(int fd, char *name);
 int		open_outfile(char *name, int append);
 int		skip_double_quote(char *input, int i, int max);
 int		skip_simple_quote(char *input, int i, int max);
+// parsing: utils_isvariable.c
+int		is_variable_end(t_struct *st, unsigned char c);
+int		is_special_variable(unsigned char c);
 //error.c
 int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);
@@ -173,17 +174,23 @@ int		is_writable(t_struct *st, char c, char c_next);
 // echo: ms_echo_utils.c
 int		echo_double_quote(t_struct *st, t_cmd *arr, int arg, int i);
 int		echo_simple_quote(t_struct *st, t_cmd *arr, int arg, int i);
-// env
+// env: ms_env.c
+void	ms_env(char **env);
+//env: ms_export.c
+int		ms_export(char *new_var, t_struct *st);
+//env: ms_free_env
+void	free_env(t_struct *st);
+//env: ms_get_env.c
+char	*ms_get_env(char **env, char *varname);
+//env: ms_manage_env.c
 int		ms_run_env(void *stt, void *cmd);
 int		ms_run_export(void *stt, void *cmd);
 int		ms_run_unset(void *stt, void *cmd);
-void	ms_env(char **env);
-int		ms_export(char *new_var, t_struct *st);
+//env: ms_unset.c
 int		ms_unset(char *var_name, t_struct *st);
-char	*ms_get_env(char **env, char *varname);
+//dir: ms_cd & ms_pwd
 int		cd(void *stt, void *cmd);
 int		pwd(void *stt, void *cmd);
-void	free_env(t_struct *st);
 // gnl
 int		read_till_limiter(t_struct *st, int tr);
 char	*get_strjoin(char *s1, char *s2);

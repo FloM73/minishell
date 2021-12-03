@@ -6,44 +6,17 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/01 09:06:33 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 14:52:19 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-// STDIN = 0, STDOUT = 1, STDERR = 2
-static void	set_redirection(t_struct *st, int which_cmd, int *fd, int *next_fd)
-{
-	if (st->nb_cmd == 1)
-	{
-		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
-		dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
-	}
-	else if (which_cmd == 0)
-	{
-		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
-		dup2(next_fd[WRITE], STDOUT_FILENO);
-	}
-	else if (which_cmd == st->nb_cmd - 1)
-	{
-		dup2(fd[READ], STDIN_FILENO);
-		dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
-	}
-	else
-	{
-		dup2(fd[READ], STDIN_FILENO);
-		dup2(next_fd[WRITE], STDOUT_FILENO);
-	}
-	close(fd[READ]);
-	close(fd[WRITE]);
-}
-
 static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
 {
 	if (st->arr[tr].limiter != NULL)
 		read_till_limiter(st, tr);
-	set_redirection(st, st->tr, fd, next_fd);
+	set_red_shell(st, st->tr, fd, next_fd);
 	if (st->arr[tr].fd_out != 1)
 		dup2(st->arr[tr].fd_out, STDOUT_FILENO);
 	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, NULL) == -1)
