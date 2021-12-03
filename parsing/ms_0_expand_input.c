@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 22:38:31 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:34:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ int	bufferize_input(t_struct *st, char *str, int i, int test_quote)
 		else if (str[i] == '"')
 			i = manage_doppel_quote(st, str, i, test_quote);
 		else
-		{
-			st->buf = add_char_to_buf(st, str[i]);
 			i = count_pipe_skip_space(st, str, i);
-		}
 		i++;
 	}
 	if (i == -1)
