@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 23:08:13 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/04 11:38:27 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	print_cmd(t_struct *st)
 		//printf("Limiter: %s\n", st->arr[tr].limiter);
 		while (arg <= st->arr[tr].nb_arg)
 		{
-			printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
+			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
 			arg++;
 		}
 		//printf("\n");
