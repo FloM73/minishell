@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/03 13:19:55 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:28:24 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 # define MINISHELL_LIBS_H
 # define PATH_MAX 4097
 # define BUFFER_SIZE 100
-
-// flo= LIMITER text save
-// flo= many echo pipe
-// Pietro= finish unset
-// Pietro= exit
-// both= basically more test (for example: signal)
-// both= test the pipes
-// leak test
-// $?
-// LIMITER: make the code to handel the LIMITER
-// we skip = VAR=x
-// pipe : only for the shell function - not for our BUILTIN?
 
 # include <signal.h>
 # include <stdio.h>
@@ -140,6 +128,7 @@ int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
 int		test_synthaxe(t_struct *st, int i, t_red redirection_typ);
 // parsing: extract_file.c
+int		create_tmp(t_struct *st, int tr);
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
 int		extract_outfile(t_struct *st, int i);

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 14:31:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:46:44 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	run_echo(void *stt, void *cmd)
 			if (pos_arg == 1)
 				write(arr->fd_out, "\n", 1);
 		}
-		free(st->buf);
+		//free(st->buf);
 	}
 	return (0);
 }
