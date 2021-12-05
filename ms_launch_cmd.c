@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 22:57:19 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:37:45 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,7 @@ static int	launch_pipe(t_struct*st, int *fd)
 		st->res = WEXITSTATUS(status);
 	return (0);
 }
-/*
-static int	create_tmp_fd(t_struct *st, int tr)
-{
-	int	i;
 
-	if (create_tmp(st, tr) == -1)
-		return (-1);
-	i = 0;
-	while (st->buf[i] != '\0')
-	{
-		write(st->arr[tr].fd_in, &(st->buf[i]), 1);
-		st->buf[i++] = '\0';
-	}
-	free(st->buf);
-	write(1, "1\n", 2);
-	close(st->arr[tr].fd_in);
-	return (open(st->arr[st->tr].name_in, O_RDWR, 0777));
-}
-*/
 int	launch_cmd(t_struct *st)
 {
 	int		fd[2];
@@ -78,11 +60,7 @@ int	launch_cmd(t_struct *st)
 	while (st->tr < st->nb_cmd)
 	{
 		if (st->arr[st->tr].cmd_type == BUILTIN)
-		{
-			st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
-			//if (st->arr[st->tr + 1].cmd_type == SHELL)
-			//	fd[WRITE] = create_tmp_fd(st, st->tr);
-		}
+			launch_builtin(st);
 		else
 		{
 			if (launch_pipe(st, fd) == -1)

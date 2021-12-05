@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/04 11:38:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:50:53 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	init_st(int argc, char **argv, t_struct *st)
 	st->force_expand = -1;
 	st->len = (int)ft_strlen(st->input);
 	st->res_dash = argc - 1;
+	st->fd_tmp = 0;
 }
 
 void	free_memory(t_struct *st)
@@ -69,6 +70,7 @@ void	free_memory(t_struct *st)
 			unlink("tmp_limite");
 			free(st->arr[tr].limiter);
 		}
+		unlink("tmp_fd");
 		while (arg <= st->arr[tr].nb_arg)
 		{
 			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
