@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 14:52:19 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:37:45 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	launch_cmd(t_struct *st)
 	while (st->tr < st->nb_cmd)
 	{
 		if (st->arr[st->tr].cmd_type == BUILTIN)
-			st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
+			launch_builtin(st);
 		else
 		{
 			if (launch_pipe(st, fd) == -1)

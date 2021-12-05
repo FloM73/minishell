@@ -6,11 +6,20 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 18:28:43 by flormich          #+#    #+#             */
-/*   Updated: 2021/11/29 22:39:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:30:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
+
+int	create_tmp(t_struct *st, int tr)
+{
+	st->arr[tr].name_in = ft_strdup("tmp_limite");
+	st->arr[tr].fd_in = open(st->arr[tr].name_in, O_CREAT | O_RDWR, 0777);
+	if (test_fd(st->arr[st->tr].fd_in, "tmp_limite") == -1)
+		return (-1);
+	return (0);
+}
 
 int	extract_limiter(t_struct *s, int i)
 {
@@ -28,9 +37,7 @@ int	extract_limiter(t_struct *s, int i)
 	while (j < len)
 		s->arr[s->tr].limiter[j++] = s->input[i++];
 	s->arr[s->tr].limiter[j] = '\0';
-	s->arr[s->tr].name_in = ft_strdup("tmp_limite");
-	s->arr[s->tr].fd_in = open(s->arr[s->tr].name_in, O_CREAT | O_RDWR, 0777);
-	if (test_fd(s->arr[s->tr].fd_in, "tmp_limite") == -1)
+	if (create_tmp(s, s->tr) == -1)
 		return (-1);
 	return (i);
 }

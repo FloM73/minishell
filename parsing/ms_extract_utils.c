@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:58:31 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 09:34:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 21:34:42 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	skip_double_quote(char *input, int i, int max)
 			return (i);
 		i++;
 	}
-	return (i + 1);
+	return (i);
 }
 
 int	skip_simple_quote(char *input, int i, int max)
@@ -64,5 +64,5 @@ int	skip_simple_quote(char *input, int i, int max)
 			return (i);
 		i++;
 	}
-	return (i + 1);
+	return (i);
 }

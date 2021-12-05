@@ -3,20 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/02 16:37:43 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/05 22:08:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
+static int	update_prompt(t_struct *st, char *pfad)
+{
+	char	*tmp;
+	char	*home;
+	char	*tmp2;
+	int		len;
+
+	tmp = st->prompt;
+	tmp2 = pfad;
+	home = ms_get_env(st->env, "HOME");
+	len = ft_strlen(home);
+	if (home)
+	{
+		if (ft_strncmp(pfad, home, len) == 0)
+			tmp2 = ft_strjoin("~", pfad + len);
+	}
+	st->prompt = ft_strjoin(tmp2, "$ ");
+	if (tmp2 != pfad)
+		free(tmp2);
+	free(tmp);
+	return (0);
+}
+
 static int	update_vars(t_struct *st)
 {
-	char		*old_wd;
-	char		*current_wd;
-	char		cwd[PATH_MAX];
+	char	*old_wd;
+	char	*current_wd;
+	char	cwd[PATH_MAX];
 
 	old_wd = ft_strjoin("OLDPWD=", ms_get_env(st->env, "PWD"));
 	if (!old_wd)
@@ -31,6 +54,7 @@ static int	update_vars(t_struct *st)
 		return (1);
 	if (ms_export(current_wd, st) != 0)
 		return (1);
+	update_prompt(st, ft_strchr(current_wd, '/'));
 	free(current_wd);
 	return (0);
 }
@@ -57,6 +81,8 @@ int	cd(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
+	if (st->nb_cmd != 1)
+		return (-1);
 	if (arr->cmd[2] != NULL)
 	{
 		st->nb_cmd = 0;

@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 23:04:16 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/03 23:39:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell_libs.h"
 
-static void	trim_quote(t_cmd *arr, char c)
+static void	trim_quote(t_cmd *arr, char c, int arg)
 {
 	char	*tmp;
 
 	if (c == '"')
-		tmp = ft_strtrim(arr->cmd[0], "\"");
+		tmp = ft_strtrim(arr->cmd[arg], "\"");
 	else
-		tmp = ft_strtrim(arr->cmd[0], "'");
+		tmp = ft_strtrim(arr->cmd[arg], "'");
 	if (tmp)
 	{
-		free(arr->cmd[0]);
-		arr->cmd[0] = tmp;
+		free(arr->cmd[arg]);
+		arr->cmd[arg] = tmp;
 	}
 }
 
 static void	implement_cmd_typ(t_cmd *arr)
 {
 	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
-		trim_quote(arr, arr->cmd[0][0]);
+		trim_quote(arr, arr->cmd[0][0], 0);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 		arr->f_ptr = &run_echo;
 	else if (ft_strncmp(arr->cmd[0], "env", ft_strlen(arr->cmd[0])) == 0)
@@ -50,6 +50,8 @@ static void	implement_cmd_typ(t_cmd *arr)
 		arr->cmd_type = SHELL;
 		return ;
 	}
+	if (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"')
+		trim_quote(arr, arr->cmd[1][0], 1);
 	arr->cmd_type = BUILTIN;
 }
 

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/03 13:19:55 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 17:56:23 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 # define MINISHELL_LIBS_H
 # define PATH_MAX 4097
 # define BUFFER_SIZE 100
-
-// flo= LIMITER text save
-// flo= many echo pipe
-// Pietro= finish unset
-// Pietro= exit
-// both= basically more test (for example: signal)
-// both= test the pipes
-// leak test
-// $?
-// LIMITER: make the code to handel the LIMITER
-// we skip = VAR=x
-// pipe : only for the shell function - not for our BUILTIN?
 
 # include <signal.h>
 # include <stdio.h>
@@ -98,15 +86,22 @@ typedef struct structure
 	int		argc;
 	char	**argv;
 	int		cancel;
+	int		no_output;
 	int		res;
 	int		res_dash;
+	int		fd_tmp;
+	char	*name_tmp;
 }	t_struct;
 
 // main.c
 void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 int		run_exit(void *stt, void *cmd);
+// ms_launch_cmd.c
+int		launch_cmd(t_struct *st);
+// ms_set_redirection.c
 void	set_red_shell(t_struct *st, int which_cmd, int *fd, int *next_fd);
+int		launch_builtin(t_struct *st);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
@@ -140,6 +135,7 @@ int		count_lengh_name(t_struct *st, int i);
 int		extract_redirection(t_struct *st, int i);
 int		test_synthaxe(t_struct *st, int i, t_red redirection_typ);
 // parsing: extract_file.c
+int		create_tmp(t_struct *st, int tr);
 int		extract_infile(t_struct *st, int i);
 int		extract_limiter(t_struct *st, int i);
 int		extract_outfile(t_struct *st, int i);
@@ -164,8 +160,6 @@ int		is_special_variable(unsigned char c);
 //error.c
 int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);
-// ms_launch_cmd.c
-int		launch_cmd(t_struct *st);
 // echo: ms_echo.c
 int		run_echo(void *st, void *cmd);
 int		initialise_buf(t_struct *st);

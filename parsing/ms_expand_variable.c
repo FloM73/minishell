@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 12:33:58 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 20:09:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,17 @@ int	expand_variable(t_struct *st, char *str, int i)
 	return (i - 1);
 }
 
+static int	expand_bracket(t_struct *st, char *str, int i)
+{
+	if (str[i + 1] == '}')
+	{
+		st->cancel = 1;
+		ms_error_synthaxe('}');
+		return (-3);
+	}
+	return (expand_variable(st, str, i));
+}
+
 //@ && * make nothing
 int	expand_special_variable(t_struct *st, char *str, int i)
 {
@@ -74,20 +85,17 @@ int	expand_special_variable(t_struct *st, char *str, int i)
 		st->buf = add_number_to_buf(st, st->res);
 	else if (str[i + 1] == '#')
 		st->buf = add_number_to_buf(st, st->res_dash);
+	else if (str[i + 1] == '~')
+	{
+		st->buf = add_char_to_buf(st, '$');
+		st->buf = add_char_to_buf(st, '~');
+	}
 	else if (str[i + 1] == '"')
 	{
 		st->buf = add_char_to_buf(st, '$');
 		return (i);
 	}
 	else if (str[i + 1] == '{')
-	{
-		if (str[i + 2] == '}')
-		{
-			st->cancel = 1;
-			ms_error_synthaxe('}');
-			return (-2);
-		}
-		i = expand_variable(st, str, i + 1);
-	}
+		i = expand_bracket(st, str, i + 1);
 	return (i + 1);
 }

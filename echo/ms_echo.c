@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 14:31:48 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 19:25:45 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	initialise_buf(t_struct *st)
 {
-	if (st->tr < st->nb_cmd - 1 && st->arr[st->tr].fd_out == 1)
-		return (-1);
 	st->cancel = 0;
 	st->buf = ft_calloc(1, sizeof(char *));
+	if (!st->buf)
+		return (-1);
 	return (0);
 }
 
@@ -78,7 +78,6 @@ void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i)
 		i++;
 	}
 	st->buf = add_char_to_buf(st, ' ');
-	arg++;
 }
 
 // if pos_arg > 1: there is a valid -n flag
@@ -96,17 +95,16 @@ int	run_echo(void *stt, void *cmd)
 		pos_arg = test_flag_n(arr);
 		arg = pos_arg;
 		while (arr->cmd[arg] && st->cancel == 0)
-		{
-			bufferize_cmd(st, arr, arg, 0);
-			arg++;
-		}
-		if (st->cancel == 0)
+			bufferize_cmd(st, arr, arg++, 0);
+		if (st->cancel == 0 && st->no_output == 0)
 		{
 			ft_putstr_fd(st->buf, arr->fd_out);
 			if (pos_arg == 1)
 				write(arr->fd_out, "\n", 1);
+			free(st->buf);
 		}
-		free(st->buf);
+		if (st->cancel == 1)
+			free(st->buf);
 	}
 	return (0);
 }
