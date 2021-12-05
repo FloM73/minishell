@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/04 12:24:47 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/05 22:08:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	cd(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
+	if (st->nb_cmd != 1)
+		return (-1);
 	if (arr->cmd[2] != NULL)
 	{
 		st->nb_cmd = 0;

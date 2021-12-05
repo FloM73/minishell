@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 17:23:00 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/28 12:21:53 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/05 22:18:59 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	ms_export(char *new_var, t_struct *st)
 	char	**env;
 	int		n;
 
+	if (st->nb_cmd != 1)
+		return (-1);
 	n = ft_2darr_len(st->env);
 	if (!env_exists(new_var, st->env))
 		n++;
