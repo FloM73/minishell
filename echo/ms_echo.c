@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/05 19:25:45 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:07:39 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ int	run_echo(void *stt, void *cmd)
 		arg = pos_arg;
 		while (arr->cmd[arg] && st->cancel == 0)
 			bufferize_cmd(st, arr, arg++, 0);
-		if (st->cancel == 0 && st->no_output == 0)
+		if (st->cancel == 0)
 		{
-			ft_putstr_fd(st->buf, arr->fd_out);
+			ft_putstr_fd(st->buf, st->fd_tmp);
 			if (pos_arg == 1)
-				write(arr->fd_out, "\n", 1);
+				write(st->fd_tmp, "\n", 1);
 			free(st->buf);
 		}
-		if (st->cancel == 1)
+		else
 			free(st->buf);
 	}
 	return (0);
