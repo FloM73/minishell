@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/05 19:18:49 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:02:28 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	launch_builtin(t_struct *st)
 	int	i;
 
 	st->no_output = 0;
-	st->fd_tmp = 0;
+	st->fd_tmp = 1;
 	if (st->tr + 1 < st->nb_cmd && st->arr[st->tr + 1].cmd_type == SHELL
 		&& st->arr[st->tr].fd_out == 1)
 	{

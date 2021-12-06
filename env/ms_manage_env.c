@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 10:14:36 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/24 21:37:23 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/06 16:04:54 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ms_run_env(void *stt, void *cmd)
 		write(2, "env: Unexpected argument\n", 26);
 		return (127);
 	}
-	ms_env(st->env);
+	ms_env(st);
 	return (0);
 }
 

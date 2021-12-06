@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 10:24:11 by pnuti             #+#    #+#             */
-/*   Updated: 2021/11/18 21:03:02 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:03:16 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	pwd(void *stt, void *cmd)
 		perror("Current directory unknown");
 		return (-1);
 	}
-	printf("%s\n", buf);
+	ft_putendl_fd(buf, st->fd_tmp);
 	return (0);
 }

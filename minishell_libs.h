@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/05 17:56:23 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:04:49 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int		is_writable(t_struct *st, char c, char c_next);
 int		echo_double_quote(t_struct *st, t_cmd *arr, int arg, int i);
 int		echo_simple_quote(t_struct *st, t_cmd *arr, int arg, int i);
 // env: ms_env.c
-void	ms_env(char **env);
+void	ms_env(t_struct *st);
 //env: ms_export.c
 int		ms_export(char *new_var, t_struct *st);
 //env: ms_free_env
