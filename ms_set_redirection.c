@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/06 16:02:28 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/06 19:09:58 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,14 @@ static int	create_fd_tmp(t_struct *st)
 
 int	launch_builtin(t_struct *st)
 {
-	int	i;
-
-	st->no_output = 0;
-	st->fd_tmp = 1;
-	if (st->tr + 1 < st->nb_cmd && st->arr[st->tr + 1].cmd_type == SHELL
-		&& st->arr[st->tr].fd_out == 1)
+	if (st->tr + 1 < st->nb_cmd)
 	{
-		st->no_output = 1;
+		st->fd_tmp = st->arr[st->tr].fd_out;
 		if (create_fd_tmp(st) == -1)
 			return (-1);
 	}
+	else
+		st->fd_tmp = st->arr[st->tr].fd_out;
 	st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
-	if (st->no_output == 1)
-	{
-		i = 0;
-		while (st->buf[i] != '\0')
-			write(st->fd_tmp, &(st->buf[i++]), 1);
-		close(st->fd_tmp);
-		free(st->buf);
-		st->fd_tmp = open(st->name_tmp, O_RDWR, 0777);
-		free(st->name_tmp);
-	}
 	return (0);
 }
