@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/06 16:04:49 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/07 17:26:05 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct structure
 	int		res_dash;
 	int		fd_tmp;
 	char	*name_tmp;
+	int		fd[2];
 }	t_struct;
 
 // main.c
@@ -100,7 +101,7 @@ int		run_exit(void *stt, void *cmd);
 // ms_launch_cmd.c
 int		launch_cmd(t_struct *st);
 // ms_set_redirection.c
-void	set_red_shell(t_struct *st, int which_cmd, int *fd, int *next_fd);
+void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
 int		launch_builtin(t_struct *st);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);

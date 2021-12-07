@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 11:48:35 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 22:40:19 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:58:55 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ int	read_till_limiter(t_struct *st, int tr)
 	}
 	initialise_buf(st);
 	bufferize_input(st, st->buf_tmp, 0, 0);
-	i = 0;
-	while (st->buf[i] != '\0')
-	{
-		write(st->arr[tr].fd_in, &(st->buf[i]), 1);
-		st->buf[i++] = '\0';
-	}
-	close(st->arr[tr].fd_in);
-	st->arr[tr].fd_in = open(st->arr[st->tr].name_in, O_RDWR, 0777);
+	i = ft_strlen(st->buf);
+	if (st->tr + 1 == st->nb_cmd)
+		dup2(st->arr[st->tr].fd_out, st->fd[WRITE]);
+	write(st->fd[WRITE], st->buf, i);
 	free(st->buf);
 	free(st->buf_tmp);
 	return (0);
