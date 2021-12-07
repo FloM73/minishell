@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/07 17:26:05 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/07 19:11:16 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ typedef struct structure
 	int		no_output;
 	int		res;
 	int		res_dash;
-	int		fd_tmp;
-	char	*name_tmp;
 	int		fd[2];
 }	t_struct;
 
