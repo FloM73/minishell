@@ -6,36 +6,11 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/05 18:50:53 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/07 19:19:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
-
-// just for test purpose
-static void	print_cmd(t_struct *st)
-{
-	int	tr;
-	int	arg;
-
-	//printf("Infile:  fd = %3d - name = %s\n", st->fd_in, st->name_in);
-	//printf("Outfile: fd = %3d - name = %s\n", st->fd_out, st->name_out);
-	tr = 0;
-	while (tr < st->nb_cmd)
-	{
-		arg = 0;
-		//printf("Infile:  fd = %3d - name = %s\n", st->arr[tr].fd_in, st->arr[tr].name_in);
-		//printf("Outfile: fd = %3d - name = %s\n", st->arr[tr].fd_out, st->arr[tr].name_out);
-		//printf("Limiter: %s\n", st->arr[tr].limiter);
-		while (arg <= st->arr[tr].nb_arg)
-		{
-			//printf("st->arr[%d].cmd[%d] = %10s (%p)\n", tr, arg, st->arr[tr].cmd[arg], st->arr[tr].cmd[arg]);
-			arg++;
-		}
-		//printf("\n");
-		tr++;
-	}
-}
 
 static void	init_st(int argc, char **argv, t_struct *st)
 {
@@ -49,7 +24,6 @@ static void	init_st(int argc, char **argv, t_struct *st)
 	st->force_expand = -1;
 	st->len = (int)ft_strlen(st->input);
 	st->res_dash = argc - 1;
-	st->fd_tmp = 0;
 }
 
 void	free_memory(t_struct *st)
@@ -70,18 +44,11 @@ void	free_memory(t_struct *st)
 			unlink("tmp_limite");
 			free(st->arr[tr].limiter);
 		}
-		unlink("tmp_fd");
 		while (arg <= st->arr[tr].nb_arg)
-		{
-			//printf("FREE st->arr[%d].cmd[%d] = %p\n", tr, arg, st->arr[tr].cmd[arg]);
-			free(st->arr[tr].cmd[arg]);
-			arg++;
-		}
-		//printf("FREE st->arr[%d].cmd = %p\n", tr, st->arr[tr].cmd);
+			free(st->arr[tr].cmd[arg++]);
 		free(st->arr[tr].cmd);
 		tr++;
 	}
-	//printf("FREE st->arr = %p\n", st->arr);
 	free(st->arr);
 	free(st->input);
 }
@@ -132,7 +99,6 @@ int	main(int argc, char **argv, char **envp)
 			{
 				if (extract_cmd(&st) == 0)
 				{
-					print_cmd(&st);
 					if (launch_cmd(&st) != 0)
 						st.res = 1;
 				}

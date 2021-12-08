@@ -6,32 +6,31 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/06 18:54:12 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:55:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-static void	exec_child(t_struct *st, int tr, int *fd, int *next_fd)
+static void	exec_child(t_struct *st, int tr, int *next_fd)
 {
 	if (st->arr[tr].limiter != NULL)
 		read_till_limiter(st, tr);
-	set_red_shell(st, st->tr, fd, next_fd);
-	if (st->arr[tr].fd_out != 1)
-		dup2(st->arr[tr].fd_out, STDOUT_FILENO);
+	set_red_shell(st, st->tr, next_fd);
 	if (execve(st->arr[tr].cmd[0], st->arr[tr].cmd, NULL) == -1)
 		perror("Child: execve failed");
 }
 
-static void	manage_fd(t_struct *st, int *fd, int *next_fd)
+static void	manage_fd(t_struct *st, int *next_fd)
 {
 	if (st->tr < st->nb_cmd)
-		dup2(next_fd[READ], fd[READ]);
+		dup2(next_fd[READ], st->fd[READ]);
 	close(next_fd[READ]);
 	close(next_fd[WRITE]);
+	close(st->fd[WRITE]);
 }
 
-static int	launch_pipe(t_struct*st, int *fd)
+static int	launch_pipe(t_struct*st)
 {
 	pid_t	pid;
 	int		status;
@@ -43,8 +42,8 @@ static int	launch_pipe(t_struct*st, int *fd)
 	if (pid < 0)
 		perror ("Failed to create Child");
 	if (pid == 0)
-		exec_child(st, st->tr, fd, next_fd);
-	manage_fd(st, fd, next_fd);
+		exec_child(st, st->tr, next_fd);
+	manage_fd(st, next_fd);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		st->res = WEXITSTATUS(status);
@@ -53,9 +52,7 @@ static int	launch_pipe(t_struct*st, int *fd)
 
 int	launch_cmd(t_struct *st)
 {
-	int		fd[2];
-
-	if (pipe(fd) == -1)
+	if (pipe(st->fd) == -1)
 		return (-1);
 	while (st->tr < st->nb_cmd)
 	{
@@ -63,7 +60,7 @@ int	launch_cmd(t_struct *st)
 			launch_builtin(st);
 		else
 		{
-			if (launch_pipe(st, fd) == -1)
+			if (launch_pipe(st) == -1)
 				return (-1);
 		}
 		st->tr++;

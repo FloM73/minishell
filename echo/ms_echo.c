@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/06 18:07:39 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/07 18:00:55 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,22 @@ int	run_echo(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
-	if (initialise_buf(st) == 0)
+	if (st->tr + 1 == st->nb_cmd)
 	{
-		pos_arg = test_flag_n(arr);
-		arg = pos_arg;
-		while (arr->cmd[arg] && st->cancel == 0)
-			bufferize_cmd(st, arr, arg++, 0);
-		if (st->cancel == 0)
+		if (initialise_buf(st) == 0)
 		{
-			ft_putstr_fd(st->buf, st->fd_tmp);
-			if (pos_arg == 1)
-				write(st->fd_tmp, "\n", 1);
+			pos_arg = test_flag_n(arr);
+			arg = pos_arg;
+			while (arr->cmd[arg] && st->cancel == 0)
+				bufferize_cmd(st, arr, arg++, 0);
+			if (st->cancel == 0)
+			{
+				ft_putstr_fd(st->buf, st->fd[WRITE]);
+				if (pos_arg == 1)
+					write(st->fd[WRITE], "\n", 1);
+			}
 			free(st->buf);
 		}
-		else
-			free(st->buf);
 	}
 	return (0);
 }
