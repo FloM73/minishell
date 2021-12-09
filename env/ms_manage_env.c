@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 10:14:36 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/06 16:04:54 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/08 09:27:05 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	ms_run_export(void *stt, void *cmd)
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
 	n = 1;
+	if (st->nb_cmd > 1)
+		return (0);
 	while (arr->cmd[n])
 	{
 		if (ft_strchr(arr->cmd[n], '='))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/07 19:19:56 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/09 09:06:12 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	init_st(int argc, char **argv, t_struct *st)
 {
+	sigint_handle(SIGUSR1);
 	st->argc = argc;
 	st->argv = argv;
 	st->arg = 0;
@@ -53,13 +54,23 @@ void	free_memory(t_struct *st)
 	free(st->input);
 }
 
+static void	set_shell(t_struct *st)
+{
+	char	path[PATH_MAX];
+	char	*shell;
+	char	*shell2;
+
+	shell = ft_strjoin("SHELL=", getcwd(path, PATH_MAX));
+	shell2 = ft_strjoin(shell, ms_get_env(st->env, "_") + 1);
+	ms_export(shell2, st);
+	free(shell2);
+	free(shell);
+}
+
 static int	init_env(char **old_env, t_struct *st)
 {
 	int		i;
 	int		n;
-	char	path[PATH_MAX];
-	char	*shell;
-	char	*shell2;
 
 	ms_sig_hook();
 	st->prompt = ft_strdup("~/MAXIPAIN $ ");
@@ -75,11 +86,7 @@ static int	init_env(char **old_env, t_struct *st)
 		i++;
 	}
 	st->env[i] = NULL;
-	shell = ft_strjoin("SHELL=", getcwd(path, PATH_MAX));
-	shell2 = ft_strjoin(shell, ms_get_env(st->env, "_") + 1);
-	ms_export(shell2, st);
-	free(shell2);
-	free(shell);
+	set_shell(st);
 	return (0);
 }
 
@@ -97,17 +104,16 @@ int	main(int argc, char **argv, char **envp)
 			init_st(argc, argv, &st);
 			if (manage_expand_variable(&st) == 0)
 			{
-				if (extract_cmd(&st) == 0)
-				{
-					if (launch_cmd(&st) != 0)
+				if (extract_cmd(&st) == 0 && launch_cmd(&st) != 0)
 						st.res = 1;
-				}
 				free_memory(&st);
-				init_st(argc, argv, &st);
 			}
+			init_st(argc, argv, &st);
 		}
 		else if (!st.input)
 			free_env(&st);
+		else
+			free(st.input);
 	}
 	return (0);
 }

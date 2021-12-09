@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/07 19:11:16 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/09 08:41:52 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct structure
 // main.c
 void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
+void	sigint_handle(int signum);
 int		run_exit(void *stt, void *cmd);
 // ms_launch_cmd.c
 int		launch_cmd(t_struct *st);
