@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:48:42 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/09 21:15:31 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/09 21:18:20 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	sig_handle(int signum)
 
 int	ms_sig_hook(void)
 {
-	//struct termios		termios_p;
 	struct sigaction	sa;
 
 	sa.sa_handler = &sig_handle;
@@ -52,10 +51,5 @@ int	ms_sig_hook(void)
 		return (-1);
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		return (-2);
-	/*if (tcgetattr(0, &termios_p) == -1)
-		return (-3);
-	termios_p.c_cc[VQUIT] = 1;
-	if (tcsetattr(0, TCSANOW, &termios_p) < 0)
-		return (-4);*/
 	return (0);
 }

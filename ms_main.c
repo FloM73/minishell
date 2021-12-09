@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/09 09:06:12 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/09 21:17:56 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 			if (manage_expand_variable(&st) == 0)
 			{
 				if (extract_cmd(&st) == 0 && launch_cmd(&st) != 0)
-						st.res = 1;
+					st.res = 1;
 				free_memory(&st);
 			}
 			init_st(argc, argv, &st);
