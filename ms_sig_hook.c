@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:48:42 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/09 08:55:13 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/09 21:15:31 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,29 @@ void	sigint_handle(int signum)
 	}
 }
 
-void	sigquit_handle(int signum)
+void	sig_handle(int signum)
 {
-	if (signum == SIGQUIT)
-		signum++;
+	if (signum == SIGINT)
+		sigint_handle(signum);
+	else if (signum == SIGQUIT)
+		printf("\b\b  \b\b");
 }
 
 int	ms_sig_hook(void)
 {
-	struct sigaction	sa1;
-	struct sigaction	sa2;
+	//struct termios		termios_p;
+	struct sigaction	sa;
 
-	sa1.sa_handler = &sigint_handle;
-	sa2.sa_handler = &sigquit_handle;
-	sa1.sa_flags = 0;
-	sa2.sa_flags = 0;
-	if (sigaction(SIGINT, &sa1, NULL) == -1)
+	sa.sa_handler = &sig_handle;
+	sa.sa_flags = 0;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
 		return (-1);
-	if (sigaction(SIGQUIT, &sa2, NULL) == -1)
-		return (-1);
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		return (-2);
+	/*if (tcgetattr(0, &termios_p) == -1)
+		return (-3);
+	termios_p.c_cc[VQUIT] = 1;
+	if (tcsetattr(0, TCSANOW, &termios_p) < 0)
+		return (-4);*/
 	return (0);
 }

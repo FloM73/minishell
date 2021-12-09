@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_buffer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/01 12:56:40 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:05:25 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	transfert_buf_input(t_struct *st)
 	int		len;
 	int		i;
 
-	printf("input  = %s\n", st->input);
-	printf("buffer = %s\n", st->buf);
 	tmp = st->input;
 	len = ft_strlen(st->buf);
 	st->input = (char *)malloc((len + 1) * sizeof(char));
