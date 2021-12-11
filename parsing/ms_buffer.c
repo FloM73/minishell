@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_buffer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/09 19:05:25 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/11 13:15:12 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,28 @@ char	*add_number_to_buf(t_struct *st, int nb)
 		j++;
 	}
 	free(str);
+	free(st->buf);
 	return (new_buf);
 }
 
 int	transfert_buf_input(t_struct *st)
 {
 	char	*tmp;
-	int		len;
-	int		i;
 
-	tmp = st->input;
-	len = ft_strlen(st->buf);
-	st->input = (char *)malloc((len + 1) * sizeof(char));
-	if (!st->input)
-		return (-1);
-	i = 0;
-	while (i < len)
+	st->len = ft_strlen(st->buf);
+	if (st->buf[st->len - 1] == '|'
+		|| (st->buf[st->len - 1] == ' ' && st->buf[st->len - 2] == '|'))
 	{
-		st->input[i] = st->buf[i];
-		i++;
+		ms_error_synthaxe('?');
+		free(st->buf);
+		free(st->input);
+		return (-1);
 	}
-	st->input[i] = '\0';
-	st->len = i;
+	tmp = st->input;
+	st->input = ft_strdup(st->buf);
 	free(tmp);
 	free(st->buf);
-	return (0);
+	if (st->input && st->input[0] != '\0')
+		return (0);
+	return (-1);
 }
