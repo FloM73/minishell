@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/09 21:16:39 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/11 12:11:16 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ int		skip_simple_quote(char *input, int i, int max);
 // parsing: utils_isvariable.c
 int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
+int		is_expand_home(unsigned char c);
 //error.c
 int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);

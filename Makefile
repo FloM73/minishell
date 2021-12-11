@@ -6,11 +6,11 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/12/05 19:19:02 by flormich         ###   ########.fr        #
+#    Updated: 2021/12/11 12:02:44 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ms
+NAME = minishell
 CFLAGS = -Wall -Wextra -Werror -g
 DIR_LIB = libft
 DIR_P = parsing

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:10:06 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/05 19:45:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:25:04 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ int	is_special_variable(unsigned char c)
 {
 	if (c == '$' || c == '?' || c == '@' || c == '*' || c == '{'
 		|| c == '"' || c == '#' || c == '~')
+		return (1);
+	return (0);
+}
+
+int	is_expand_home(unsigned char c)
+{
+	if (c == '$' || c == ' ' || c == '\0' || c == '\n')
 		return (1);
 	return (0);
 }

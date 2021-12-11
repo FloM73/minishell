@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 23:39:07 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:30:28 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static void	implement_cmd_typ(t_cmd *arr)
 		arr->cmd_type = SHELL;
 		return ;
 	}
-	if (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"')
+	if (arr->f_ptr != &run_echo
+		&& (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"'))
 		trim_quote(arr, arr->cmd[1][0], 1);
 	arr->cmd_type = BUILTIN;
 }

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 12:10:26 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:29:32 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int	manage_expand_variable(t_struct *st)
 		free(st->input);
 		return (-1);
 	}
-	transfert_buf_input(st);
-	if (st->input && st->input[0] != '\0')
-		return (0);
-	return (-1);
+	return (transfert_buf_input(st));
 }
 
 int	find_match(t_struct *st, int e, char *var, int pos)
