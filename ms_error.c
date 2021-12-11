@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 19:55:53 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 11:17:50 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:54:46 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	ms_error_synthaxe(char c)
 		printf("-bash: cd: too many arguments\n");
 	else if (c == '?')
 		printf("-bash: |: missing command\n");
+	else if (c == 'C')
+		printf("-bash: command not found\n");
 	else if (c == '"' || c == '\'')
 		printf("-bash: unclosed quote\n");
 	else

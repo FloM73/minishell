@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 12:55:14 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:55:21 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	find_path(t_struct *st)
 		else
 			return (i);
 	}
-	exit (-1);
+	ms_error_synthaxe('C');
+	return (-1);
 }
 
 static char	*join_path(char const *s1, char const *s2)
@@ -110,7 +111,7 @@ int	add_path(t_struct *st)
 			if (!st->arr[tr].cmd[0])
 			{
 				free_arr(arr_path);
-				perror("Command-not-found\n");
+				ms_error_synthaxe('C');
 				return (-1);
 			}
 		}
