@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/05 22:08:25 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/10 10:10:13 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,11 @@ static int	dash_syntax(t_struct *st, t_cmd *arr)
 	return (0);
 }
 
-int	cd(void *stt, void *cmd)
+static int	implement_syntax(t_struct *st, t_cmd *arr)
 {
-	t_cmd		*arr;
-	t_struct	*st;
-
-	arr = (t_cmd *)cmd;
-	st = (t_struct *)stt;
-	if (st->nb_cmd != 1)
-		return (-1);
-	if (arr->cmd[2] != NULL)
-	{
-		st->nb_cmd = 0;
-		return (1);
-	}
-	if (arr->cmd[1][0] == '-' && ft_strlen(arr->cmd[1]) == 1)
+	if (!arr->cmd[1])
+		return (chdir(ms_get_env(st->env, "HOME")) * -1);
+	else if (arr->cmd[1][0] == '-' && ft_strlen(arr->cmd[1]) == 1)
 	{
 		if (dash_syntax(st, arr))
 			return (1);
@@ -98,6 +88,25 @@ int	cd(void *stt, void *cmd)
 		perror("cd");
 		return (1);
 	}
+	return (0);
+}
+
+int	cd(void *stt, void *cmd)
+{
+	t_cmd		*arr;
+	t_struct	*st;
+
+	arr = (t_cmd *)cmd;
+	st = (t_struct *)stt;
+	if (st->nb_cmd != 1)
+		return (-1);
+	if (arr->cmd[1] && arr->cmd[2] != NULL)
+	{
+		st->nb_cmd = 0;
+		return (1);
+	}
+	else if (implement_syntax(st, arr))
+		return (1);
 	update_vars(st);
 	return (0);
 }
