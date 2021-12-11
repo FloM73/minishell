@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 14:33:33 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:19:05 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	set_red_shell(t_struct *st, int which_cmd, int *next_fd)
 	else if (which_cmd == 0)
 	{
 		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
-		dup2(next_fd[WRITE], STDOUT_FILENO);
+		if (st->arr[which_cmd].fd_out != 1)
+			dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
+		else
+			dup2(next_fd[WRITE], STDOUT_FILENO);
 	}
 	else
 	{
 		dup2(st->fd[READ], STDIN_FILENO);
-		if (which_cmd == st->nb_cmd - 1)
+		if (which_cmd == st->nb_cmd - 1 || st->arr[which_cmd].fd_out != 1)
 			dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
 		else
 			dup2(next_fd[WRITE], STDOUT_FILENO);
