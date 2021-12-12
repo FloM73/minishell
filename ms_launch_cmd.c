@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/09 14:39:32 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/12 08:48:11 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	launch_pipe(t_struct*st)
 
 	if (pipe(next_fd) == -1)
 		return (-1);
+	status = 0;
 	pid = fork();
 	if (pid < 0)
 		perror ("Failed to create Child");
