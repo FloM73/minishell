@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/07 18:00:55 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:56:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	test_flag_n(t_cmd *arr)
 	return (i);
 }
 
-int	is_writable(t_struct *st, char c, char c_next)
+int	is_writable_x(t_struct *st, char c, char c_next)
 {
 	if (c == '\\'
 		|| (c == '$' && c_next == '"'))
@@ -71,9 +71,17 @@ void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i)
 	{
 		if (arr->cmd[arg][i] == '"')
 			i = echo_double_quote(st, arr, arg, i + 1);
-		else if (st->all == 0 && st->exp == 1 && arr->cmd[arg][i] == '\'')
+		else if (arr->cmd[arg][i] == '\'')
 			i = echo_simple_quote(st, arr, arg, i + 1);
-		else if (is_writable(st, arr->cmd[arg][i], arr->cmd[arg][i + 1]) == 1)
+		else if (arr->cmd[arg][i] == '\\')
+		{
+			i++;
+			if (arr->cmd[arg][i] != '\0')
+				st->buf = add_char_to_buf(st, arr->cmd[arg][i]);
+			else
+				i--;
+		}
+		else if (is_writable_x(st, arr->cmd[arg][i], arr->cmd[arg][i + 1]) == 1)
 			st->buf = add_char_to_buf(st, arr->cmd[arg][i]);
 		i++;
 	}

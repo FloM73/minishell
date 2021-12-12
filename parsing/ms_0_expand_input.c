@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 12:17:22 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 10:10:22 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	bufferize_input(t_struct *st, char *str, int i, int test_quote)
 {
 	while (str[i] != '\0' && i != -1)
 	{
-		if (str[i] == '\\' && (str[i + 1] == '$' || str[i + 1] == '~'))
+		if (str[i] == '\\' && (str[i + 1] == '$' || str[i + 1] == '~'
+				|| str[i + 1] == '"' || str[i + 1] == '\''))
 			i = do_not_expand_variable(st, str, i);
 		else if ((str[i] == '$' && is_variable_end(st, str[i + 1]) == 0)
 			|| (str[i] == '~' && is_expand_home(str[i + 1]) == 1)

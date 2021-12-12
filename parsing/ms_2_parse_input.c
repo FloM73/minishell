@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 21:44:00 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:51:14 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ static int	fill_cmd(char *input, t_struct *st, int i)
 			i = parse_redirection(st, i);
 		if (i != -1 && (input[i] == '"' || input[i] == '\''))
 			i = parse_quote(st, input, i);
-		else if (i != -1 && i < st->len
-			&& (ft_isspace(input[i]) == 0 || st->all == 1))
-			i = parse_char(st, i, input[i]);
+		else if (i != -1 && i < st->len && ft_isspace(input[i]) == 0)
+			i = parse_char(st, input, i);
 	}
 	return (i);
 }

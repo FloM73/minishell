@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/11 12:11:16 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:49:58 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		parse_input(t_struct *st);
 int		parse_space(t_struct *st, int i);
 int		parse_pipe(t_struct *st, int i);
 int		parse_redirection(t_struct *st, int i);
-int		parse_char(t_struct *st, int i, char c);
+int		parse_char(t_struct *st, char *input, int i);
 // parsing: 2_parse_input_utils_2.c
 int		parse_quote(t_struct *st, char *input, int i);
 int		parse_simple_quote(t_struct *st, char *input, int i);
@@ -165,7 +165,7 @@ void	ms_error_synthaxe(char c);
 int		run_echo(void *st, void *cmd);
 int		initialise_buf(t_struct *st);
 void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i);
-int		is_writable(t_struct *st, char c, char c_next);
+int		is_writable_x(t_struct *st, char c, char c_next);
 // echo: ms_echo_utils.c
 int		echo_double_quote(t_struct *st, t_cmd *arr, int arg, int i);
 int		echo_simple_quote(t_struct *st, t_cmd *arr, int arg, int i);
