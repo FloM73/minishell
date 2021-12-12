@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 12:21:12 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/02 09:39:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:51:34 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,16 @@ int	parse_redirection(t_struct *st, int i)
 	return (i);
 }
 
-int	parse_char(t_struct *st, int i, char c)
+int	parse_char(t_struct *st, char *input, int i)
 {
-	st->arr[st->tr].cmd[st->arg][st->digit] = c;
+	st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 	st->digit++;
-	return (i + 1);
+	i++;
+	if (input[i] == '"' || input[i] == '\'')
+	{
+		st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
+		st->digit++;
+		i++;
+	}
+	return (i);
 }
