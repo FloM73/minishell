@@ -6,24 +6,32 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 18:55:21 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 15:54:17 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell_libs.h"
 
-static void	free_arr(char **arr)
+static int	free_arr(char **arr, int where_is_path, int cancel)
 {
 	int	tr;
 
-	tr = 0;
-	while (*(arr + tr) != 0)
+	if (where_is_path != -1)
 	{
+		tr = 0;
+		while (*(arr + tr) != 0)
+		{
+			free(arr[tr]);
+			tr++;
+		}
 		free(arr[tr]);
-		tr++;
+		free(arr);
+		return (0);
 	}
-	free(arr[tr]);
 	free(arr);
+	if (cancel == -1)
+		ms_error_synthaxe('C');
+	return (cancel);
 }
 
 static int	find_path(t_struct *st)
@@ -38,7 +46,6 @@ static int	find_path(t_struct *st)
 		else
 			return (i);
 	}
-	ms_error_synthaxe('C');
 	return (-1);
 }
 
@@ -99,24 +106,21 @@ int	add_path(t_struct *st)
 	int		where_is_path;
 
 	where_is_path = find_path(st);
-	if (where_is_path == -1)
-		return (-1);
-	arr_path = ft_split(st->env[where_is_path], ':');
+	if (where_is_path != -1)
+		arr_path = ft_split(st->env[where_is_path], ':');
+	else
+		arr_path = (char **) NULL;
 	tr = 0;
 	while (tr <= st->tr)
 	{
 		if (st->arr[tr].cmd_type != BUILTIN)
 		{
-			st->arr[tr].cmd[0] = test_path(arr_path, st->arr[tr].cmd[0]);
-			if (!st->arr[tr].cmd[0])
-			{
-				free_arr(arr_path);
-				ms_error_synthaxe('C');
-				return (-1);
-			}
+			if (where_is_path != -1)
+				st->arr[tr].cmd[0] = test_path(arr_path, st->arr[tr].cmd[0]);
+			if (!st->arr[tr].cmd[0] || where_is_path == -1)
+				return (free_arr(arr_path, where_is_path, -1));
 		}
 		tr++;
 	}
-	free_arr(arr_path);
-	return (0);
+	return (free_arr(arr_path, where_is_path, 0));
 }
