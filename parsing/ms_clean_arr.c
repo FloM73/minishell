@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 12:30:28 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:13:30 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static void	trim_quote(t_cmd *arr, char c, int arg)
 
 static void	implement_cmd_typ(t_cmd *arr)
 {
-	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
-		trim_quote(arr, arr->cmd[0][0], 0);
 	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 		arr->f_ptr = &run_echo;
 	else if (ft_strncmp(arr->cmd[0], "env", ft_strlen(arr->cmd[0])) == 0)
@@ -50,37 +48,50 @@ static void	implement_cmd_typ(t_cmd *arr)
 		arr->cmd_type = SHELL;
 		return ;
 	}
-	if (arr->f_ptr != &run_echo
-		&& (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"'))
-		trim_quote(arr, arr->cmd[1][0], 1);
 	arr->cmd_type = BUILTIN;
 }
 
-void	clean_arr(t_struct *st)
+static int	launch_implement_cmd_typ(t_cmd *arr)
 {
-	int	tr;
-	int	arg;
-	int	offset;
-
-	tr = 0;
-	while (tr < st->nb_cmd)
+	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
+		trim_quote(arr, arr->cmd[0][0], 0);
+	if (arr->cmd[0][0] != '\0')
 	{
-		arg = 0;
-		implement_cmd_typ(&(st->arr[tr]));
-		while (tr < st->nb_cmd && arg < st->arr[tr].nb_arg
-			&& st->arr[tr].cmd[arg][0] != '\0')
-			arg++;
-		free(st->arr[tr].cmd[arg]);
-		st->arr[tr].cmd[arg] = (char *)0;
-		arg++;
-		offset = 0;
-		while (arg <= st->arr[tr].nb_arg)
-		{
-			free(st->arr[tr].cmd[arg]);
-			offset++;
-			arg++;
-		}
-		st->arr[tr].nb_arg -= offset;
-		tr++;
+		implement_cmd_typ(arr);
+		if (arr->f_ptr != &run_echo
+			&& (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"'))
+			trim_quote(arr, arr->cmd[1][0], 1);
 	}
+	if (arr->cmd[0][0] != '\0')
+		return (0);
+	return (-1);
+}
+
+int	clean_arr(t_struct *st)
+{
+	st->tr = 0;
+	while (st->tr < st->nb_cmd)
+	{
+		st->arg = 0;
+		if (launch_implement_cmd_typ(&(st->arr[st->tr])) == 0)
+		{
+			while (st->tr < st->nb_cmd && st->arg < st->arr[st->tr].nb_arg
+				&& st->arr[st->tr].cmd[st->arg][0] != '\0')
+				st->arg++;
+			free(st->arr[st->tr].cmd[st->arg]);
+			st->arr[st->tr].cmd[st->arg++] = (char *)0;
+			st->digit = 0;
+			while (st->arg <= st->arr[st->tr].nb_arg)
+			{
+				free(st->arr[st->tr].cmd[st->arg]);
+				st->digit++;
+				st->arg++;
+			}
+			st->arr[st->tr].nb_arg -= st->digit;
+		}
+		else if (st->tr == 0)
+			return (-1);
+		st->tr++;
+	}
+	return (0);
 }

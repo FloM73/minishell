@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/12 09:49:58 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:39:57 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 int		transfert_buf_input(t_struct *st);
 // parsing: clean_arr
-void	clean_arr(t_struct *st);
+int		clean_arr(t_struct *st);
 // parsing: extract_utils.c
 char	*malloc_f_name(char **file, int len);
 int		test_fd(int fd, char *name);

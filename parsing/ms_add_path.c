@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/12 17:37:05 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:03:27 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	add_path(t_struct *st)
 	else
 		arr_path = (char **) NULL;
 	tr = 0;
-	while (tr <= st->tr)
+	while (tr < st->nb_cmd)
 	{
 		if (st->arr[tr].cmd_type != BUILTIN)
 		{
