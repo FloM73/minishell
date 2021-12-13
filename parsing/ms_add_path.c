@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/12 15:54:17 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:37:05 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static int	free_arr(char **arr, int where_is_path, int cancel)
 			tr++;
 		}
 		free(arr[tr]);
-		free(arr);
-		return (0);
 	}
 	free(arr);
 	if (cancel == -1)
@@ -84,7 +82,7 @@ static char	*test_path(char **arr_path, char *cmd)
 
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
-	j = 1;
+	j = 0;
 	while (arr_path[j] != NULL)
 	{
 		str_cmd = join_path(arr_path[j++], cmd);
@@ -107,7 +105,7 @@ int	add_path(t_struct *st)
 
 	where_is_path = find_path(st);
 	if (where_is_path != -1)
-		arr_path = ft_split(st->env[where_is_path], ':');
+		arr_path = ft_split(st->env[where_is_path] + 5, ':');
 	else
 		arr_path = (char **) NULL;
 	tr = 0;
