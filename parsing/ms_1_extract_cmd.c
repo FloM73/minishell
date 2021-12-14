@@ -47,7 +47,7 @@ int	extract_cmd(t_struct *st)
 	st->tr = 0;
 	if (sucess == -1)
 	{
-		st->res = 127;
+		g_exit_value = 127;
 		return (-1);
 	}
 	return (0);

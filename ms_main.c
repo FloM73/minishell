@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 11:58:59 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 09:13:13 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	init_env(char **old_env, t_struct *st)
 
 	ms_sig_hook();
 	st->prompt = ft_strdup("~/MAXIPAIN $ ");
-	st->res = 0;
+	g_exit_value = 0;
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!st->env)
@@ -105,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 			if (manage_expand_variable(&st) == 0)
 			{
 				if (extract_cmd(&st) == 0 && launch_cmd(&st) != 0)
-					st.res = 1;
+					g_exit_value = 1;
 				free_memory(&st);
 			}
 			init_st(argc, argv, &st);

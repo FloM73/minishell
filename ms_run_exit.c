@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 08:10:56 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/14 09:03:10 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/14 09:12:13 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	run_exit(void *stt, void *cmd)
 	if (st->nb_cmd != 1)
 		return (-1);
 	if (!arr->cmd[1])
-		st->res = 0;
+		g_exit_value = 0;
 	else
 	{
-		st->res = ft_atoi(arr->cmd[1]);
-		if (st->res == 0 && arr->cmd[1][0] != '0' && ft_strlen(arr->cmd[1]) > 1)
+		g_exit_value = ft_atoi(arr->cmd[1]);
+		if (g_exit_value == 0 && arr->cmd[1][0] != '0' && ft_strlen(arr->cmd[1]) > 1)
 		{
-			st->res = 2;
+			g_exit_value = 2;
 			write(2, "exit: numeric argument required\n", 33);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:48:42 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/09 21:18:20 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/14 15:21:11 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	sigint_handle(int signum)
 	}
 	if (signum == SIGINT)
 	{
+		g_exit_value = 130;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -46,7 +47,7 @@ int	ms_sig_hook(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = &sig_handle;
-	sa.sa_flags = 0;
+	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		return (-1);
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)

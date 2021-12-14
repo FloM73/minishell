@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 18:50:43 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 09:12:27 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	launch_builtin(t_struct *st)
 		return (0);
 	if (st->tr + 1 == st->nb_cmd)
 		dup2(st->arr[st->tr].fd_out, st->fd[WRITE]);
-	st->res = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
+	g_exit_value = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 	return (0);
 }
