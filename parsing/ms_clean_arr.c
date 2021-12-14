@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/13 20:13:30 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:35:44 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,23 @@ static void	implement_cmd_typ(t_cmd *arr)
 
 static int	launch_implement_cmd_typ(t_cmd *arr)
 {
+	int	i;
+
 	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
 		trim_quote(arr, arr->cmd[0][0], 0);
 	if (arr->cmd[0][0] != '\0')
 	{
 		implement_cmd_typ(arr);
-		if (arr->f_ptr != &run_echo
-			&& (arr->cmd[1][0] == '"' || arr->cmd[1][0] == '"'))
-			trim_quote(arr, arr->cmd[1][0], 1);
+		if (arr->f_ptr != &run_echo)
+		{
+			i = 1;
+			while (arr->cmd[i][0] != '\0')
+			{
+				if (arr->cmd[i][0] == '"' || arr->cmd[i][0] == '"')
+					trim_quote(arr, arr->cmd[i][0], i);
+				i++;
+			}
+		}
 	}
 	if (arr->cmd[0][0] != '\0')
 		return (0);
