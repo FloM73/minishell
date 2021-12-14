@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/14 10:27:36 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:18:45 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,19 @@ static int	launch_pipe(t_struct*st)
 
 	if (pipe(next_fd) == -1)
 		return (-1);
+	status = 0;
 	pid = fork();
 	if (pid < 0)
 		perror ("Failed to create Child");
 	if (pid == 0)
 		exec_child(st, st->tr, next_fd);
 	manage_fd(st, next_fd);
-	waitpid(pid, &status, 0);
+	if (wait4(pid, &status, 0, NULL) < 0)
+		return (-1);
 	if (WIFEXITED(status))
-		st->res = WEXITSTATUS(status);
+		g_exit_value = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_value = 128 + WTERMSIG(status);
 	return (0);
 }
 

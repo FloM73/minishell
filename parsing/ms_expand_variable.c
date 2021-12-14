@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/05 20:09:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 09:12:52 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	expand_special_variable(t_struct *st, char *str, int i)
 	if (str[i + 1] == '$')
 		st->buf = add_number_to_buf(st, getpid());
 	else if (str[i + 1] == '?')
-		st->buf = add_number_to_buf(st, st->res);
+		st->buf = add_number_to_buf(st, g_exit_value);
 	else if (str[i + 1] == '#')
 		st->buf = add_number_to_buf(st, st->res_dash);
 	else if (str[i + 1] == '~')

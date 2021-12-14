@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/12/11 12:02:44 by flormich         ###   ########.fr        #
+#    Updated: 2021/12/14 14:21:22 by pnuti            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
