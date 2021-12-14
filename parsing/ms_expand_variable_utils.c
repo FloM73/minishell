@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/11 12:29:32 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/14 09:38:14 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	manage_expand_variable(t_struct *st)
 		return (-1);
 	while (ft_isspace(st->input[i]) == 1)
 		i++;
+	if (st->input[i] == '|')
+	{
+		ms_error_synthaxe('|');
+		free(st->input);
+		return (-1);
+	}
 	if (bufferize_input(st, st->input, i, 1) == -1)
 	{
 		free(st->buf);
