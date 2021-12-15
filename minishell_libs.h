@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/15 11:22:59 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/15 12:29:27 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		parse_quote(t_struct *st, char *input, int i);
 int		parse_simple_quote(t_struct *st, char *input, int i);
 int		parse_double_quote(t_struct *st, char *input, int i);
 // parsing: 3_extract_redirection.c
-int		count_lengh_name(t_struct *st, int i);
+int		count_lengh_name(t_struct *st, int i, int test_len);
 int		extract_redirection(t_struct *st, int i);
 int		test_synthaxe(t_struct *st, int i, t_red redirection_typ);
 // parsing: extract_file.c
