@@ -29,25 +29,21 @@ int	extract_cmd(t_struct *st)
 	int	sucess;
 
 	sucess = 0;
-	if (!st->input)
-		sucess = -1;
+	st->arr = create_arr(st);
+	if (!st->arr)
+		(sucess = -1);
 	else
 	{
-		st->arr = create_arr(st);
-		if (!st->arr)
-			(sucess = -1);
-		else
-		{
-			if (parse_input(st) == -1)
-				sucess = -1;
-			else if (add_path(st) == -1)
-				sucess = -1;
-		}
+		if (parse_input(st) == -1)
+			sucess = -1;
+		else if (add_path(st) == -1)
+			sucess = -2;
 	}
 	st->tr = 0;
-	if (sucess == -1)
+	if (sucess < 0)
 	{
-		g_exit_value = 127;
+		if (sucess == -1)
+			g_exit_value = 2;
 		return (-1);
 	}
 	return (0);

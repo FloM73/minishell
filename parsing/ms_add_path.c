@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_add_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 19:34:59 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/13 20:03:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/15 14:32:02 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static int	free_arr(char **arr, int where_is_path, int cancel)
 	}
 	free(arr);
 	if (cancel == -1)
+	{
+		g_exit_value = 127;
 		ms_error_synthaxe('C');
+	}
 	return (cancel);
 }
 
