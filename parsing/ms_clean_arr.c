@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/15 13:30:25 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/15 13:39:18 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	launch_implement_cmd_typ(t_cmd *arr)
 {
 	int	i;
 
-	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '"')
+	if (arr->cmd[0][0] == '"' || arr->cmd[0][0] == '\'')
 		trim_quote(arr, arr->cmd[0][0], 0);
 	if (arr->cmd[0][0] != '\0')
 	{
