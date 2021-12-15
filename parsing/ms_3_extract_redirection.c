@@ -6,13 +6,13 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:43:25 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 12:25:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:28:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell_libs.h"
 
-int	count_lengh_name(t_struct *st, int i)
+int	count_lengh_name(t_struct *st, int i, int test_len)
 {
 	int	len;
 
@@ -23,6 +23,8 @@ int	count_lengh_name(t_struct *st, int i)
 		i++;
 		len++;
 	}
+	if (test_len == 1 && len == 0)
+		ms_error_synthaxe('\0');
 	return (len);
 }
 
