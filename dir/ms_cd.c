@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/10 10:10:13 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/15 11:20:01 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static int	update_prompt(t_struct *st, char *pfad)
 	if (home)
 	{
 		if (ft_strncmp(pfad, home, len) == 0)
-			tmp2 = ft_strjoin("~", pfad + len);
+			tmp2 = ft_strjoin("\033[0;32m~", pfad + len);
 	}
-	st->prompt = ft_strjoin(tmp2, "$ ");
+	st->prompt = ft_strjoin(tmp2, "$ \033[0m");
 	if (tmp2 != pfad)
 		free(tmp2);
 	free(tmp);

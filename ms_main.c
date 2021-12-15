@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/14 09:13:13 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/15 11:13:00 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	init_env(char **old_env, t_struct *st)
 	int		n;
 
 	ms_sig_hook();
-	st->prompt = ft_strdup("~/MAXIPAIN $ ");
+	st->prompt = ft_strdup("\033[0;32m~/MAXIPAIN $ \033[0m");
 	g_exit_value = 0;
 	n = ft_2darr_len(old_env);
 	st->env = (char **)malloc(sizeof(char *) * (n + 1));
