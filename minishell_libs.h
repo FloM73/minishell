@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/14 09:11:04 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/15 11:22:59 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@
 
 # define READ 0
 # define WRITE 1
-# define RED "\033[0;31m"
-# define GR "\033[0;32m"
-# define YE "\033[0;33m"
-# define BL "\033[0;34m"
-# define PU "\033[0;35m"
-# define CY "\033[0;36m"
-# define WH "\033[0;37m"
-# define D "\033[0m"
-//# define PATH = "~/minishell/sbin/"
 
 int	g_exit_value;
 
@@ -89,7 +80,6 @@ typedef struct structure
 	char	**argv;
 	int		cancel;
 	int		no_output;
-	int		res;
 	int		res_dash;
 	int		fd[2];
 }	t_struct;
