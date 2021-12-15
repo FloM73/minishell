@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 18:28:43 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/03 22:30:07 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:22:28 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	extract_infile(t_struct *s, int i)
 	if (i == -1)
 		return (-1);
 	len = count_lengh_name(s, i);
+	if (len == 0)
+	{
+		ms_error_synthaxe('\0');
+		return (-1);
+	}
 	s->arr[s->tr].name_in = malloc_f_name(&(s->arr[s->tr].name_in), len + 1);
 	if (!s->arr[s->tr].name_in)
 		ms_error("Failed to malloc infile\n", 0, s);
@@ -79,6 +84,11 @@ int	extract_outfile(t_struct *s, int i)
 	if (i == -1)
 		return (-1);
 	len = count_lengh_name(s, i);
+	if (len == 0)
+	{
+		ms_error_synthaxe('\0');
+		return (-1);
+	}
 	s->arr[s->tr].name_out = malloc_f_name(&(s->arr[s->tr].name_out), len + 1);
 	if (!s->arr[s->tr].name_out)
 		ms_error("Failed to malloc infile\n", 0, s);
