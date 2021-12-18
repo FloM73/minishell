@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/12 09:56:56 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:11:04 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ int	is_writable_x(t_struct *st, char c, char c_next)
 	{
 		st->cancel = 1;
 		ms_error_synthaxe(c);
-		return (0);
-	}
-	if (c == '>' || c == '<' )
-	{
-		st->cancel = 1;
-		ms_error_synthaxe('\n');
 		return (0);
 	}
 	return (1);

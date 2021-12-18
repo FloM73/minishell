@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/15 12:29:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:43:42 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	g_exit_value;
 typedef enum command_typ
 {
 	SHELL,
-	BUILTIN,
-	IGNORE
+	BUILTIN
 }	t_cmdt;
 
 typedef enum redirection_typ
@@ -93,7 +92,6 @@ int		run_exit(void *stt, void *cmd);
 int		launch_cmd(t_struct *st);
 // ms_set_redirection.c
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
-int		launch_builtin(t_struct *st);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);

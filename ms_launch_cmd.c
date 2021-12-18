@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/15 11:32:13 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:23:49 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	exec_child(t_struct *st, int tr, int *next_fd)
 	set_red_shell(st, st->tr, next_fd);
 	if (st->arr[tr].fd_out != 1)
 		dup2(st->arr[tr].fd_out, STDOUT_FILENO);
-	execve(st->arr[tr].cmd[0], st->arr[tr].cmd, NULL);
+	execve(st->arr[tr].cmd[0], st->arr[tr].cmd, st->env);
 }
 
 static void	manage_fd(t_struct *st, int *next_fd)
@@ -56,6 +56,17 @@ static int	launch_pipe(t_struct*st)
 		if (WTERMSIG(status) == SIGQUIT)
 			ft_putendl_fd("Quit (core dumped)", 2);
 	}
+	return (0);
+}
+
+static int	launch_builtin(t_struct *st)
+{
+	if (st->arr[st->tr].f_ptr == &run_echo
+		&& st->tr + 1 != st->nb_cmd && st->arr[st->tr + 1].f_ptr == &run_echo)
+		return (0);
+	if (st->tr + 1 == st->nb_cmd)
+		dup2(st->arr[st->tr].fd_out, st->fd[WRITE]);
+	g_exit_value = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 	return (0);
 }
 
