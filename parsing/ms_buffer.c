@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:42:51 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/12 10:08:41 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/18 23:40:28 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,28 @@ char	*add_number_to_buf(t_struct *st, int nb)
 	free(str);
 	free(st->buf);
 	return (new_buf);
+}
+
+int	find_prefixe(t_struct *st, char *str, int i)
+{
+	int		len;
+
+	len = 0;
+	while (str[i + len] != '*')
+		len++;
+	if (len > 0)
+		st->pre = ft_substr(str, i, len);
+	i += len + 1;
+	if (str[i] != '\0')
+	{
+		len = 0;
+		while (ft_isspace(str[i + len]) == 0)
+			len++;
+		if (len > 0)
+			st->post = ft_substr(str, i, len);
+		i += len;
+	}
+	return (i);
 }
 
 int	transfert_buf_input(t_struct *st)

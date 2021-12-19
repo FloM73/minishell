@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/15 12:29:27 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/18 22:59:30 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <dirent.h>
 # include "libft/libft.h"
 
 # define READ 0
@@ -36,8 +37,7 @@ int	g_exit_value;
 typedef enum command_typ
 {
 	SHELL,
-	BUILTIN,
-	IGNORE
+	BUILTIN
 }	t_cmdt;
 
 typedef enum redirection_typ
@@ -82,6 +82,8 @@ typedef struct structure
 	int		no_output;
 	int		res_dash;
 	int		fd[2];
+	char	*pre;
+	char	*post;
 }	t_struct;
 
 // main.c
@@ -93,7 +95,6 @@ int		run_exit(void *stt, void *cmd);
 int		launch_cmd(t_struct *st);
 // ms_set_redirection.c
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
-int		launch_builtin(t_struct *st);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
@@ -107,10 +108,13 @@ int		expand_special_variable(t_struct *st, char *str, int i);
 int		manage_expand_variable(t_struct *st);
 int		find_match(t_struct *st, int e, char *var, int pos);
 void	write_variable(t_struct *st, int e, int j);
-// parsing : expand_variable_utils.c
 int		do_not_expand_variable(t_struct *st, char *str, int i);
+// parsing : expand_variable_utils2.c
+int		check_is_wildcard(char *str, int i);
+int		launch_expand_wildcard(t_struct *st, char *str, int i);
 // parsing: 1_extract_cmd.c
 int		extract_cmd(t_struct *st);
+t_cmd	*create_arr(t_struct *st);
 // parsing: 2_parse_input.c
 int		parse_input(t_struct *st);
 // parsing: 2_parse_input_utils.c
@@ -138,6 +142,7 @@ int		add_path(t_struct *st);
 char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 int		transfert_buf_input(t_struct *st);
+int		find_prefixe(t_struct *st, char *str, int i);
 // parsing: clean_arr
 int		clean_arr(t_struct *st);
 // parsing: extract_utils.c
