@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/14 09:38:14 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/18 18:07:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,12 @@ void	write_variable(t_struct *st, int e, int j)
 		st->buf = add_char_to_buf(st, st->env[e][j + 2]);
 		j++;
 	}
+}
+
+int	do_not_expand_variable(t_struct *st, char *str, int i)
+{
+	if (str[i + 1 == '"' || str[i + 1] == '\''])
+		st->buf = add_char_to_buf(st, str[i]);
+	st->buf = add_char_to_buf(st, str[i + 1]);
+	return (i + 1);
 }

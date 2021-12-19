@@ -13,7 +13,7 @@
 #include"../minishell_libs.h"
 
 // create the maximum size ***arr according to the number of pipes
-static t_cmd	*create_arr(t_struct *st)
+t_cmd	*create_arr(t_struct *st)
 {
 	t_cmd	*arr;
 
