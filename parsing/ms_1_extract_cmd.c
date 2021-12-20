@@ -29,6 +29,7 @@ int	extract_cmd(t_struct *st)
 	int	sucess;
 
 	sucess = 0;
+	st->arg = 0;
 	st->arr = create_arr(st);
 	if (!st->arr)
 		(sucess = -1);

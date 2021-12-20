@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/18 22:59:30 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/19 22:53:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef enum command_typ
 	BUILTIN
 }	t_cmdt;
 
+typedef enum position
+{
+	BEGIN,
+	MID,
+	END
+}	t_pos;
+
 typedef enum redirection_typ
 {
 	INFILE,
@@ -59,6 +66,12 @@ typedef struct command
 	int		fd_out;
 	char	*name_out;
 }	t_cmd;
+
+typedef struct s_wildcard_pattern
+{
+	char	*pattern;
+	t_pos	position;
+}	t_pat;
 
 typedef struct structure
 {
@@ -82,8 +95,10 @@ typedef struct structure
 	int		no_output;
 	int		res_dash;
 	int		fd[2];
-	char	*pre;
-	char	*post;
+	t_pat	*pat;
+	int		nb_wildcard;
+	int		wildcard_all;
+	int		is_wildcard_match;
 }	t_struct;
 
 // main.c
@@ -110,8 +125,8 @@ int		find_match(t_struct *st, int e, char *var, int pos);
 void	write_variable(t_struct *st, int e, int j);
 int		do_not_expand_variable(t_struct *st, char *str, int i);
 // parsing : expand_variable_utils2.c
-int		check_is_wildcard(char *str, int i);
-int		launch_expand_wildcard(t_struct *st, char *str, int i);
+int		check_is_wildcard(t_struct *st, char *str, int i);
+int		launch_expand_wildcard(t_struct *st, char *str, int i, int i_org);
 // parsing: 1_extract_cmd.c
 int		extract_cmd(t_struct *st);
 t_cmd	*create_arr(t_struct *st);
@@ -142,7 +157,6 @@ int		add_path(t_struct *st);
 char	*add_char_to_buf(t_struct *st, char c);
 char	*add_number_to_buf(t_struct *st, int nb);
 int		transfert_buf_input(t_struct *st);
-int		find_prefixe(t_struct *st, char *str, int i);
 // parsing: clean_arr
 int		clean_arr(t_struct *st);
 // parsing: extract_utils.c
@@ -155,6 +169,10 @@ int		skip_simple_quote(char *input, int i, int max);
 int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
 int		is_expand_home(unsigned char c);
+// parsing: ms_wildcard_pattern.c
+int		launch_find_wc_pattern(t_struct *st, char *str, int i);
+void	cpy_str_no_match(t_struct *st, char *str, int i_org);
+void	cpy_match(t_struct *st, struct dirent *dirp);
 //error.c
 int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);

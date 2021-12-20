@@ -6,78 +6,120 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 22:31:57 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/18 23:56:53 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:23:31 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_libs.h"
 
-int	check_is_wildcard(char *str, int i)
+static void	free_memory_wildcard(t_struct *st, struct dirent *dirp, DIR *dir)
+{
+	int	i;
+
+	closedir(dir);
+	free(dirp);
+	if (st->wildcard_all == 0)
+	{
+		i = 0;
+		while (i < st->nb_wildcard)
+		{
+			free(st->pat[i].pattern);
+			i++;
+		}
+		free(st->pat);
+	}
+}
+
+int	check_is_wildcard(t_struct *st, char *str, int i)
 {
 	int	wild_card;
 
+	st->nb_wildcard = 1;
 	wild_card = 0;
-	while (str[i] != '\0' && ft_isspace(str[i]) == 0)
+	while (str[i] != '\0' && ft_isspace(str[i]) == 0 && str[i] != '|')
 	{
 		if (str[i] == '"' || str[i] == '\'')
 			return (0);
 		if (str[i] == '*')
+		{
 			wild_card = 1;
+			st->nb_wildcard++;
+		}
 		i++;
 	}
 	return (wild_card);
 }
 
-static int	find_wildcard_match(t_struct *st, struct dirent *dirp)
+static int	wildcard_match_end(char *pat, char *dir)
 {
-	int		len_post;
+	int		len_pat;
 	int		len_dir;
 
-	if (st->pre && ft_strncmp(st->pre, dirp->d_name, ft_strlen(st->pre)) != 0)
+	len_pat = ft_strlen(pat);
+	len_dir = ft_strlen(dir);
+	if (len_pat > len_dir)
 		return (0);
-	if (st->post)
+	while (len_pat > 0)
 	{
-		len_post = ft_strlen(st->post);
-		len_dir = ft_strlen(dirp->d_name);
-		while (len_post > 0)
+		if (pat[len_pat - 1] == dir[len_dir - 1])
 		{
-			if (st->post[len_post - 1] == dirp->d_name[len_dir - 1])
-			{
-				len_post--;
-				len_dir--;
-			}
-			else
-				return (0);
+			len_pat--;
+			len_dir--;
 		}
+		else
+			return (0);
 	}
 	return (1);
 }
 
-int	launch_expand_wildcard(t_struct *st, char *str, int i)
+static int	find_wildcard_match(t_struct *st, struct dirent *d, int arg)
+{
+	int		len_pat;
+	char	*tmp;
+
+	tmp = d->d_name;
+	while (arg < st->nb_wildcard && st->pat[arg].pattern != NULL)
+	{
+		if (st->pat[arg].position == END)
+			return (wildcard_match_end(st->pat[arg].pattern, tmp));
+		len_pat = ft_strlen(st->pat[arg].pattern);
+		if (st->pat[arg].position == BEGIN)
+		{
+			if (ft_strncmp(st->pat[arg].pattern, tmp, len_pat) != 0)
+				return (0);
+		}
+		else
+		{
+			tmp = ft_strnstr(tmp, st->pat[arg].pattern, ft_strlen(tmp));
+			if (tmp == NULL)
+				return (0);
+		}
+		tmp += len_pat;
+		arg++;
+	}
+	return (1);
+}
+
+int	launch_expand_wildcard(t_struct *st, char *str, int i, int i_org)
 {
 	DIR				*cur_dir;
 	struct dirent	*dirp;
-	int				j;
 
-	i = find_prefixe(st, str, i);
+	st->is_wildcard_match = 0;
+	i = launch_find_wc_pattern(st, str, i);
+	if (i == -1)
+		return (-1);
 	cur_dir = opendir(ms_get_env(st->env, "PWD"));
+	dirp = readdir(cur_dir);
 	while (dirp != NULL)
 	{
-		dirp = readdir(cur_dir);
 		if (dirp && dirp->d_name[0] != '.'
-			&& (find_wildcard_match(st, dirp) == 1 || (!st->pre && !st->post)))
-		{
-			j = 0;
-			while (dirp->d_name[j])
-				st->buf = add_char_to_buf(st, dirp->d_name[j++]);
-			st->buf = add_char_to_buf(st, ' ');
-		}
+			&& (st->wildcard_all == 1 || find_wildcard_match(st, dirp, 0) == 1))
+			cpy_match(st, dirp);
+		dirp = readdir(cur_dir);
 	}
-	closedir(cur_dir);
-	free(dirp);
-	if (st->pre)
-		free(st->pre);
-	if (st->post)
-		free(st->post);
+	if (st->is_wildcard_match == 0)
+		cpy_str_no_match(st, str, i_org);
+	free_memory_wildcard(st, dirp, cur_dir);
 	return (i);
 }
