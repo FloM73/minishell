@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:33:15 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/19 23:16:33 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/20 13:52:47 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	launch_store_pattern(t_struct *st, char *str, int i)
 {
 	int		len;
 
+	while (str[i] == '*')
+		i++;
 	len = 0;
 	while (str[i + len] != '*' && ft_isspace(str[i + len]) == 0
 		&& str[i + len] != '\0' && str[i + len] != '|')
@@ -53,7 +55,7 @@ int	launch_find_wc_pattern(t_struct *st, char *str, int i)
 		st->wildcard_all = 1;
 		return (i + 1);
 	}
-	if (str[i] == '*')
+	while (str[i] == '*')
 		i++;
 	st->pat = malloc((st->nb_wildcard) * sizeof(t_pat));
 	if (!st->pat)
