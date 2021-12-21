@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/19 22:53:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:12:20 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct structure
 	int		nb_wildcard;
 	int		wildcard_all;
 	int		is_wildcard_match;
+	int		include_hiddenfiles;
 }	t_struct;
 
 // main.c
@@ -173,6 +174,9 @@ int		is_expand_home(unsigned char c);
 int		launch_find_wc_pattern(t_struct *st, char *str, int i);
 void	cpy_str_no_match(t_struct *st, char *str, int i_org);
 void	cpy_match(t_struct *st, struct dirent *dirp);
+// parsing: ms_wildcard_utils.c
+int		check_include_hiddenfiles(const char *str, int i);
+int		wildcard_match_end(char *pat, char *dir);
 //error.c
 int		ms_error(char *txt, int exit_level, t_struct *st);
 void	ms_error_synthaxe(char c);

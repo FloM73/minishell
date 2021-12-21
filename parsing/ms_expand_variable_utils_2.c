@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 22:31:57 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/20 12:21:20 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:02:31 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,21 @@ int	check_is_wildcard(t_struct *st, char *str, int i)
 	return (wild_card);
 }
 
-static int	wildcard_match_end(char *pat, char *dir)
-{
-	int		len_pat;
-	int		len_dir;
-
-	len_pat = ft_strlen(pat);
-	len_dir = ft_strlen(dir);
-	if (len_pat > len_dir)
-		return (0);
-	while (len_pat > 0)
-	{
-		if (pat[len_pat - 1] == dir[len_dir - 1])
-		{
-			len_pat--;
-			len_dir--;
-		}
-		else
-			return (0);
-	}
-	return (1);
-}
-
 static int	find_wildcard_match(t_struct *st, struct dirent *d, int arg)
 {
-	int		len_pat;
 	char	*tmp;
 
+	if (st->wildcard_all == 1)
+		return (1);
 	tmp = d->d_name;
 	while (arg < st->nb_wildcard && st->pat[arg].pattern != NULL)
 	{
 		if (st->pat[arg].position == END)
 			return (wildcard_match_end(st->pat[arg].pattern, tmp));
-		len_pat = ft_strlen(st->pat[arg].pattern);
+		st->digit = ft_strlen(st->pat[arg].pattern);
 		if (st->pat[arg].position == BEGIN)
 		{
-			if (ft_strncmp(st->pat[arg].pattern, tmp, len_pat) != 0)
+			if (ft_strncmp(st->pat[arg].pattern, tmp, st->digit) != 0)
 				return (0);
 		}
 		else
@@ -94,7 +73,7 @@ static int	find_wildcard_match(t_struct *st, struct dirent *d, int arg)
 			if (tmp == NULL)
 				return (0);
 		}
-		tmp += len_pat;
+		tmp += st->digit;
 		arg++;
 	}
 	return (1);
@@ -106,6 +85,7 @@ int	launch_expand_wildcard(t_struct *st, char *str, int i, int i_org)
 	struct dirent	*dirp;
 
 	st->is_wildcard_match = 0;
+	st->include_hiddenfiles = check_include_hiddenfiles(str, i);
 	i = launch_find_wc_pattern(st, str, i);
 	if (i == -1)
 		return (-1);
@@ -113,8 +93,9 @@ int	launch_expand_wildcard(t_struct *st, char *str, int i, int i_org)
 	dirp = readdir(cur_dir);
 	while (dirp != NULL)
 	{
-		if (dirp && dirp->d_name[0] != '.'
-			&& (st->wildcard_all == 1 || find_wildcard_match(st, dirp, 0) == 1))
+		if (dirp
+			&& find_wildcard_match(st, dirp, 0) == 1
+			&& (st->include_hiddenfiles != 0 || dirp->d_name[0] != '.'))
 			cpy_match(st, dirp);
 		dirp = readdir(cur_dir);
 	}
