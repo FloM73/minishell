@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:42:06 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/22 20:33:28 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/23 19:05:35 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	start_child(t_struct *st, t_cmd *arr)
 		exit(1);
 }
 
-int		run_child(void *sst, void *cmd)
+int	run_child(void *sst, void *cmd)
 {
 	t_struct	*st;
 	t_cmd		*arr;

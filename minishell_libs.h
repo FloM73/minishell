@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/21 08:36:48 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/23 19:05:17 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,9 @@ void	*gnl_calloc(size_t nmemb, size_t n);
 void	handle_logical(t_struct *st, int argc, char **argv);
 int		run_child(void *sst, void *cmd);
 int		manage_parenthesis(t_struct *st, char *s, int i);
-int		manage_separator(t_cmd *arr , char *s, int i);
+int		manage_separator(t_cmd *arr, char *s, int i);
 int		skip_parenthesis(char *s, int i, int max);
 int		parse_logical(t_struct *st, int i);
 int		parse_parenthesis(t_struct *st, char *input, int i);
-
 
 #endif

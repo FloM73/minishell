@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/22 20:18:30 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/23 19:21:03 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ static int	count_arg(char *input, t_struct *st, int i)
 				i = skip_simple_quote(input, i + 1, st->len);
 			else if (input[i] == '(')
 				i = skip_parenthesis(input, i + 1, st->len);
-			else if (ft_isspace(input[i]) == 1)
-			{
-				if (input[i + 1] != '|' && i < st->len)
+			else if (ft_isspace(input[i]) == 1
+				&& input[i + 1] != '|' && i < st->len)
 					st->arr[tr].nb_arg++;
-			}
 			i++;
 		}
 		i = manage_separator(&st->arr[tr], input, i);

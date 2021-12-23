@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/22 20:10:00 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/23 19:26:45 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	manage_expand_variable(t_struct *st)
 		return (-1);
 	while (ft_isspace(st->input[i]) == 1)
 		i++;
-	if (st->input[i] == '|') //add case for || and &&
+	if (st->input[i] == '|' || st->input[i] == '&')
 	{
-		ms_error_synthaxe('|');
+		ms_error_synthaxe(st->input[i]);
 		free(st->input);
 		return (-1);
 	}
