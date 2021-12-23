@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/15 13:39:18 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:02:33 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ static void	trim_quote(t_cmd *arr, char c, int arg)
 
 static void	implement_cmd_typ(t_cmd *arr)
 {
-	if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
+	if (arr->cmd[0][0] == '(')
+		arr->f_ptr = &run_child;
+	else if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 		arr->f_ptr = &run_echo;
 	else if (ft_strncmp(arr->cmd[0], "env", ft_strlen(arr->cmd[0])) == 0)
 		arr->f_ptr = &ms_run_env;
@@ -60,7 +62,7 @@ static int	launch_implement_cmd_typ(t_cmd *arr)
 	if (arr->cmd[0][0] != '\0')
 	{
 		implement_cmd_typ(arr);
-		if (arr->f_ptr != &run_echo)
+		if (arr->f_ptr != &run_echo && arr->f_ptr != &run_child)
 		{
 			i = 1;
 			while (arr->cmd[i][0] != '\0')

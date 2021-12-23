@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_0_expand_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/19 09:40:51 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/22 10:58:25 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	bufferize_input(t_struct *st, char *str, int i, int test_quote)
 		if ((i == 0 || (i > 0 && ft_isspace(str[i - 1]) == 1))
 			&& check_is_wildcard(str, i) == 1)
 			i = launch_expand_wildcard(st, str, i);
+		else if (str[i] == '(')
+			i = manage_parenthesis(st, str, i);
 		else if (str[i] == '\\' && (str[i + 1] == '$' || str[i + 1] == '~'
 				|| str[i + 1] == '"' || str[i + 1] == '\''))
 			i = do_not_expand_variable(st, str, i);

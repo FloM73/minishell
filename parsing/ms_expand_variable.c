@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/17 11:52:09 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/22 10:54:28 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 int	count_pipe_skip_space(t_struct *st, char *str, int i)
 {
-	if (str[i] == '|')
+	if (str[i] == '|' || (str[i] == '&' && str[i + 1] == '&'))
 	{
 		st->nb_cmd += 1;
 		if (str[i - 1] != ' ')
 			st->buf = add_char_to_buf(st, ' ');
+		if (str[i + 1] == '|' || (str[i] == '&' && str[i + 1] == '&'))
+		{
+			st->buf = add_char_to_buf(st, str[i]);
+			i++;
+		}
 	}
 	st->buf = add_char_to_buf(st, str[i]);
 	while (ft_isspace(str[i]) == 1 && str[i + 1] != '\0'

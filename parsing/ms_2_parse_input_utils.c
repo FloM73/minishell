@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 12:21:12 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/12 09:51:34 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/21 13:00:36 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ int	parse_pipe(t_struct *st, int i)
 	st->arg = 0;
 	st->digit = 0;
 	return (i + 1);
+}
+
+int	parse_logical(t_struct *st, int i)
+{
+	st->tr++;
+	st->arg = 0;
+	st->digit = 0;
+	return (i + 2);
 }
 
 int	parse_redirection(t_struct *st, int i)
