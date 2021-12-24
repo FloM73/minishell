@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/23 19:21:03 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:21:33 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	count_arg(char *input, t_struct *st, int i)
 	while (i <= st->len && input[i] != '\0')
 	{
 		st->arr[tr].nb_arg = 0;
-		while ((input[i] != '|' && input[i] != '&')
+		while ((input[i] != '|' && ft_memcmp(&input[i], "&&", 2) != 0)
 			&& i <= st->len && input[i] != '\0')
 		{
 			if (input[i] == '"')
