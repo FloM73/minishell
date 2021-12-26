@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 12:21:12 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/23 19:14:29 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/26 16:02:51 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,14 @@ int	manage_parenthesis(t_struct *st, char *s, int i)
 
 	n = 1;
 	st->buf = add_char_to_buf(st, s[i]);
-	i++;
 	while (s[i] && n > 0)
 	{
+		i++;
 		st->buf = add_char_to_buf(st, s[i]);
 		if (s[i] == '(')
 			n++;
 		else if (s[i] == ')')
 			n--;
-		i++;
 	}
 	if (n > 0)
 	{

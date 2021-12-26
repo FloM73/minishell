@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 07:26:57 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/21 08:36:41 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/26 16:05:01 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	parse_parenthesis(t_struct *st, char *input, int i)
 		st->digit++;
 		i++;
 	}
-	st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 	st->digit++;
 	return (i + 1);
 }

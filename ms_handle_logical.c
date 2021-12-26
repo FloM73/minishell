@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:42:06 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/23 19:05:35 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/26 14:22:03 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void	start_child(t_struct *st, t_cmd *arr)
 
 	new_argv[0] = st->argv[0];
 	new_argv[1] = ft_strdup("-c");
-	new_argv[2] = ft_substr(arr->cmd[0], 1, ft_strlen(arr->cmd[0]) - 2);
+	new_argv[2] = ft_substr(arr->cmd[0], 1,
+		ft_revlen_until_char(arr->cmd[0], ')') - 1);
 	new_argv[3] = NULL;
 	if (execve(ms_get_env(st->env, "SHELL"), new_argv, st->env) < 0)
 		exit(1);
