@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 10:57:27 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/05 22:10:19 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:41:18 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ms_unset(char *var_name, t_struct *st)
 	char	**env;
 	int		n;
 
-	if (st->nb_cmd != 1)
-		return (-1);
 	if (!ms_get_env(st->env, var_name))
 		return (0);
 	n = ft_2darr_len(st->env);

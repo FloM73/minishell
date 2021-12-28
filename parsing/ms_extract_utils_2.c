@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_len_until_char.c                                :+:      :+:    :+:   */
+/*   ms_extract_utils_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 15:26:56 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/26 14:21:03 by pnuti            ###   ########.fr       */
+/*   Created: 2021/12/20 09:08:00 by pnuti             #+#    #+#             */
+/*   Updated: 2021/12/23 19:28:48 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell_libs.h"
 
-int	ft_len_until_char(char *s, char c)
+int	skip_parenthesis(char *s, int i, int max)
 {
-	int	i;
+	int	n;
 
-	i = 0;
-	while (s[i] != c && s[i])
-		i++;
-	if (s[i] == c)
-		return (i);
-	else
-		return (0);
-}
-
-int	ft_revlen_until_char(char *s, char c)
-{
-	int	i;
-
-	i = ft_strlen(s);
-	while (i >= 0)
+	n = 1;
+	while (s[i] && n > 0 && i < max)
 	{
-		if (s[i] == c)
-			return (i);
-		i--;
+		if (s[i] == '(')
+			n++;
+		else if (s[i] == ')')
+			n--;
+		i++;
 	}
-	return (0);
+	return (i);
 }

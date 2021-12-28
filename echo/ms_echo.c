@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/17 13:11:04 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:48:43 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	run_echo(void *stt, void *cmd)
 
 	arr = (t_cmd *)cmd;
 	st = (t_struct *)stt;
-	if (st->tr + 1 == st->nb_cmd)
+	if (st->tr + 1 == st->nb_cmd || st->arr[st->tr].logical != 0)
 	{
 		if (initialise_buf(st) == 0)
 		{

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
 /*   Updated: 2021/12/21 18:12:20 by flormich         ###   ########.fr       */
@@ -65,6 +65,7 @@ typedef struct command
 	char	*limiter;
 	int		fd_out;
 	char	*name_out;
+	int		logical;
 }	t_cmd;
 
 typedef struct s_wildcard_pattern
@@ -107,6 +108,7 @@ void	free_memory(t_struct *cmd);
 int		ms_sig_hook(void);
 void	sigint_handle(int signum);
 int		run_exit(void *stt, void *cmd);
+void	init_st(int argc, char **argv, t_struct *st);
 // ms_launch_cmd.c
 int		launch_cmd(t_struct *st);
 // ms_set_redirection.c
@@ -217,5 +219,13 @@ char	*gnl_substr(char const *s, size_t len);
 size_t	gnl_strlen(const char *s);
 void	gnl_bzero(void *s, size_t n);
 void	*gnl_calloc(size_t nmemb, size_t n);
+// Logical
+void	handle_logical(t_struct *st, int argc, char **argv);
+int		run_child(void *sst, void *cmd);
+int		manage_parenthesis(t_struct *st, char *s, int i);
+int		manage_separator(t_cmd *arr, char *s, int i);
+int		skip_parenthesis(char *s, int i, int max);
+int		parse_logical(t_struct *st, int i);
+int		parse_parenthesis(t_struct *st, char *input, int i);
 
 #endif

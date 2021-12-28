@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/17 12:23:49 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/26 16:04:03 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ static int	launch_pipe(t_struct*st)
 static int	launch_builtin(t_struct *st)
 {
 	if (st->arr[st->tr].f_ptr == &run_echo
-		&& st->tr + 1 != st->nb_cmd && st->arr[st->tr + 1].f_ptr == &run_echo)
+		&& st->tr + 1 != st->nb_cmd && st->arr[st->tr + 1].f_ptr == &run_echo
+		&& !st->arr[st->tr].logical)
 		return (0);
-	if (st->tr + 1 == st->nb_cmd)
+	if (st->tr + 1 == st->nb_cmd || st->arr[st->tr].logical)
 		dup2(st->arr[st->tr].fd_out, st->fd[WRITE]);
 	g_exit_value = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
 	return (0);
@@ -76,12 +77,17 @@ int	launch_cmd(t_struct *st)
 		return (-1);
 	while (st->tr < st->nb_cmd)
 	{
-		if (st->arr[st->tr].cmd_type == BUILTIN)
-			launch_builtin(st);
-		else
+		if (st->tr == 0 || (st->tr > 0 && ((st->arr[st->tr - 1].logical == 2
+			&& g_exit_value == 0) || (st->arr[st->tr - 1].logical == 1
+			&& g_exit_value > 0) || !st->arr[st->tr - 1].logical)))
 		{
-			if (launch_pipe(st) == -1)
-				return (-1);
+			if (st->arr[st->tr].cmd_type == BUILTIN)
+				launch_builtin(st);
+			else
+			{
+				if (launch_pipe(st) == -1)
+					return (-1);
+			}
 		}
 		st->tr++;
 	}

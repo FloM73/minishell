@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:01:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/18 18:07:07 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/23 19:26:45 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	manage_expand_variable(t_struct *st)
 		return (-1);
 	while (ft_isspace(st->input[i]) == 1)
 		i++;
-	if (st->input[i] == '|')
+	if (st->input[i] == '|' || st->input[i] == '&')
 	{
-		ms_error_synthaxe('|');
+		ms_error_synthaxe(st->input[i]);
 		free(st->input);
 		return (-1);
 	}
@@ -34,6 +34,7 @@ int	manage_expand_variable(t_struct *st)
 	{
 		free(st->buf);
 		free(st->input);
+		g_exit_value = 1;
 		return (-1);
 	}
 	return (transfert_buf_input(st));

@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_len_until_char.c                                :+:      :+:    :+:   */
+/*   ms_2_parse_input_utils_3.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 15:26:56 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/26 14:21:03 by pnuti            ###   ########.fr       */
+/*   Created: 2021/12/21 07:26:57 by pnuti             #+#    #+#             */
+/*   Updated: 2021/12/26 16:05:01 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell_libs.h"
 
-int	ft_len_until_char(char *s, char c)
+int	parse_parenthesis(t_struct *st, char *input, int i)
 {
-	int	i;
+	int	n;
 
-	i = 0;
-	while (s[i] != c && s[i])
-		i++;
-	if (s[i] == c)
-		return (i);
-	else
-		return (0);
-}
-
-int	ft_revlen_until_char(char *s, char c)
-{
-	int	i;
-
-	i = ft_strlen(s);
-	while (i >= 0)
+	n = 1;
+	st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
+	st->digit++;
+	i++;
+	while (n > 0)
 	{
-		if (s[i] == c)
-			return (i);
-		i--;
+		if (input[i] == '(')
+			n++;
+		else if (input[i] == ')')
+			n--;
+		st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
+		st->digit++;
+		i++;
 	}
-	return (0);
+	st->digit++;
+	return (i + 1);
 }

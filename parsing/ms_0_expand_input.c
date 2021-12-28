@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_0_expand_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
 /*   Updated: 2021/12/20 13:03:33 by flormich         ###   ########.fr       */

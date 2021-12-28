@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
 /*   Updated: 2021/12/19 16:33:44 by flormich         ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "minishell_libs.h"
 
-static void	init_st(int argc, char **argv, t_struct *st)
+void	init_st(int argc, char **argv, t_struct *st)
 {
 	sigint_handle(SIGUSR1);
 	st->argc = argc;
@@ -54,20 +54,28 @@ void	free_memory(t_struct *st)
 	free(st->input);
 }
 
-static void	set_shell(t_struct *st)
+static void	set_shell(t_struct *st, char **argv)
 {
 	char	path[PATH_MAX];
 	char	*shell;
 	char	*shell2;
+	char	*shell3;
 
 	shell = ft_strjoin("SHELL=", getcwd(path, PATH_MAX));
-	shell2 = ft_strjoin(shell, ms_get_env(st->env, "_") + 1);
+	if (argv[0][0] == '.')
+		shell2 = ft_strjoin(shell, &argv[0][1]);
+	else
+	{
+		shell3 = ft_strjoin(shell, "/");
+		shell2 = ft_strjoin(shell3, argv[0]);
+		free(shell3);
+	}
 	ms_export(shell2, st);
 	free(shell2);
 	free(shell);
 }
 
-static int	init_env(char **old_env, t_struct *st)
+static int	init_env(char **old_env, t_struct *st, char **argv)
 {
 	int		i;
 	int		n;
@@ -86,7 +94,7 @@ static int	init_env(char **old_env, t_struct *st)
 		i++;
 	}
 	st->env[i] = NULL;
-	set_shell(st);
+	set_shell(st, argv);
 	return (0);
 }
 
@@ -94,7 +102,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_struct	st;
 
-	init_env(envp, &st);
+	init_env(envp, &st, argv);
+	handle_logical(&st, argc, argv);
 	while (1)
 	{
 		st.input = readline(st.prompt);
