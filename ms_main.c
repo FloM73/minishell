@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/24 15:22:38 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/19 16:33:44 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	init_st(int argc, char **argv, t_struct *st)
 	st->force_expand = -1;
 	st->len = (int)ft_strlen(st->input);
 	st->res_dash = argc - 1;
-	st->pre = NULL;
-	st->post = NULL;
 }
 
 void	free_memory(t_struct *st)
