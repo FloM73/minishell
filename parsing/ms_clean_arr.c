@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_clean_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/22 20:02:33 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/28 18:01:17 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	trim_quote(t_cmd *arr, char c, int arg)
 	}
 }
 
-static void	implement_cmd_typ(t_cmd *arr)
+static void	implement_cmd_typ(t_cmd *arr, int logical)
 {
-	if (arr->cmd[0][0] == '(')
+	if (arr->cmd[0][0] == '(' || logical > 0)
 		arr->f_ptr = &run_child;
 	else if (ft_strncmp(arr->cmd[0], "echo", ft_strlen(arr->cmd[0])) == 0)
 		arr->f_ptr = &run_echo;
@@ -53,7 +53,7 @@ static void	implement_cmd_typ(t_cmd *arr)
 	arr->cmd_type = BUILTIN;
 }
 
-static int	launch_implement_cmd_typ(t_cmd *arr)
+static int	launch_implement_cmd_typ(t_cmd *arr, int logical)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ static int	launch_implement_cmd_typ(t_cmd *arr)
 		trim_quote(arr, arr->cmd[0][0], 0);
 	if (arr->cmd[0][0] != '\0')
 	{
-		implement_cmd_typ(arr);
+		implement_cmd_typ(arr, logical);
 		if (arr->f_ptr != &run_echo && arr->f_ptr != &run_child)
 		{
 			i = 1;
@@ -84,7 +84,7 @@ int	clean_arr(t_struct *st)
 	while (st->tr < st->nb_cmd)
 	{
 		st->arg = 0;
-		if (launch_implement_cmd_typ(&(st->arr[st->tr])) == 0)
+		if (launch_implement_cmd_typ(&(st->arr[st->tr]), st->logical) == 0)
 		{
 			while (st->tr < st->nb_cmd && st->arg < st->arr[st->tr].nb_arg
 				&& st->arr[st->tr].cmd[st->arg][0] != '\0')

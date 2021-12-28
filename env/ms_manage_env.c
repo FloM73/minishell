@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_manage_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 10:14:36 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/23 19:09:27 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/28 16:57:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ms_run_export(void *stt, void *cmd)
 	st = (t_struct *)stt;
 	n = 1;
 	if (st->nb_cmd != 1 && ((!arr->logical && ((st->tr > 0
-		&& !st->arr[st->tr - 1].logical) || st->tr == 0))))
+			&& !st->arr[st->tr - 1].logical) || st->tr == 0))))
 		return (0);
 	while (arr->cmd[n])
 	{
@@ -62,7 +62,7 @@ int	ms_run_unset(void *stt, void *cmd)
 	st = (t_struct *)stt;
 	n = 1;
 	if (st->nb_cmd != 1 && ((!arr->logical && ((st->tr > 0
-		&& !st->arr[st->tr - 1].logical) || st->tr == 0))))
+			&& !st->arr[st->tr - 1].logical) || st->tr == 0))))
 		return (0);
 	while (arr->cmd[n])
 	{

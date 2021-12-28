@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/21 18:12:20 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/28 17:33:42 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ typedef struct structure
 	int		wildcard_all;
 	int		is_wildcard_match;
 	int		include_hiddenfiles;
+	int		nb_parenthesis;
+	int		logical;
 }	t_struct;
 
 // main.c
@@ -115,11 +117,14 @@ int		launch_cmd(t_struct *st);
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
+int		launch_expand_variable(t_struct *st, char *str, int i);
+// parsing: ms_manage_quote.c
+int		launch_manage_quote(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
 int		manage_doppel_quote(t_struct *st, char *str, int i, int test_quote);
-int		launch_expand_variable(t_struct *st, char *str, int i);
+// parsing: ms_manage_pipe_parenthesis.c
+int		launch_manage_pipe_parenthesis(t_struct *st, char *str, int i);
 //parsing: expand_variable.c
-int		count_pipe_skip_space(t_struct *st, char *str, int i);
 int		expand_variable(t_struct *st, char *str, int i);
 int		expand_special_variable(t_struct *st, char *str, int i);
 // parsing : expand_variable_utils.c
@@ -144,6 +149,8 @@ int		parse_char(t_struct *st, char *input, int i);
 int		parse_quote(t_struct *st, char *input, int i);
 int		parse_simple_quote(t_struct *st, char *input, int i);
 int		parse_double_quote(t_struct *st, char *input, int i);
+// parsing: 2_parse_input_utils_3.c
+int		parse_parenthesis(t_struct *st, char *input, int i);
 // parsing: 3_extract_redirection.c
 int		count_lengh_name(t_struct *st, int i, int test_len);
 int		extract_redirection(t_struct *st, int i);
@@ -168,6 +175,8 @@ int		test_fd(int fd, char *name);
 int		open_outfile(char *name, int append);
 int		skip_double_quote(char *input, int i, int max);
 int		skip_simple_quote(char *input, int i, int max);
+// parsing: extract_utils_2.c
+int		skip_parenthesis(char *s, int i, int max);
 // parsing: utils_isvariable.c
 int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
