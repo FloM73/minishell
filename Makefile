@@ -6,7 +6,7 @@
 #    By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/18 22:32:44 by flormich          #+#    #+#              #
-#    Updated: 2021/12/28 17:13:00 by flormich         ###   ########.fr        #
+#    Updated: 2021/12/29 19:23:20 by flormich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ DIR_G = gnl
 HEADER = $(DIR_LIB)/libft.h minishell_libs.h
 
 SRC = ms_main.c ms_error.c ms_launch_cmd.c ms_sig_hook.c ms_run_exit.c \
-	ms_set_redirection.c ms_handle_logical.c
+	ms_set_redirection.c ms_handle_logical.c ms_externalise_if.c
 SRC_P = $(DIR_P)/ms_0_expand_input.c $(DIR_P)/ms_1_extract_cmd.c \
 	$(DIR_P)/ms_2_parse_input.c $(DIR_P)/ms_2_parse_input_utils.c \
 	$(DIR_P)/ms_2_parse_input_utils_2.c $(DIR_P)/ms_2_parse_input_utils_3.c \

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/28 17:33:42 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:42:56 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct structure
 	int		is_wildcard_match;
 	int		include_hiddenfiles;
 	int		nb_parenthesis;
-	int		logical;
 }	t_struct;
 
 // main.c
@@ -115,6 +114,11 @@ void	init_st(int argc, char **argv, t_struct *st);
 int		launch_cmd(t_struct *st);
 // ms_set_redirection.c
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
+// ms_externalise_if.c
+int		if_cd(t_struct *st);
+int		if_run_export(t_struct *st);
+int		if_run_unset(t_struct *st);
+int		if_launch_cmd(t_struct *st);
 // parsing: 0_expand_input.c
 int		bufferize_input(t_struct *st, char *str, int i, int test_quote);
 int		launch_expand_variable(t_struct *st, char *str, int i);

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:24:04 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/28 18:26:43 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:03:47 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 static int	count_pipe(t_struct *st, char *str, int i)
 {
-	if (str[i] == '|' && str[i + 1] == '|')
-		st->logical = 1;
-	else if (str[i] == '&' && str[i + 1] == '&')
-		st->logical = 2;
 	st->nb_cmd += 1;
 	if (str[i - 1] != ' ')
 		st->buf = add_char_to_buf(st, ' ');
-	if (str[i + 1] == '|' || (str[i] == '&' && str[i + 1] == '&'))
-	{
-		st->buf = add_char_to_buf(st, str[i]);
-		i++;
-	}
+	st->buf = add_char_to_buf(st, str[i++]);
 	if (str[i - 1] != '|' || str[i] != '&')
 		st->buf = add_char_to_buf(st, str[i]);
+	while (ft_isspace(str[i]) == 1 && str[i + 1] != '\0'
+		&& ft_isspace(str[i + 1]) == 1)
+		i++;
 	return (i);
 }
 

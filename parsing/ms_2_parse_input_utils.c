@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 12:21:12 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/21 13:00:36 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/29 19:12:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	parse_char(t_struct *st, char *input, int i)
 	st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 	st->digit++;
 	i++;
-	if (input[i] == '"' || input[i] == '\'')
+	if (input[i - 1] == '\\' && (input[i] == '"' || input[i] == '\''))
 	{
 		st->arr[st->tr].cmd[st->arg][st->digit] = input[i];
 		st->digit++;

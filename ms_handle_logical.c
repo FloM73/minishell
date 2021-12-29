@@ -6,30 +6,20 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:42:06 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/29 10:23:11 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:14:18 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_libs.h"
 
-// ACHTUNG:
-// - weitere argumenten fehlen: echo TEXT IS NOT IN cmd[0]
-// if len == 0 => take all till the end
 static void	start_child(t_struct *st, t_cmd *a)
 {
 	char	*new_argv[4];
 
 	new_argv[0] = st->argv[0];
 	new_argv[1] = ft_strdup("-c");
-	if (a->cmd[0][0] == '(')
-		new_argv[2] = ft_substr(a->cmd[0],
+	new_argv[2] = ft_substr(a->cmd[0],
 			1, ft_revlen_until_char(a->cmd[0], ')') - 1);
-	else if (st->logical == 1)
-		new_argv[2] = ft_substr(a->cmd[0],
-			0, ft_len_until_char(a->cmd[0], '|'));
-	else if (st->logical == 2)
-		new_argv[2] = ft_substr(a->cmd[0],
-			0, ft_len_until_char(a->cmd[0], '&'));
 	new_argv[3] = NULL;
 	if (execve(ms_get_env(st->env, "SHELL"), new_argv, st->env) < 0)
 		exit(1);

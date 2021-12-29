@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:25:26 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/28 17:33:54 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/29 17:30:12 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	init_st(int argc, char **argv, t_struct *st)
 	st->len = (int)ft_strlen(st->input);
 	st->res_dash = argc - 1;
 	st->nb_parenthesis = 0;
-	st->logical = 0;
 }
 
 void	free_memory(t_struct *st)
