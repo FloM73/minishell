@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input_utils_3.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 07:26:57 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/26 16:05:01 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/29 18:17:16 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

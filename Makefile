@@ -21,10 +21,12 @@ DIR_G = gnl
 HEADER = $(DIR_LIB)/libft.h minishell_libs.h
 
 SRC = ms_main.c ms_error.c ms_launch_cmd.c ms_sig_hook.c ms_run_exit.c \
-	ms_set_redirection.c ms_handle_logical.c
+	ms_set_redirection.c ms_handle_logical.c ms_externalise_if.c
 SRC_P = $(DIR_P)/ms_0_expand_input.c $(DIR_P)/ms_1_extract_cmd.c \
 	$(DIR_P)/ms_2_parse_input.c $(DIR_P)/ms_2_parse_input_utils.c \
-	$(DIR_P)/ms_2_parse_input_utils_2.c $(DIR_P)/ms_extract_utils.c \
+	$(DIR_P)/ms_2_parse_input_utils_2.c $(DIR_P)/ms_2_parse_input_utils_3.c \
+	$(DIR_P)/ms_extract_utils.c $(DIR_P)/ms_extract_utils_2.c\
+	$(DIR_P)/ms_manage_quote.c $(DIR_P)/ms_manage_pipe_parenthesis.c \
 	$(DIR_P)/ms_extract_utils_2.c $(DIR_P)/ms_2_parse_input_utils_3.c \
 	$(DIR_P)/ms_extract_files.c $(DIR_P)/ms_3_extract_redirection.c \
 	$(DIR_P)/ms_add_path.c $(DIR_P)/ms_clean_arr.c $(DIR_P)/ms_expand_variable.c \

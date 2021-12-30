@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/24 15:21:33 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/30 19:37:02 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static int	fill_cmd(char *input, t_struct *st, int i)
 	{
 		if (ft_isspace(input[i]) == 1)
 			i = parse_space(st, i);
-		if (input[i] == '|' && st->all == 0 && input[i + 1] != '|')
+		if (input[i] == '|' && input[i + 1] != '|')
 			i = parse_pipe(st, i);
 		if ((input[i] == '|' && input[i + 1] == '|')
 			|| (input[i] == '&' && input[i + 1] == '&'))
 			i = parse_logical(st, i);
-		if (st->all == 0 && (input[i] == '<' || input[i] == '>'))
+		if (input[i] == '<' || input[i] == '>')
 			i = parse_redirection(st, i);
 		if (i != -1 && (input[i] == '"' || input[i] == '\''))
 			i = parse_quote(st, input, i);
-		if (input[i] == '(')
+		else if (input[i] == '(')
 			i = parse_parenthesis(st, input, i);
 		else if (i != -1 && i < st->len && ft_isspace(input[i]) == 0)
 			i = parse_char(st, input, i);
@@ -96,6 +96,7 @@ static void	initialize_cmd(t_struct *st, int tr)
 	st->arr[tr].name_in = NULL;
 	st->arr[tr].name_out = NULL;
 	st->arr[tr].limiter = NULL;
+	st->digit = 0;
 }
 
 // Create the cmd array and lauch the parsing

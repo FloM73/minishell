@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_len_until_char.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:26:56 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/26 14:21:03 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/29 10:22:27 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_len_until_char(char *s, char c)
 	int	i;
 
 	i = 0;
-	while (s[i] != c && s[i])
+	while (s[i] != c && s[i] != '\0')
 		i++;
 	if (s[i] == c)
 		return (i);
@@ -36,5 +36,5 @@ int	ft_revlen_until_char(char *s, char c)
 			return (i);
 		i--;
 	}
-	return (0);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 22:31:57 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/21 20:02:31 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/29 18:34:57 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	check_is_wildcard(t_struct *st, char *str, int i)
 
 	st->nb_wildcard = 1;
 	wild_card = 0;
-	while (str[i] != '\0' && ft_isspace(str[i]) == 0 && str[i] != '|')
+	while (str[i] != '\0' && ft_isspace(str[i]) == 0
+		&& str[i] != '$' && str[i] != '|')
 	{
 		if (str[i] == '"' || str[i] == '\'')
 			return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/26 16:04:03 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/30 19:38:02 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,16 @@ static int	launch_builtin(t_struct *st)
 	return (0);
 }
 
+//if (st->tr == 0 || (st->tr > 0 && ((st->arr[st->tr - 1].logical == 2
+//&& g_exit_value == 0) || (st->arr[st->tr - 1].logical == 1
+//&& g_exit_value > 0) || !st->arr[st->tr - 1].logical)))
 int	launch_cmd(t_struct *st)
 {
 	if (pipe(st->fd) == -1)
 		return (-1);
 	while (st->tr < st->nb_cmd)
 	{
-		if (st->tr == 0 || (st->tr > 0 && ((st->arr[st->tr - 1].logical == 2
-			&& g_exit_value == 0) || (st->arr[st->tr - 1].logical == 1
-			&& g_exit_value > 0) || !st->arr[st->tr - 1].logical)))
+		if (if_launch_cmd(st) == 1)
 		{
 			if (st->arr[st->tr].cmd_type == BUILTIN)
 				launch_builtin(st);
