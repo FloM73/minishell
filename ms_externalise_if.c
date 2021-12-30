@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_externalise_if.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 19:23:37 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 19:50:53 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/30 21:50:22 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_cd(t_struct *st)
 {
-	if (!st->arr[st->tr].logical)
+	if (st->arr[st->tr].logical)
 		return (0);
 	if ((st->tr > 0 && !st->arr[st->tr - 1].logical) || st->tr == 0)
 		return (1);
