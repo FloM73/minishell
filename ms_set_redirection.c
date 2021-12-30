@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 21:11:41 by pnuti            ###   ########.fr       */
+/*   Updated: 2021/12/30 22:45:41 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	set_red_first_cmd(t_struct *st, int which_cmd, int *next_fd)
 		dup2(next_fd[WRITE], STDOUT_FILENO);
 }
 
-// STDIN = 0, STDOUT = 1, STDERR = 2
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd)
 {
 	if (st->nb_cmd == 1 || st->arr[which_cmd].logical != 0)

@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:24:04 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 19:03:47 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/30 22:30:18 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	launch_manage_pipe_parenthesis(t_struct *st, char *str, int i)
 	if ((str[i] == '&' && str[i + 1] == '|')
 		|| (str[i] == '&' && str[i + 1] != '&' && str[i - 1] != '|'))
 	{
-		ms_error_synthaxe(str[i]);
+		ms_error_synthaxe(str[i + 1]);
 		return (-2);
 	}
 	if (str[i] == '|' || (str[i] == '&' && str[i + 1] == '&'))
