@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 18:13:24 by flormich         ###   ########.fr       */
+/*   Updated: 2021/12/30 19:37:02 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static void	initialize_cmd(t_struct *st, int tr)
 	st->arr[tr].name_in = NULL;
 	st->arr[tr].name_out = NULL;
 	st->arr[tr].limiter = NULL;
+	st->digit = 0;
 }
 
 // Create the cmd array and lauch the parsing
