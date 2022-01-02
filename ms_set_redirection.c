@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/02 09:36:52 by pnuti            ###   ########.fr       */
+/*   Updated: 2022/01/02 10:55:05 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@ static void	set_red_one_cmd(t_struct *st, int which_cmd)
 	if (st->arr[which_cmd].limiter != NULL)
 		dup2(st->fd[READ], STDIN_FILENO);
 	else
-		dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
+	{
+		if (which_cmd == 0 || (which_cmd > 0
+				&& st->arr[which_cmd - 1].logical != 0))
+			dup2(st->arr[which_cmd].fd_in, STDIN_FILENO);
+		else
+			dup2(st->fd[READ], STDIN_FILENO);
+	}
 	dup2(st->arr[which_cmd].fd_out, STDOUT_FILENO);
 }
 
