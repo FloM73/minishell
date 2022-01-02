@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:30:48 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/22 17:48:43 by pnuti            ###   ########.fr       */
+/*   Updated: 2022/01/02 11:34:26 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	bufferize_cmd(t_struct *st, t_cmd *arr, int arg, int i)
 			st->buf = add_char_to_buf(st, arr->cmd[arg][i]);
 		i++;
 	}
-	st->buf = add_char_to_buf(st, ' ');
+	if (arg < arr->nb_arg - 1)
+		st->buf = add_char_to_buf(st, ' ');
 }
 
 // if pos_arg > 1: there is a valid -n flag
