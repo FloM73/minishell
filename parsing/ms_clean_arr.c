@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/02 18:37:53 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:55:20 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,6 @@ static int	launch_implement_cmd_typ(t_cmd *arr)
 	return (-1);
 }
 
-static void print_arr(t_struct *st)
-{
-	int	tr=0;
-	int arg;
-	while (tr < st->nb_cmd)
-	{
-		arg=0;
-		while (arg <= st->arr[tr].nb_arg)
-		{
-			printf("tr=%d - arg=%d cmd=%s| len=%ld\n", tr, arg, st->arr[tr].cmd[arg], ft_strlen(st->arr[tr].cmd[arg]));
-			arg++;
-		}
-		tr++;
-	}
-}
 int	clean_arr(t_struct *st)
 {
 	st->tr = 0;
@@ -102,7 +87,8 @@ int	clean_arr(t_struct *st)
 		if (launch_implement_cmd_typ(&(st->arr[st->tr])) == 0)
 		{
 			while (st->tr < st->nb_cmd && st->arg < st->arr[st->tr].nb_arg
-				&& st->arr[st->tr].cmd[st->arg][0] != '\0')
+				&& st->arr[st->tr].cmd[st->arg][0] != '\0'
+				&& st->arr[st->tr].cmd[st->arg][0] != '\177')
 				st->arg++;
 			free(st->arr[st->tr].cmd[st->arg]);
 			st->arr[st->tr].cmd[st->arg++] = (char *)0;
@@ -119,6 +105,5 @@ int	clean_arr(t_struct *st)
 			return (-1);
 		st->tr++;
 	}
-	print_arr(st);
 	return (0);
 }

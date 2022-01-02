@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:10:06 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/02 13:43:41 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:52:19 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_expand_home(unsigned char c)
 
 int	is_wildcard_end(unsigned char c)
 {
-	if (c == '|' || c == ')' || c == '('|| c == '\0')
+	if (c == '|' || c == ')' || c == '(' || c == '\0')
 		return (1);
 	return (0);
 }
