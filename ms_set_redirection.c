@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:52:27 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/30 22:45:41 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/02 09:36:52 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

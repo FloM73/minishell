@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/30 22:58:55 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/02 10:03:07 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static void	initialize_cmd(t_struct *st, int tr)
 	st->arr[tr].name_in = NULL;
 	st->arr[tr].name_out = NULL;
 	st->arr[tr].limiter = NULL;
-	st->arr[tr].logical = 0;
 	st->digit = 0;
 }
 
@@ -107,6 +106,7 @@ int	parse_input(t_struct *st)
 
 	tr = 0;
 	st->nb_cmd = count_arg(st->input, st, 0);
+	st->arr[st->nb_cmd - 1].logical = 0;
 	if (st->nb_cmd == -1)
 		return (-1);
 	while (tr < st->nb_cmd)
