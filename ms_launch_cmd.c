@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/03 18:29:09 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:19:24 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ static int	launch_pipe(t_struct*st)
 
 static int	launch_builtin(t_struct *st)
 {
+	int	next_fd[2];
+
+	if (pipe(next_fd) < 0)
+		return (1);
+	dup2(next_fd[WRITE], st->fd[WRITE]);
+	dup2(next_fd[READ], st->fd[READ]);
+	close(next_fd[WRITE]);
+	close(next_fd[READ]);
 	if (st->arr[st->tr].f_ptr == &run_echo
 		&& st->tr + 1 != st->nb_cmd && st->arr[st->tr + 1].f_ptr == &run_echo
 		&& !st->arr[st->tr].logical)
