@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:50:14 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/29 19:31:09 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:29:25 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ static int	implement_syntax(t_struct *st, t_cmd *arr)
 	return (0);
 }
 
-//if (st->nb_cmd != 1 && ((!arr->logical && ((st->tr > 0
-// && !st->arr[st->tr - 1].logical) || st->tr == 0))))
 int	cd(void *stt, void *cmd)
 {
 	t_cmd		*arr;

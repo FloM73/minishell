@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:24:04 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/30 22:30:18 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:56:28 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	count_pipe(t_struct *st, char *str, int i)
 	return (i);
 }
 
-int	launch_manage_pipe_parenthesis(t_struct *st, char *str, int i)
+int	launch_manage_pipe_parenthes(t_struct *st, char *str, int i, int test)
 {
 	if ((str[i] == '&' && str[i + 1] == '|')
 		|| (str[i] == '&' && str[i + 1] != '&' && str[i - 1] != '|'))
@@ -38,13 +38,13 @@ int	launch_manage_pipe_parenthesis(t_struct *st, char *str, int i)
 		i = count_pipe(st, str, i);
 	else
 	{
-		if (str[i] == '(')
+		if (str[i] == '(' && test == 1)
 			st->nb_parenthesis++;
-		if (str[i] == ')')
+		if (str[i] == ')' && test == 1)
 			st->nb_parenthesis--;
 		st->buf = add_char_to_buf(st, str[i]);
 	}
-	while (ft_isspace(str[i]) == 1 && str[i + 1] != '\0'
+	while (test == 1 && ft_isspace(str[i]) == 1 && str[i + 1] != '\0'
 		&& ft_isspace(str[i + 1]) == 1)
 		i++;
 	return (i);
