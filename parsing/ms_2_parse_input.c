@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_2_parse_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:09:00 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/02 10:03:07 by pnuti            ###   ########.fr       */
+/*   Updated: 2022/01/03 11:21:34 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	count_arg(char *input, t_struct *st, int i)
 			else if (input[i] == '(')
 				i = skip_parenthesis(input, i + 1, st->len);
 			else if (ft_isspace(input[i]) == 1
-				&& input[i + 1] != '|' && i < st->len)
+				&& input[i + 1] != '|' && input[i + 1] != ')' && i < st->len)
 					st->arr[tr].nb_arg++;
 			i++;
 		}
