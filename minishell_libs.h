@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/29 19:42:56 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:55:50 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		launch_manage_quote(t_struct *st, char *str, int i, int test_quote);
 int		manage_simple_quote(t_struct *st, char *str, int i, int test_quote);
 int		manage_doppel_quote(t_struct *st, char *str, int i, int test_quote);
 // parsing: ms_manage_pipe_parenthesis.c
-int		launch_manage_pipe_parenthesis(t_struct *st, char *str, int i);
+int		launch_manage_pipe_parenthes(t_struct *st, char *str, int i, int test);
 //parsing: expand_variable.c
 int		expand_variable(t_struct *st, char *str, int i);
 int		expand_special_variable(t_struct *st, char *str, int i);
@@ -185,6 +185,8 @@ int		skip_parenthesis(char *s, int i, int max);
 int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
 int		is_expand_home(unsigned char c);
+int		is_wildcard_end(unsigned char c);
+int		is_buffer_end(unsigned char c);
 // parsing: ms_wildcard_pattern.c
 int		launch_find_wc_pattern(t_struct *st, char *str, int i);
 void	cpy_str_no_match(t_struct *st, char *str, int i_org);

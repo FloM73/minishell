@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:18:33 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/28 18:27:07 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:55:52 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	bufferize_input(t_struct *st, char *str, int i, int test_quote)
 		else if (str[i] == '\'' || str[i] == '"')
 			i = launch_manage_quote(st, str, i, test_quote);
 		else
-			i = launch_manage_pipe_parenthesis(st, str, i);
+			i = launch_manage_pipe_parenthes(st, str, i, test_quote);
 		i++;
 	}
 	if (st->nb_parenthesis != 0)

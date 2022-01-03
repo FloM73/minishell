@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_launch_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
 /*   Updated: 2022/01/03 17:19:24 by pnuti            ###   ########.fr       */
@@ -79,9 +79,6 @@ static int	launch_builtin(t_struct *st)
 	return (0);
 }
 
-//if (st->tr == 0 || (st->tr > 0 && ((st->arr[st->tr - 1].logical == 2
-//&& g_exit_value == 0) || (st->arr[st->tr - 1].logical == 1
-//&& g_exit_value > 0) || !st->arr[st->tr - 1].logical)))
 int	launch_cmd(t_struct *st)
 {
 	if (pipe(st->fd) == -1)

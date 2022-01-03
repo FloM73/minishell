@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 22:31:57 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 18:34:57 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:54:48 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	launch_expand_wildcard(t_struct *st, char *str, int i, int i_org)
 	if (st->is_wildcard_match == 0)
 		cpy_str_no_match(st, str, i_org);
 	free_memory_wildcard(st, dirp, cur_dir);
-	if (str[i] == '|')
+	if (str[i] == '|' || str[i] == ')')
 		return (i - 1);
 	return (i);
 }

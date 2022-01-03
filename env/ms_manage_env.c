@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 10:14:36 by pnuti             #+#    #+#             */
-/*   Updated: 2021/12/29 19:51:10 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:29:51 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	ms_run_env(void *stt, void *cmd)
 	return (0);
 }
 
-//if (st->nb_cmd != 1 && ((!arr->logical && ((st->tr > 0
-//&& !st->arr[st->tr - 1].logical) || st->tr == 0))))
 int	ms_run_export(void *stt, void *cmd)
 {
 	t_cmd		*arr;

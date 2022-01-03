@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:45:01 by flormich          #+#    #+#             */
-/*   Updated: 2021/12/29 17:29:00 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:31:48 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	clean_arr(t_struct *st)
 		if (launch_implement_cmd_typ(&(st->arr[st->tr])) == 0)
 		{
 			while (st->tr < st->nb_cmd && st->arg < st->arr[st->tr].nb_arg
-				&& st->arr[st->tr].cmd[st->arg][0] != '\0')
+				&& is_buffer_end(st->arr[st->tr].cmd[st->arg][0]) == 0)
 				st->arg++;
 			free(st->arr[st->tr].cmd[st->arg]);
 			st->arr[st->tr].cmd[st->arg++] = (char *)0;
