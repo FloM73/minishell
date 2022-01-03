@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:26:13 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/03 08:59:25 by pnuti            ###   ########.fr       */
+/*   Updated: 2022/01/03 17:19:24 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,7 @@ static int	launch_pipe(t_struct*st)
 	}
 	return (0);
 }
-/*
-static int	launch_builtin(t_struct *st)
-{
-	if (st->arr[st->tr].f_ptr == &run_echo
-		&& st->tr + 1 != st->nb_cmd && st->arr[st->tr + 1].f_ptr == &run_echo
-		&& !st->arr[st->tr].logical)
-		return (0);
-	if (st->tr + 1 == st->nb_cmd || st->arr[st->tr].logical)
-		dup2(st->arr[st->tr].fd_out, st->fd[WRITE]);
-	g_exit_value = st->arr[st->tr].f_ptr(st, &(st->arr[st->tr]));
-	return (0);
-}
-*/
+
 static int	launch_builtin(t_struct *st)
 {
 	int	next_fd[2];
