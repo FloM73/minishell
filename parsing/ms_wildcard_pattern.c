@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:33:15 by flormich          #+#    #+#             */
-/*   Updated: 2022/01/03 10:42:12 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:42:07 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,7 @@ void	cpy_match(t_struct *st, struct dirent *dirp)
 
 	j = 0;
 	while (dirp->d_name[j])
-	{
-		if (dirp->d_name[j] != '\177')
-			st->buf = add_char_to_buf(st, dirp->d_name[j]);
-		else
-			sleep(1);
-		j++;
-	}
+		st->buf = add_char_to_buf(st, dirp->d_name[j++]);
 	st->buf = add_char_to_buf(st, ' ');
 	st->is_wildcard_match = 1;
 }

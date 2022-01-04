@@ -6,7 +6,7 @@
 /*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2022/01/03 18:55:50 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:49:00 by flormich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ int		is_variable_end(t_struct *st, unsigned char c);
 int		is_special_variable(unsigned char c);
 int		is_expand_home(unsigned char c);
 int		is_wildcard_end(unsigned char c);
-int		is_buffer_end(unsigned char c);
 // parsing: ms_wildcard_pattern.c
 int		launch_find_wc_pattern(t_struct *st, char *str, int i);
 void	cpy_str_no_match(t_struct *st, char *str, int i_org);
