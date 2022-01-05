@@ -6,7 +6,7 @@
 /*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 08:10:56 by pnuti             #+#    #+#             */
-/*   Updated: 2022/01/02 14:22:44 by pnuti            ###   ########.fr       */
+/*   Updated: 2022/01/05 11:28:00 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	run_exit(void *stt, void *cmd)
 
 	st = (t_struct *)stt;
 	arr = (t_cmd *)cmd;
-	if (st->nb_cmd != 1)
+	if (st->nb_cmd != 1 && if_exit(st) == 1)
 		return (-1);
+	printf("exit\n");
 	if (!arr->cmd[1])
 		g_exit_value = 0;
 	else

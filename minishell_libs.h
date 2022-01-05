@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_libs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flormich <flormich@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pnuti <pnuti@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 17:51:13 by pnuti             #+#    #+#             */
-/*   Updated: 2022/01/04 11:49:00 by flormich         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:18:31 by pnuti            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int		launch_cmd(t_struct *st);
 void	set_red_shell(t_struct *st, int which_cmd, int *next_fd);
 // ms_externalise_if.c
 int		if_cd(t_struct *st);
+int		if_exit(t_struct *st);
 int		if_run_export(t_struct *st);
 int		if_run_unset(t_struct *st);
 int		if_launch_cmd(t_struct *st);
