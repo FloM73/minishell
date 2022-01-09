@@ -6,4 +6,4 @@ Thanks to my teammate pnuti.
 
 It was a hard but nice run!
 
-![image](https://user-images.githubusercontent.com/83426352/148680065-8a0013d4-b1b0-4c56-b02b-efe239149c19.png)
+![image](https://user-images.githubusercontent.com/83426352/148680120-d376e2af-3237-4c70-acbf-075c8443433c.png)
